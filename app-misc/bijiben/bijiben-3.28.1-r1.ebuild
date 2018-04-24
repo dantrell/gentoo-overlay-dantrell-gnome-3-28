@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit gnome2
+inherit gnome2 meson
 
 DESCRIPTION="Note editor designed to remain simple to use"
 HOMEPAGE="https://wiki.gnome.org/Apps/Bijiben"
@@ -31,19 +31,20 @@ DEPEND="${RDEPEND}
 	sys-devel/gettext
 	virtual/pkgconfig
 "
-# Needed if eautoreconf:
-# sys-devel/autoconf-archive
-
-src_prepare() {
-	# From Fedora:
-	# 	http://pkgs.fedoraproject.org/cgit/rpms/bijiben.git/tree/bijiben.spec?h=f27
-	sed -i -e 's/tracker-sparql-1\.0/tracker-sparql-2.0/g' configure
-
-	gnome2_src_prepare
-}
 
 src_configure() {
-	gnome2_src_configure \
-		--disable-update-mimedb \
-		--disable-zeitgeist
+	local emesonargs=(
+		-D zeitgeist=false
+		-D update_mimedb=false
+	)
+	meson_src_configure
+}
+
+src_install() {
+	meson_src_install
+
+	# From GNOME:
+	# 	https://git.gnome.org/browse/bijiben/commit/?id=0b89cde5c61febe581e804360442a4fa489ddde6
+	insinto /usr/share/glib-2.0/schemas
+	doins "${WORKDIR}"/"${P}"/data/org.gnome.bijiben.gschema.xml
 }

@@ -25,7 +25,7 @@ COMMON_DEPEND="
 	>=app-arch/gnome-autoar-0.2.1
 	>=dev-libs/glib-2.51.2:2[dbus]
 	>=x11-libs/pango-1.28.3
-	>=x11-libs/gtk+-3.21.6:3[introspection?]
+	>=x11-libs/gtk+-3.22.26:3[introspection?]
 	>=dev-libs/libxml2-2.7.8:2
 	>=gnome-base/gnome-desktop-3:3=
 
@@ -69,6 +69,9 @@ src_prepare() {
 			close the previewer, press space again."
 	fi
 
+	# Don't treat warnings as errors
+	sed -e 's/-Werror=/-W/' -i meson.build || die "sed failed"
+
 	#~if ! use vanilla-menu; then
 		#~eapply "${FILESDIR}"/${PN}-3.26.3.1-reorder-context-menu.patch
 		#~if ! use vanilla-menu-compress; then
@@ -96,9 +99,9 @@ src_prepare() {
 		#~eapply "${FILESDIR}"/${PN}-3.22.0-remove-native-compress.patch
 	#~fi
 
-	#~if ! use vanilla-rename; then
-		#~eapply "${FILESDIR}"/${PN}-3.26.3.1-support-slow-double-click-to-rename.patch
-	#~fi
+	if ! use vanilla-rename; then
+		eapply "${FILESDIR}"/${PN}-3.28.1-support-slow-double-click-to-rename.patch
+	fi
 
 	if ! use vanilla-search; then
 		# From Dr. Amr Osman:
