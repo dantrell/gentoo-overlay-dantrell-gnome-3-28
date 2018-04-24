@@ -11,7 +11,7 @@ LICENSE="GPL-2+ FDL-1.1+ LGPL-2+"
 SLOT="3/12" # subslot = libgnome-desktop-3 soname version
 KEYWORDS="*"
 
-IUSE="debug +introspection +seccomp udev"
+IUSE="debug +introspection +seccomp udev vanilla-thumbnailer"
 
 # cairo[X] needed for gnome-bg
 # bubblewrap is automagic
@@ -25,12 +25,12 @@ COMMON_DEPEND="
 	x11-libs/libX11
 	x11-misc/xkeyboard-config
 	>=gnome-base/gsettings-desktop-schemas-3.5.91
-	sys-apps/bubblewrap
 	introspection? ( >=dev-libs/gobject-introspection-0.9.7:= )
 	seccomp? ( >=sys-libs/libseccomp-2.0 )
 	udev? (
 		sys-apps/hwids
 		virtual/libudev:= )
+	vanilla-thumbnailer? ( sys-apps/bubblewrap )
 "
 RDEPEND="${COMMON_DEPEND}
 	!<gnome-base/gnome-desktop-2.32.1-r1:2[doc]
@@ -47,6 +47,16 @@ DEPEND="${COMMON_DEPEND}
 "
 
 # Includes X11/Xatom.h in libgnome-desktop/gnome-bg.c which comes from xproto
+
+src_prepare() {
+	if ! use vanilla-thumbnailer; then
+		# From GNOME:
+		# 	https://git.gnome.org/browse/gnome-desktop/commit/?id=8b1db18aa75c2684b513481088b4e289b5c8ed92
+		eapply "${FILESDIR}"/${PN}-3.28.1-dont-sandbox-thumbnailers-on-linux.patch
+	fi
+
+	gnome2_src_prepare
+}
 
 src_configure() {
 	gnome2_src_configure \
