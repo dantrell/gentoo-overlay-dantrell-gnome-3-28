@@ -1,0 +1,3853 @@
+diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
+--- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,22 @@
++NULL =
++
++SUBDIRS = 			\
++	gnome-settings-daemon	\
++	subprojects/gvc		\
++	data			\
++	plugins			\
++	po 			\
++	tests 			\
++	$(NULL)
++
++# Honor aclocal flags
++ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
++
++EXTRA_DIST = \
++	MAINTAINERS		\
++	ChangeLog		\
++	README			\
++	$(NULL)
++
++DISTCLEANFILES = \
++	$(NULL)
+diff '--exclude=.git' -urN a/acinclude.m4 b/acinclude.m4
+--- a/acinclude.m4	1969-12-31 19:00:00.000000000 -0500
++++ b/acinclude.m4	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,137 @@
++dnl EXTRA_COMPILE_WARNINGS
++dnl Turn on many useful compiler warnings
++dnl For now, only works on GCC
++AC_DEFUN([EXTRA_COMPILE_WARNINGS],[
++    dnl ******************************
++    dnl More compiler warnings
++    dnl ******************************
++
++    AC_ARG_ENABLE(compile-warnings,
++                  AC_HELP_STRING([--enable-compile-warnings=@<:@no/minimum/yes/maximum/error@:>@],
++                                 [Turn on compiler warnings]),,
++                  [enable_compile_warnings="m4_default([$1],[yes])"])
++
++    warnCFLAGS=
++    if test "x$GCC" != xyes; then
++	enable_compile_warnings=no
++    fi
++
++    warning_flags=
++    realsave_CFLAGS="$CFLAGS"
++
++    case "$enable_compile_warnings" in
++    no)
++	warning_flags=
++	;;
++    minimum)
++	warning_flags="-Wall"
++	;;
++    yes)
++	warning_flags="-Wall -Wmissing-prototypes"
++	;;
++    maximum|error)
++	warning_flags="-Wall -Wmissing-prototypes -Wnested-externs -Wpointer-arith"
++	CFLAGS="$warning_flags $CFLAGS"
++	for option in -Wno-sign-compare; do
++		SAVE_CFLAGS="$CFLAGS"
++		CFLAGS="$CFLAGS $option"
++		AC_MSG_CHECKING([whether gcc understands $option])
++		AC_TRY_COMPILE([], [],
++			has_option=yes,
++			has_option=no,)
++		CFLAGS="$SAVE_CFLAGS"
++		AC_MSG_RESULT($has_option)
++		if test $has_option = yes; then
++		  warning_flags="$warning_flags $option"
++		fi
++		unset has_option
++		unset SAVE_CFLAGS
++	done
++	unset option
++	if test "$enable_compile_warnings" = "error" ; then
++	    warning_flags="$warning_flags -Werror"
++	fi
++	;;
++    *)
++	AC_MSG_ERROR(Unknown argument '$enable_compile_warnings' to --enable-compile-warnings)
++	;;
++    esac
++    CFLAGS="$realsave_CFLAGS"
++    AC_MSG_CHECKING(what warning flags to pass to the C compiler)
++    AC_MSG_RESULT($warning_flags)
++
++    AC_ARG_ENABLE(iso-c,
++                  AC_HELP_STRING([--enable-iso-c],
++                                 [Try to warn if code is not ISO C ]),,
++                  [enable_iso_c=no])
++
++    AC_MSG_CHECKING(what language compliance flags to pass to the C compiler)
++    complCFLAGS=
++    if test "x$enable_iso_c" != "xno"; then
++	if test "x$GCC" = "xyes"; then
++	case " $CFLAGS " in
++	    *[\ \	]-ansi[\ \	]*) ;;
++	    *) complCFLAGS="$complCFLAGS -ansi" ;;
++	esac
++	case " $CFLAGS " in
++	    *[\ \	]-pedantic[\ \	]*) ;;
++	    *) complCFLAGS="$complCFLAGS -pedantic" ;;
++	esac
++	fi
++    fi
++    AC_MSG_RESULT($complCFLAGS)
++
++    WARN_CFLAGS="$warning_flags $complCFLAGS"
++    AC_SUBST(WARN_CFLAGS)
++])
++
++dnl as-ac-expand.m4 0.2.0                                   -*- autoconf -*-
++dnl autostars m4 macro for expanding directories using configure's prefix
++
++dnl (C) 2003, 2004, 2005 Thomas Vander Stichele <thomas at apestaart dot org>
++
++dnl Copying and distribution of this file, with or without modification,
++dnl are permitted in any medium without royalty provided the copyright
++dnl notice and this notice are preserved.
++
++dnl AS_AC_EXPAND(VAR, CONFIGURE_VAR)
++
++dnl example:
++dnl AS_AC_EXPAND(SYSCONFDIR, $sysconfdir)
++dnl will set SYSCONFDIR to /usr/local/etc if prefix=/usr/local
++
++AC_DEFUN([AS_AC_EXPAND],
++[
++  EXP_VAR=[$1]
++  FROM_VAR=[$2]
++
++  dnl first expand prefix and exec_prefix if necessary
++  prefix_save=$prefix
++  exec_prefix_save=$exec_prefix
++
++  dnl if no prefix given, then use /usr/local, the default prefix
++  if test "x$prefix" = "xNONE"; then
++    prefix="$ac_default_prefix"
++  fi
++  dnl if no exec_prefix given, then use prefix
++  if test "x$exec_prefix" = "xNONE"; then
++    exec_prefix=$prefix
++  fi
++
++  full_var="$FROM_VAR"
++  dnl loop until it doesn't change anymore
++  while true; do
++    new_full_var="`eval echo $full_var`"
++    if test "x$new_full_var" = "x$full_var"; then break; fi
++    full_var=$new_full_var
++  done
++
++  dnl clean up
++  full_var=$new_full_var
++  AC_SUBST([$1], "$full_var")
++
++  dnl restore prefix and exec_prefix
++  prefix=$prefix_save
++  exec_prefix=$exec_prefix_save
++])
++
+diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
+--- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
++++ b/autogen.sh	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,42 @@
++#!/bin/sh
++# Run this to generate all the initial makefiles, etc.
++test -n "$srcdir" || srcdir=$(dirname "$0")
++test -n "$srcdir" || srcdir=.
++
++olddir=$(pwd)
++
++cd $srcdir
++
++(test -f configure.ac) || {
++	echo "*** ERROR: Directory '$srcdir' does not look like the top-level project directory ***"
++	exit 1
++}
++
++# shellcheck disable=SC2016
++PKG_NAME=$(autoconf --trace 'AC_INIT:$1' configure.ac)
++
++if [ "$#" = 0 -a "x$NOCONFIGURE" = "x" ]; then
++	echo "*** WARNING: I am going to run 'configure' with no arguments." >&2
++	echo "*** If you wish to pass any to it, please specify them on the" >&2
++	echo "*** '$0' command line." >&2
++	echo "" >&2
++fi
++
++# Fetch submodules if needed
++git submodule update --init
++
++aclocal --install || exit 1
++glib-gettextize --force --copy || exit 1
++intltoolize --force --copy --automake || exit 1
++autoreconf --verbose --force --install || exit 1
++
++cd "$olddir"
++if [ "$NOCONFIGURE" = "" ]; then
++	$srcdir/configure "$@" || exit 1
++
++	if [ "$1" = "--help" ]; then exit 0 else
++		echo "Now type 'make' to compile $PKG_NAME" || exit 1
++	fi
++else
++	echo "Skipping configure process."
++fi
+diff '--exclude=.git' -urN a/configure.ac b/configure.ac
+--- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
++++ b/configure.ac	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,572 @@
++AC_PREREQ([2.69])
++
++AC_INIT([gnome-settings-daemon],
++        [3.27.3],
++        [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-settings-daemon])
++
++AC_CONFIG_SRCDIR([gnome-settings-daemon/gnome-settings-bus.c])
++AC_CONFIG_MACRO_DIR([m4])
++
++AM_INIT_AUTOMAKE([1.9 tar-ustar dist-xz no-dist-gzip check-news])
++AM_MAINTAINER_MODE([enable])
++
++m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
++
++m4_define([gsd_api_version_major],[3])
++m4_define([gsd_api_version_minor],[0])
++m4_define([gsd_api_version],[gsd_api_version_major.gsd_api_version_minor])
++GSD_API_VERSION="gsd_api_version"
++AC_SUBST(GSD_API_VERSION)
++
++AC_HEADER_STDC
++AC_PROG_CXX
++AM_PROG_CC_C_O
++AC_PROG_CC_C99
++LT_INIT
++
++AC_HEADER_STDC
++
++AC_SUBST(VERSION)
++
++AC_CONFIG_HEADERS([config.h])
++
++IT_PROG_INTLTOOL([0.37.1])
++
++GETTEXT_PACKAGE=gnome-settings-daemon
++AC_SUBST(GETTEXT_PACKAGE)
++AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [Name of default gettext domain])
++
++AM_GLIB_GNU_GETTEXT
++
++dnl ---------------------------------------------------------------------------
++dnl - Dependencies
++dnl ---------------------------------------------------------------------------
++
++GLIB_REQUIRED_VERSION=2.53.0
++GIO_REQUIRED_VERSION=${GLIB_REQUIRED_VERSION}
++GTK_REQUIRED_VERSION=3.15.3
++GCONF_REQUIRED_VERSION=2.6.1
++GNOME_DESKTOP_REQUIRED_VERSION=3.11.1
++LIBGWEATHER_REQUIRED_VERSION=3.9.5
++LIBNOTIFY_REQUIRED_VERSION=0.7.3
++PA_REQUIRED_VERSION=2.0
++LIBWACOM_REQUIRED_VERSION=0.7
++LIBRSVG_REQUIRED_VERSION=2.36.2
++PANGO_REQUIRED_VERSION=1.20.0
++POLKIT_REQUIRED_VERSION=0.103
++UPOWER_REQUIRED_VERSION=0.99.0
++GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION=3.23.3
++GEOCODE_GLIB_REQUIRED_VERSION=3.10.0
++GEOCLUE_REQUIRED_VERSION=2.3.1
++NM_REQUIRED_VERSION=1.0
++LCMS_REQUIRED_VERSION=2.2
++
++EXTRA_COMPILE_WARNINGS(yes)
++
++GSD_PLUGIN_LDFLAGS="-export_dynamic -module -avoid-version -no-undefined"
++case $host_os in
++  darwin*)
++    GSD_PLUGIN_LDFLAGS="${GSD_PLUGIN_LDFLAGS} -Wl,-bundle_loader,\$(top_builddir)/gnome-settings-daemon/gnome-settings-daemon"
++    ;;
++esac
++AC_SUBST([GSD_PLUGIN_LDFLAGS])
++
++AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
++AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
++AC_PATH_PROG([GLIB_COMPILE_RESOURCES], [glib-compile-resources])
++
++LT_LIB_M
++AC_SUBST(LIBM)
++
++dnl ================================================================
++dnl GSettings stuff
++dnl ================================================================
++
++GLIB_GSETTINGS
++
++dnl ---------------------------------------------------------------------------
++dnl - GUdev integration (default enabled)
++dnl ---------------------------------------------------------------------------
++GUDEV_PKG=""
++AC_ARG_ENABLE(gudev, AS_HELP_STRING([--disable-gudev],[Disable GUdev support (not optional on Linux platforms)]), enable_gudev=$enableval)
++if test x$enable_gudev != xno; then
++	PKG_CHECK_MODULES(GUDEV, gudev-1.0, have_gudev="yes", have_gudev="no")
++	if test "x$have_gudev" = "xyes"; then
++		AC_DEFINE(HAVE_GUDEV, 1, [define if GUdev is available])
++		GUDEV_PKG="gudev-1.0"
++	else
++		if test x$enable_gudev = xyes; then
++			AC_MSG_ERROR([GUdev enabled but not found])
++		fi
++	fi
++else
++	have_gudev=no
++fi
++AM_CONDITIONAL(HAVE_GUDEV, test x$have_gudev = xyes)
++
++dnl ---------------------------------------------------------------------------
++dnl - ALSA integration (default enabled)
++dnl ---------------------------------------------------------------------------
++ALSA_PKG=""
++AC_ARG_ENABLE(alsa, AS_HELP_STRING([--disable-alsa],[Disable ALSA support (not optional on Linux platforms)]), enable_alsa=$enableval)
++if test x$enable_alsa != xno; then
++	PKG_CHECK_MODULES(ALSA, alsa, have_alsa="yes", have_alsa="no")
++	if test "x$have_alsa" = "xyes"; then
++		AC_DEFINE(HAVE_ALSA, 1, [define if ALSA is available])
++		ALSA_PKG="alsa"
++	else
++		if test x$enable_alsa = xyes; then
++			AC_MSG_ERROR([ALSA enabled but not found])
++		fi
++	fi
++else
++	have_alsa=no
++fi
++AM_CONDITIONAL(HAVE_ALSA, test x$have_alsa = xyes)
++
++dnl ---------------------------------------------------------------------------
++dnl - Check for libwayland-client
++dnl ---------------------------------------------------------------------------
++AC_ARG_ENABLE(wayland,
++        AS_HELP_STRING([--disable-wayland],[Disable wayland support (default: auto)]),
++        enable_wayland=$enableval, enable_wayland=auto)
++if test x$enable_wayland != xno; then
++        PKG_CHECK_MODULES(WAYLAND, wayland-client, have_wayland=yes, have_wayland=no)
++        if test x$have_wayland = xyes; then
++                AC_DEFINE(HAVE_WAYLAND, 1, [Define if libwayland-client is available])
++        else
++                if test x$enable_wayland = xyes; then
++                        AC_MSG_ERROR([Wayland enabled but not found])
++                fi
++        fi
++fi
++AM_CONDITIONAL(HAVE_WAYLAND, test x$have_wayland = xyes)
++
++dnl ================================================================
++dnl Plugins
++dnl ================================================================
++
++PKG_CHECK_MODULES(A11Y_SETTINGS,
++		  gio-2.0
++		  gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION)
++
++PKG_CHECK_MODULES(CLIPBOARD,
++		  gtk+-x11-3.0
++		  x11)
++
++PKG_CHECK_MODULES(COLOR,
++		  colord >= 1.0.2
++		  gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
++		  libcanberra-gtk3
++		  libgeoclue-2.0 >= $GEOCLUE_REQUIRED_VERSION
++		  lcms2 >= $LCMS_REQUIRED_VERSION
++		  libnotify)
++
++PKG_CHECK_MODULES(DATETIME,
++		  libnotify >= $LIBNOTIFY_REQUIRED_VERSION
++		  libgeoclue-2.0 >= $GEOCLUE_REQUIRED_VERSION
++		  geocode-glib-1.0 >= $GEOCODE_GLIB_REQUIRED_VERSION
++		  gweather-3.0 >= $LIBGWEATHER_REQUIRED_VERSION
++		  polkit-gobject-1 >= $POLKIT_REQUIRED_VERSION)
++
++PKG_CHECK_MODULES(DUMMY,
++		  gio-2.0
++		  glib-2.0)
++
++PKG_CHECK_MODULES(HOUSEKEEPING,
++		  gtk+-3.0
++		  gio-unix-2.0
++		  libnotify >= $LIBNOTIFY_REQUIRED_VERSION)
++
++PKG_CHECK_MODULES(KEYBOARD,
++		  gtk+-3.0)
++
++PKG_CHECK_MODULES(MEDIA_KEYS,
++		  gio-unix-2.0
++		  gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION
++		  libpulse >= $PA_REQUIRED_VERSION
++		  $GUDEV_PKG
++		  libpulse-mainloop-glib >= $PA_REQUIRED_VERSION
++		  libcanberra-gtk3
++		  upower-glib >= $UPOWER_REQUIRED_VERSION)
++PKG_CHECK_MODULES(GVC,
++		  gobject-2.0
++		  libpulse >= $PA_REQUIRED_VERSION
++		  libpulse-mainloop-glib >= $PA_REQUIRED_VERSION
++		  $ALSA_PKG)
++AM_CONDITIONAL(HAVE_INTROSPECTION, false)
++
++PKG_CHECK_MODULES(MOUSE,
++		  gsettings-desktop-schemas >= $GSETTINGS_DESKTOP_SCHEMAS_REQUIRED_VERSION
++		  gio-2.0)
++
++PKG_CHECK_MODULES(MOUSE_LOCATE_POINTER,
++		  gtk+-3.0
++		  x11)
++
++PKG_CHECK_MODULES(POWER,
++		  libnotify >= $LIBNOTIFY_REQUIRED_VERSION
++		  upower-glib >= $UPOWER_REQUIRED_VERSION
++		  gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
++		  $GUDEV_PKG
++		  libcanberra-gtk3
++		  libnotify
++		  x11 xext xtst)
++
++if test x$have_gudev != xno; then
++	PKG_CHECK_MODULES(BACKLIGHT_HELPER,
++		glib-2.0 >= $GLIB_REQUIRED_VERSION
++		gudev-1.0
++	)
++fi
++
++PKG_CHECK_MODULES(PRINT_NOTIFICATIONS,
++		  libnotify >= $LIBNOTIFY_REQUIRED_VERSION
++		  gtk+-3.0)
++
++PKG_CHECK_MODULES(RFKILL,
++		  gio-unix-2.0)
++
++PKG_CHECK_MODULES(SCREENSAVER_PROXY,
++		  gio-2.0)
++
++PKG_CHECK_MODULES(SOUND,
++		  libpulse >= $PA_REQUIRED_VERSION
++		  libpulse-mainloop-glib >= $PA_REQUIRED_VERSION)
++
++PKG_CHECK_MODULES(XSETTINGS,
++		  fontconfig
++		  gtk+-3.0
++		  x11)
++
++dnl ---------------------------------------------------------------------------
++dnl - XTest
++dnl ---------------------------------------------------------------------------
++
++PKG_CHECK_MODULES(XTEST, x11 xtst)
++AC_SUBST(XTEST_CFLAGS)
++AC_SUBST(XTEST_LIBS)
++
++dnl ---------------------------------------------------------------------------
++dnl - wacom (disabled for s390/s390x and non Linux platforms)
++dnl ---------------------------------------------------------------------------
++
++LIBWACOM_PKG=""
++case $host_os in
++  linux*)
++    if test "$host_cpu" = s390 -o "$host_cpu" = s390x; then
++      have_wacom=no
++    else
++      if test x$enable_gudev != xno; then
++        LIBWACOM_PKG="libwacom >= $LIBWACOM_REQUIRED_VERSION"
++        PKG_CHECK_MODULES(LIBWACOM, [libwacom >= $LIBWACOM_REQUIRED_VERSION])
++        PKG_CHECK_MODULES(WACOM, [gtk+-3.0 pango >= $PANGO_REQUIRED_VERSION])
++        PKG_CHECK_MODULES(WACOM_OLED, [gudev-1.0])
++      else
++        AC_MSG_ERROR([GUdev is necessary to compile Wacom support])
++      fi
++      AC_DEFINE_UNQUOTED(HAVE_WACOM, 1, [Define to 1 if wacom support is available])
++      have_wacom=yes
++    fi
++    ;;
++  *)
++    have_wacom=no
++    ;;
++esac
++AM_CONDITIONAL(HAVE_WACOM, test x$have_wacom = xyes)
++
++dnl ---------------------------------------------------------------------------
++dnl - common
++dnl ---------------------------------------------------------------------------
++
++PKG_CHECK_MODULES(COMMON,
++		  gtk+-x11-3.0
++		  gnome-desktop-3.0 >= $GNOME_DESKTOP_REQUIRED_VERSION
++		  x11
++		  kbproto
++		  xi
++		  $GUDEV_PKG
++		  $LIBWACOM_PKG)
++PKG_CHECK_MODULES(HELPER, gio-unix-2.0)
++
++dnl ==============================================
++dnl smartcard section
++dnl ==============================================
++have_smartcard_support=false
++AC_ARG_ENABLE(smartcard-support,
++  AS_HELP_STRING([--disable-smartcard-support],[turn off smartcard support]),
++       [case "${enableval}" in
++               yes) WANT_SMARTCARD_SUPPORT=yes ;;
++               no)  WANT_SMARTCARD_SUPPORT=no ;;
++               *) AC_MSG_ERROR(bad value ${enableval} for --disable-smartcard-support) ;;
++       esac],
++       [WANT_SMARTCARD_SUPPORT=yes])
++
++if test x$WANT_SMARTCARD_SUPPORT = xyes ; then
++       NSS_REQUIRED_VERSION=3.11.2
++       PKG_CHECK_MODULES(SMARTCARD, gio-unix-2.0 nss >= $NSS_REQUIRED_VERSION libnotify >= $LIBNOTIFY_REQUIRED_VERSION,
++             [have_smartcard_support=true
++              AC_DEFINE(SMARTCARD_SUPPORT, 1, [Define if smartcard support should be enabled])],
++             [have_smartcard_support=false])
++fi
++AM_CONDITIONAL(SMARTCARD_SUPPORT, test "x$have_smartcard_support" = "xtrue")
++
++AC_SUBST(NSS_CFLAGS)
++AC_SUBST(NSS_LIBS)
++
++AC_ARG_WITH(nssdb,
++  AS_HELP_STRING([--with-nssdb],[where system NSS database is]))
++
++NSS_DATABASE=""
++if test "x$have_smartcard_support" = "xtrue"; then
++        if ! test -z "$with_nssdb" ; then
++                NSS_DATABASE="$with_nssdb"
++        else
++                NSS_DATABASE="${sysconfdir}/pki/nssdb"
++        fi
++else
++        if ! test -z "$with_nssdb" ; then
++                AC_MSG_WARN([nssdb specified when smartcard support is disabled])
++        fi
++fi
++
++AC_SUBST(NSS_DATABASE)
++
++# ---------------------------------------------------------------------------
++# CUPS
++# ---------------------------------------------------------------------------
++
++AC_ARG_ENABLE(cups,
++              AS_HELP_STRING([--disable-cups], [disable CUPS support (default: enabled)]),,
++              enable_cups=yes)
++
++if test x"$enable_cups" != x"no" ; then
++   AC_PROG_SED
++
++   AC_PATH_PROG(CUPS_CONFIG, cups-config)
++
++   if test x$CUPS_CONFIG = x; then
++     AC_MSG_ERROR([cups-config not found but CUPS support requested])
++   fi
++
++  CUPS_API_VERSION=`$CUPS_CONFIG --api-version`
++  CUPS_API_MAJOR=`echo $ECHO_N $CUPS_API_VERSION | cut -d . -f 1`
++  CUPS_API_MINOR=`echo $ECHO_N $CUPS_API_VERSION | cut -d . -f 2`
++
++  AC_CHECK_HEADERS([cups/cups.h cups/http.h cups/ipp.h],,
++                   AC_MSG_ERROR([CUPS headers not found but CUPS support requested]))
++
++   if ! test $CUPS_API_MAJOR -gt 1 -o \
++             $CUPS_API_MAJOR -eq 1 -a $CUPS_API_MINOR -ge 4 ; then
++      AC_MSG_ERROR([CUPS 1.4 or newer not found, but CUPS support requested])
++   fi
++
++   # https://bugzilla.gnome.org/show_bug.cgi?id=696571
++   CUPS_CPPFLAGS=""
++   if test $CUPS_API_MAJOR -gt 1 -o \
++           $CUPS_API_MAJOR -eq 1 -a $CUPS_API_MINOR -ge 6 ; then
++      CUPS_CPPFLAGS=-D_PPD_DEPRECATED=""
++   fi
++
++   CUPS_CFLAGS=`$CUPS_CONFIG --cflags | $SED -e 's/-O\w*//g' -e 's/-m\w*//g'`
++   CUPS_LIBS=`$CUPS_CONFIG --libs`
++   AC_SUBST(CUPS_CPPFLAGS)
++   AC_SUBST(CUPS_CFLAGS)
++   AC_SUBST(CUPS_LIBS)
++fi
++
++AM_CONDITIONAL(BUILD_PRINT_NOTIFICATIONS, [test x"$enable_cups" = x"yes"])
++
++# ---------------------------------------------------------------------------
++# Rfkill
++# ---------------------------------------------------------------------------
++
++AC_ARG_ENABLE([rfkill],
++              [AS_HELP_STRING([--disable-rfkill],
++                              [Disable rfkill support (default: enabled)])],
++              [enable_rfkill=$enableval],
++              [enable_rfkill=yes])
++
++if test x"$enable_rfkill" != x"no" ; then
++  AC_CHECK_HEADERS([linux/rfkill.h],,
++                   AC_MSG_ERROR([RFKill headers not found but rfkill support requested]))
++fi
++
++AM_CONDITIONAL(BUILD_RFKILL, [test x"$enable_rfkill" = x"yes"])
++
++dnl ---------------------------------------------------------------------------
++dnl Sharing plugin
++dnl ---------------------------------------------------------------------------
++
++AC_ARG_ENABLE(network-manager,
++        AS_HELP_STRING([--disable-network-manager],
++                       [Disable NetworkManager support]),
++        enable_network_manager=$enableval,
++        enable_network_manager=yes)
++
++if test "x$enable_network_manager" = "xyes" ; then
++        NM_MODULE="libnm >= $NM_REQUIRED_VERSION"
++        AC_DEFINE(HAVE_NETWORK_MANAGER, 1, [Defined if NetworkManager support is enabled])
++else
++        NM_MODULE=
++fi
++
++PKG_CHECK_MODULES(SHARING,
++		  libnotify >= $LIBNOTIFY_REQUIRED_VERSION
++		  gio-unix-2.0
++		  $NM_MODULE)
++
++# ---------------------------------------------------------------------------
++# Enable Profiling
++# ---------------------------------------------------------------------------
++AC_ARG_ENABLE(profiling,
++	[AS_HELP_STRING([--enable-profiling],[turn on profiling])],
++	, enable_profiling=no)
++if test "x$enable_profiling" = "xyes"; then
++    AC_DEFINE(ENABLE_PROFILING,1,[enable profiling])
++fi
++
++# ---------------------------------------------------------------------------
++# Plugins
++# ---------------------------------------------------------------------------
++
++plugindir='$(libdir)/gnome-settings-daemon-gsd_api_version'
++AC_SUBST([plugindir])
++
++PLUGIN_CFLAGS="-DG_LOG_DOMAIN=\"\\\"\$(plugin_name)-plugin\\\"\" -DPLUGIN_NAME=\"\\\"\$(plugin_name)\\\"\" "
++AC_SUBST(PLUGIN_CFLAGS)
++
++dnl ---------------------------------------------------------------------------
++dnl - Finish
++dnl ---------------------------------------------------------------------------
++
++
++# Turn on the additional warnings last, so warnings don't affect other tests.
++
++AC_ARG_ENABLE(more-warnings,
++	[AS_HELP_STRING([--enable-more-warnings],[Maximum compiler warnings])],
++	set_more_warnings="$enableval",[
++		if test -d $srcdir/.git; then
++			set_more_warnings=yes
++		else
++			set_more_warnings=no
++		fi
++        ])
++AC_MSG_CHECKING(for more warnings)
++if test "$GCC" = "yes" -a "$set_more_warnings" != "no"; then
++        AC_MSG_RESULT(yes)
++        CFLAGS="\
++        -Wall \
++        -Wchar-subscripts -Wmissing-declarations -Wmissing-prototypes \
++        -Wnested-externs -Wpointer-arith \
++        -Wcast-align -Wsign-compare \
++        $CFLAGS"
++
++        for option in -Wno-strict-aliasing -Wno-sign-compare; do
++                SAVE_CFLAGS="$CFLAGS"
++                CFLAGS="$CFLAGS $option"
++                AC_MSG_CHECKING([whether gcc understands $option])
++                AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[has_option=yes],[has_option=no])
++                if test $has_option = no; then
++                        CFLAGS="$SAVE_CFLAGS"
++                fi
++                AC_MSG_RESULT($has_option)
++                unset has_option
++                unset SAVE_CFLAGS
++        done
++        unset option
++else
++        AC_MSG_RESULT(no)
++fi
++
++#
++# Enable Debug
++#
++AC_ARG_ENABLE(debug,
++	[AS_HELP_STRING([--enable-debug],[turn on debugging])],
++	, enable_debug=yes)
++if test "$enable_debug" = "yes"; then
++	DEBUG_CFLAGS="-DG_ENABLE_DEBUG"
++else
++	if test "x$enable_debug" = "xno"; then
++		DEBUG_CFLAGS="-DG_DISABLE_ASSERT -DG_DISABLE_CHECKS"
++	else
++		DEBUG_CFLAGS=""
++	fi
++fi
++AC_SUBST(DEBUG_CFLAGS)
++
++AC_CONFIG_FILES([
++Makefile
++gnome-settings-daemon/Makefile
++plugins/Makefile
++plugins/a11y-settings/Makefile
++plugins/clipboard/Makefile
++plugins/color/Makefile
++plugins/common/Makefile
++plugins/datetime/Makefile
++plugins/dummy/Makefile
++plugins/power/Makefile
++plugins/housekeeping/Makefile
++plugins/keyboard/Makefile
++plugins/media-keys/Makefile
++plugins/mouse/Makefile
++plugins/print-notifications/Makefile
++plugins/rfkill/Makefile
++plugins/screensaver-proxy/Makefile
++plugins/sharing/Makefile
++plugins/smartcard/Makefile
++plugins/sound/Makefile
++plugins/wacom/Makefile
++plugins/xsettings/Makefile
++subprojects/gvc/Makefile
++data/Makefile
++data/gnome-settings-daemon.pc
++data/org.gnome.settings-daemon.plugins.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.color.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in
++data/org.gnome.settings-daemon.peripherals.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in
++data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in
++po/Makefile.in
++tests/Makefile
++])
++AC_OUTPUT
++
++dnl ---------------------------------------------------------------------------
++dnl - Show summary
++dnl ---------------------------------------------------------------------------
++
++echo "
++                    gnome-settings-daemon $VERSION
++                    =============================
++
++        prefix:                   ${prefix}
++        exec_prefix:              ${exec_prefix}
++        libdir:                   ${libdir}
++        bindir:                   ${bindir}
++        sbindir:                  ${sbindir}
++        sysconfdir:               ${sysconfdir}
++        sysconfsubdir:            ${sysconfsubdir}
++        localstatedir:            ${localstatedir}
++        plugindir:                ${plugindir}
++        datadir:                  ${datadir}
++        source code location:     ${srcdir}
++        compiler:                 ${CC}
++        cflags:                   ${CFLAGS}
++        Maintainer mode:          ${USE_MAINTAINER_MODE}
++
++        NetworkManager support:   ${enable_network_manager}
++        Libnotify support:        ${have_libnotify}
++        Smartcard support:        ${have_smartcard_support}
++        Cups support:             ${enable_cups}
++        Wacom support:            ${have_wacom}
++        RFKill support:           ${enable_rfkill}
++${NSS_DATABASE:+\
++        System nssdb:             ${NSS_DATABASE}
++}\
++        Profiling support:        ${enable_profiling}
++"
+diff '--exclude=.git' -urN a/data/Makefile.am b/data/Makefile.am
+--- a/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,48 @@
++NULL =
++
++apidir = $(includedir)/gnome-settings-daemon-$(GSD_API_VERSION)/gnome-settings-daemon
++api_DATA = gsd-enums.h
++
++gsettings_ENUM_NAMESPACE = org.gnome.settings-daemon
++gsettings_ENUM_FILES = $(top_srcdir)/data/$(api_DATA)
++
++gsettings_SCHEMAS =							\
++	org.gnome.settings-daemon.peripherals.gschema.xml		\
++	org.gnome.settings-daemon.plugins.gschema.xml			\
++	org.gnome.settings-daemon.plugins.power.gschema.xml		\
++	org.gnome.settings-daemon.plugins.color.gschema.xml		\
++	org.gnome.settings-daemon.plugins.media-keys.gschema.xml	\
++	org.gnome.settings-daemon.plugins.sharing.gschema.xml		\
++	org.gnome.settings-daemon.plugins.xsettings.gschema.xml		\
++	org.gnome.settings-daemon.plugins.housekeeping.gschema.xml	\
++	org.gnome.settings-daemon.peripherals.wacom.gschema.xml
++
++@INTLTOOL_XML_NOMERGE_RULE@
++
++@GSETTINGS_RULES@
++
++convertdir = $(datadir)/GConf/gsettings
++convert_DATA = gnome-settings-daemon.convert
++
++pkgconfigdir = $(libdir)/pkgconfig
++pkgconfig_DATA = gnome-settings-daemon.pc
++
++@INTLTOOL_XML_NOMERGE_RULE@
++
++EXTRA_DIST = 					\
++	$(convert_DATA)				\
++	$(gsettings_SCHEMAS:.xml=.xml.in.in)	\
++	$(gsettings_ENUM_FILES)			\
++	gnome-settings-daemon.pc.in		\
++	$(api_DATA)				\
++	$(NULL)
++
++DISTCLEANFILES = 			\
++	$(gsettings_SCHEMAS)		\
++	$(NULL)
++
++MAINTAINERCLEANFILES =			\
++	*~				\
++	Makefile.in			\
++	$(gsettings_SCHEMAS:.xml=.valid)
++
+diff '--exclude=.git' -urN a/data/gnome-settings-daemon.pc.in b/data/gnome-settings-daemon.pc.in
+--- a/data/gnome-settings-daemon.pc.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/gnome-settings-daemon.pc.in	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,8 @@
++prefix=@prefix@
++includedir=@includedir@
++
++Name: gnome-settings-daemon
++Description: gnome-settings-daemon specific enumerations
++Requires: glib-2.0
++Version: @VERSION@
++Cflags: -I${includedir}/gnome-settings-daemon-@GSD_API_VERSION@
+diff '--exclude=.git' -urN a/data/meson.build b/data/meson.build
+--- a/data/meson.build	2018-04-12 13:08:48.000000000 -0400
++++ b/data/meson.build	2018-04-22 00:25:35.434837000 -0400
+@@ -16,10 +16,17 @@
+ schema_conf.set('GETTEXT_PACKAGE', meson.project_name())
+ 
+ foreach schema: schemas
+-  configure_file(
+-    input: schema + '.in',
++  schema_in = configure_file(
++    input: schema + '.in.in',
++    output: schema + '.in',
++    configuration: schema_conf
++  )
++
++  custom_target(
++    schema,
++    input: schema_in,
+     output: schema,
+-    configuration: schema_conf,
++    command: [intltool_merge, '-x', '-u', '--no-translations', '@INPUT@', '@OUTPUT@'],
+     install: true,
+     install_dir: gsd_schemadir
+   )
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,164 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals" path="/org/gnome/settings-daemon/peripherals/">
+-    <child name="smartcard" schema="org.gnome.settings-daemon.peripherals.smartcard"/>
+-    <child name="keyboard" schema="org.gnome.settings-daemon.peripherals.keyboard"/>
+-    <child name="mouse" schema="org.gnome.settings-daemon.peripherals.mouse"/>
+-    <child name="touchscreen" schema="org.gnome.settings-daemon.peripherals.touchscreen"/>
+-  </schema>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.smartcard" path="/org/gnome/settings-daemon/peripherals/smartcard/">
+-    <key name="removal-action" enum="org.gnome.settings-daemon.GsdSmartcardRemovalAction">
+-      <default>'none'</default>
+-      <summary>Smartcard removal action</summary>
+-      <description>Set this to one of “none”, “lock-screen”, or “force-logout”. The action will get performed when the smartcard used for log in is removed.</description>
+-    </key>
+-  </schema>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.keyboard" path="/org/gnome/settings-daemon/peripherals/keyboard/">
+-    <key name="click" type="b">
+-      <default>true</default>
+-    </key>
+-    <key name="click-volume" type="i">
+-      <default>0</default>
+-    </key>
+-    <key name="bell-mode" enum="org.gnome.settings-daemon.GsdBellMode">
+-      <default>'on'</default>
+-      <description>Possible values are “on”, “off”, and “custom”.</description>
+-    </key>
+-    <key name="bell-pitch" type="i">
+-      <default>400</default>
+-    </key>
+-    <key name="bell-duration" type="i">
+-      <default>100</default>
+-    </key>
+-    <key name="bell-custom-file" type="s">
+-      <default>''</default>
+-      <summary>Keyboard Bell Custom Filename</summary>
+-      <description>File name of the bell sound to be played.</description>
+-    </key>
+-    <key name="remember-numlock-state" type="b">
+-      <default>true</default>
+-      <summary>Remember NumLock state</summary>
+-      <description>When set to true, GNOME will remember the state of the NumLock LED between sessions.</description>
+-    </key>
+-    <key name="numlock-state" enum="org.gnome.settings-daemon.GsdNumLockState">
+-      <default>'unknown'</default>
+-      <summary>NumLock state</summary>
+-      <description>The remembered state of the NumLock LED.</description>
+-    </key>
+-  </schema>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.mouse" path="/org/gnome/settings-daemon/peripherals/mouse/">
+-    <key name="locate-pointer" type="b">
+-      <default>false</default>
+-      <summary>Highlights the current location of the pointer when the Control key is pressed and released.</summary>
+-    </key>
+-    <key name="double-click" type="i">
+-      <default>400</default>
+-      <summary>Double click time</summary>
+-      <description> Length of a double click in milliseconds.</description>
+-    </key>
+-    <key name="drag-threshold" type="i">
+-      <default>8</default>
+-      <summary>Drag threshold</summary>
+-      <description>Distance before a drag is started.</description>
+-    </key>
+-  </schema>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.touchscreen" path="/org/gnome/settings-daemon/peripherals/touchscreen/">
+-    <key name="orientation-lock" type="b">
+-      <default>false</default>
+-      <summary>Whether the tablet’s orientation is locked, or rotated automatically.</summary>
+-    </key>
+-  </schema>
+-
+-  <!-- Deprecated schemas/keys -->
+-  <schema id="org.gnome.settings-daemon.peripherals.mouse.deprecated">
+-    <key name="left-handed" type="b">
+-      <default>false</default>
+-      <summary>Mouse button orientation</summary>
+-      <description>Swap left and right mouse buttons for left-handed mice.</description>
+-    </key>
+-    <key name="motion-acceleration" type="d">
+-      <default>-1</default>
+-      <summary>Single Click</summary>
+-      <description>Acceleration multiplier for mouse motion. A value of -1 is the system default.</description>
+-    </key>
+-    <key name="motion-threshold" type="i">
+-      <default>-1</default>
+-      <summary>Motion Threshold</summary>
+-      <description>Distance in pixels the pointer must move before accelerated mouse motion is activated. A value of -1 is the system default.</description>
+-    </key>
+-    <key name="middle-button-enabled" type="b">
+-      <default>false</default>
+-      <summary>Middle button emulation</summary>
+-      <description>Enables middle mouse button emulation through simultaneous left and right button click.</description>
+-    </key>
+-  </schema>
+-  <schema id="org.gnome.settings-daemon.peripherals.keyboard.deprecated">
+-    <key name="repeat" type="b">
+-      <default>true</default>
+-    </key>
+-    <key name="repeat-interval" type="u">
+-      <default>30</default>
+-      <summary>Key Repeat Interval</summary>
+-      <description>Delay between repeats in milliseconds.</description>
+-    </key>
+-    <key name="delay" type="u">
+-      <default>500</default>
+-      <summary>Initial Key Repeat Delay</summary>
+-      <description>Initial key repeat delay in milliseconds.</description>
+-    </key>
+-  </schema>
+-  <schema id="org.gnome.settings-daemon.peripherals.touchpad.deprecated">
+-    <key name="disable-while-typing" type="b">
+-      <default>false</default>
+-      <summary>Disable touchpad while typing</summary>
+-      <description>Set this to TRUE if you have problems with accidentally hitting the touchpad while typing.</description>
+-    </key>
+-    <key name="horiz-scroll-enabled" type="b">
+-      <default>true</default>
+-      <summary>Enable horizontal scrolling</summary>
+-      <description>Set this to TRUE to allow horizontal scrolling by the same method selected with the scroll_method key.</description>
+-    </key>
+-    <key name="scroll-method" enum="org.gnome.settings-daemon.GsdTouchpadScrollMethod">
+-      <default>'two-finger-scrolling'</default>
+-      <summary>Select the touchpad scroll method</summary>
+-      <description>Select the touchpad scroll method. Supported values are: “disabled”, “edge-scrolling”, “two-finger-scrolling”.</description>
+-    </key>
+-    <key name="tap-to-click" type="b">
+-      <default>false</default>
+-      <summary>Enable mouse clicks with touchpad</summary>
+-      <description>Set this to TRUE to be able to send mouse clicks by tapping on the touchpad.</description>
+-    </key>
+-    <key name="touchpad-enabled" type="b">
+-      <default>true</default>
+-      <summary>Enable touchpad</summary>
+-      <description>Set this to TRUE to enable all touchpads.</description>
+-    </key>
+-    <key name="left-handed" enum="org.gnome.settings-daemon.GsdTouchpadHandedness">
+-      <default>'mouse'</default>
+-      <summary>Touchpad button orientation</summary>
+-      <description>Swap left and right mouse buttons for left-handed mice with “left”, “right” for right-handed, “mouse” to follow the mouse setting.</description>
+-    </key>
+-    <key name="motion-acceleration" type="d">
+-      <default>-1</default>
+-      <summary>Single Click</summary>
+-      <description>Acceleration multiplier for mouse motion. A value of -1 is the system default.</description>
+-    </key>
+-    <key name="motion-threshold" type="i">
+-      <default>-1</default>
+-      <summary>Motion Threshold</summary>
+-      <description>Distance in pixels the pointer must move before accelerated mouse motion is activated. A value of -1 is the system default.</description>
+-    </key>
+-    <key name="natural-scroll" type="b">
+-      <default>false</default>
+-      <summary>Natural scrolling</summary>
+-      <description>Set this to TRUE to enable natural (reverse) scrolling for touchpads.</description>
+-    </key>
+-  </schema>
+-  <schema id="org.gnome.settings-daemon.peripherals.trackball.deprecated">
+-    <key name="scroll-wheel-emulation-button" type="i">
+-      <default>0</default>
+-      <range min="0" max="24"/>
+-      <summary>Mouse wheel emulation button. 0 to disable the feature.</summary>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in	2018-04-22 00:25:35.434837000 -0400
+@@ -0,0 +1,163 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals" path="/org/gnome/settings-daemon/peripherals/">
++    <child name="smartcard" schema="org.gnome.settings-daemon.peripherals.smartcard"/>
++    <child name="keyboard" schema="org.gnome.settings-daemon.peripherals.keyboard"/>
++    <child name="mouse" schema="org.gnome.settings-daemon.peripherals.mouse"/>
++    <child name="touchscreen" schema="org.gnome.settings-daemon.peripherals.touchscreen"/>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.smartcard" path="/org/gnome/settings-daemon/peripherals/smartcard/">
++    <key name="removal-action" enum="org.gnome.settings-daemon.GsdSmartcardRemovalAction">
++      <default>'none'</default>
++      <_summary>Smartcard removal action</_summary>
++      <_description>Set this to one of “none”, “lock-screen”, or “force-logout”. The action will get performed when the smartcard used for log in is removed.</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.keyboard" path="/org/gnome/settings-daemon/peripherals/keyboard/">
++    <key name="click" type="b">
++      <default>true</default>
++    </key>
++    <key name="click-volume" type="i">
++      <default>0</default>
++    </key>
++    <key name="bell-mode" enum="org.gnome.settings-daemon.GsdBellMode">
++      <default>'on'</default>
++      <_description>Possible values are “on”, “off”, and “custom”.</_description>
++    </key>
++    <key name="bell-pitch" type="i">
++      <default>400</default>
++    </key>
++    <key name="bell-duration" type="i">
++      <default>100</default>
++    </key>
++    <key name="bell-custom-file" type="s">
++      <default>''</default>
++      <_summary>Keyboard Bell Custom Filename</_summary>
++      <_description>File name of the bell sound to be played.</_description>
++    </key>
++    <key name="remember-numlock-state" type="b">
++      <default>true</default>
++      <_summary>Remember NumLock state</_summary>
++      <_description>When set to true, GNOME will remember the state of the NumLock LED between sessions.</_description>
++    </key>
++    <key name="numlock-state" enum="org.gnome.settings-daemon.GsdNumLockState">
++      <default>'unknown'</default>
++      <_summary>NumLock state</_summary>
++      <_description>The remembered state of the NumLock LED.</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.mouse" path="/org/gnome/settings-daemon/peripherals/mouse/">
++    <key name="locate-pointer" type="b">
++      <default>false</default>
++      <_summary>Highlights the current location of the pointer when the Control key is pressed and released.</_summary>
++    </key>
++    <key name="double-click" type="i">
++      <default>400</default>
++      <_summary>Double click time</_summary>
++      <_description> Length of a double click in milliseconds.</_description>
++    </key>
++    <key name="drag-threshold" type="i">
++      <default>8</default>
++      <_summary>Drag threshold</_summary>
++      <_description>Distance before a drag is started.</_description>
++    </key>
++  </schema>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals.touchscreen" path="/org/gnome/settings-daemon/peripherals/touchscreen/">
++    <key name="orientation-lock" type="b">
++      <default>false</default>
++      <_summary>Whether the tablet’s orientation is locked, or rotated automatically.</_summary>
++    </key>
++  </schema>
++
++  <!-- Deprecated schemas/keys -->
++  <schema id="org.gnome.settings-daemon.peripherals.mouse.deprecated">
++    <key name="left-handed" type="b">
++      <default>false</default>
++      <_summary>Mouse button orientation</_summary>
++      <_description>Swap left and right mouse buttons for left-handed mice.</_description>
++    </key>
++    <key name="motion-acceleration" type="d">
++      <default>-1</default>
++      <_summary>Single Click</_summary>
++      <_description>Acceleration multiplier for mouse motion. A value of -1 is the system default.</_description>
++    </key>
++    <key name="motion-threshold" type="i">
++      <default>-1</default>
++      <_summary>Motion Threshold</_summary>
++      <_description>Distance in pixels the pointer must move before accelerated mouse motion is activated. A value of -1 is the system default.</_description>
++    </key>
++    <key name="middle-button-enabled" type="b">
++      <default>false</default>
++      <_summary>Middle button emulation</_summary>
++      <_description>Enables middle mouse button emulation through simultaneous left and right button click.</_description>
++    </key>
++  </schema>
++  <schema id="org.gnome.settings-daemon.peripherals.keyboard.deprecated">
++    <key name="repeat" type="b">
++      <default>true</default>
++    </key>
++    <key name="repeat-interval" type="u">
++      <default>30</default>
++      <_summary>Key Repeat Interval</_summary>
++      <_description>Delay between repeats in milliseconds.</_description>
++    </key>
++    <key name="delay" type="u">
++      <default>500</default>
++      <_summary>Initial Key Repeat Delay</_summary>
++      <_description>Initial key repeat delay in milliseconds.</_description>
++    </key>
++  </schema>
++  <schema id="org.gnome.settings-daemon.peripherals.touchpad.deprecated">
++    <key name="disable-while-typing" type="b">
++      <default>false</default>
++      <_summary>Disable touchpad while typing</_summary>
++      <_description>Set this to TRUE if you have problems with accidentally hitting the touchpad while typing.</_description>
++    </key>
++    <key name="horiz-scroll-enabled" type="b">
++      <default>true</default>
++      <_summary>Enable horizontal scrolling</_summary>
++      <_description>Set this to TRUE to allow horizontal scrolling by the same method selected with the scroll_method key.</_description>
++    </key>
++    <key name="scroll-method" enum="org.gnome.settings-daemon.GsdTouchpadScrollMethod">
++      <default>'two-finger-scrolling'</default>
++      <_summary>Select the touchpad scroll method</_summary>
++      <_description>Select the touchpad scroll method. Supported values are: “disabled”, “edge-scrolling”, “two-finger-scrolling”.</_description>
++    </key>
++    <key name="tap-to-click" type="b">
++      <default>false</default>
++      <_summary>Enable mouse clicks with touchpad</_summary>
++      <_description>Set this to TRUE to be able to send mouse clicks by tapping on the touchpad.</_description>
++    </key>
++    <key name="touchpad-enabled" type="b">
++      <default>true</default>
++      <_summary>Enable touchpad</_summary>
++      <_description>Set this to TRUE to enable all touchpads.</_description>
++    </key>
++    <key name="left-handed" enum="org.gnome.settings-daemon.GsdTouchpadHandedness">
++      <default>'mouse'</default>
++      <_summary>Touchpad button orientation</_summary>
++      <_description>Swap left and right mouse buttons for left-handed mice with “left”, “right” for right-handed, “mouse” to follow the mouse setting.</_description>
++    </key>
++    <key name="motion-acceleration" type="d">
++      <default>-1</default>
++      <_summary>Single Click</_summary>
++      <_description>Acceleration multiplier for mouse motion. A value of -1 is the system default.</_description>
++    </key>
++    <key name="motion-threshold" type="i">
++      <default>-1</default>
++      <_summary>Motion Threshold</_summary>
++      <_description>Distance in pixels the pointer must move before accelerated mouse motion is activated. A value of -1 is the system default.</_description>
++    </key>
++    <key name="natural-scroll" type="b">
++      <default>false</default>
++      <_summary>Natural scrolling</_summary>
++      <_description>Set this to TRUE to enable natural (reverse) scrolling for touchpads.</_description>
++    </key>
++  </schema>
++  <schema id="org.gnome.settings-daemon.peripherals.trackball.deprecated">
++    <key name="scroll-wheel-emulation-button" type="i">
++      <default>0</default>
++      <range min="0" max="24"/>
++      <_summary>Mouse wheel emulation button. 0 to disable the feature.</_summary>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,92 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema id="org.gnome.settings-daemon.peripherals.wacom.deprecated">
+-    <child name="stylus" schema="org.gnome.settings-daemon.peripherals.wacom.stylus.deprecated"/>
+-    <child name="eraser" schema="org.gnome.settings-daemon.peripherals.wacom.eraser.deprecated"/>
+-
+-    <!-- is-absolute applies to all tools but PAD, CURSOR is hard-coded -->
+-    <key name="is-absolute" type="b">
+-      <default>true</default>
+-      <summary>Wacom stylus absolute mode</summary>
+-      <description>Enable this to set the tablet to absolute mode.</description>
+-    </key>
+-    <key name="area" type="ai">
+-      <default>[-1, -1, -1, -1]</default>
+-      <summary>Wacom tablet area</summary>
+-      <description>Set this to x1, y1 and x2, y2 of the area usable by the tools.</description>
+-    </key>
+-    <key name="keep-aspect" type="b">
+-      <default>false</default>
+-      <summary>Wacom tablet aspect ratio</summary>
+-      <description>Enable this to restrict the Wacom tablet area to match the aspect ratio of the output.</description>
+-    </key>
+-    <key name="rotation" enum="org.gnome.settings-daemon.GsdWacomRotation">
+-      <default>'none'</default>
+-      <summary>Wacom tablet rotation</summary>
+-      <description>Set this to “none”, “cw” for 90 degree clockwise, “half” for 180 degree, and “ccw” for 90 degree counterclockwise.</description>
+-    </key>
+-    <key name="touch" type="b">
+-      <default>true</default>
+-      <summary>Wacom touch feature</summary>
+-      <description>Enable this to move the cursor when the user touches the tablet.</description>
+-    </key>
+-  </schema>
+-  <schema id="org.gnome.settings-daemon.peripherals.wacom.stylus.deprecated">
+-    <key name="pressurecurve" type="ai">
+-      <default>[0, 0, 100, 100]</default>
+-      <summary>Wacom stylus pressure curve</summary>
+-      <description>Set this to x1, y1 and x2, y2 of the pressure curve applied to the stylus.</description>
+-    </key>
+-    <key name="buttonmapping" type="ai">
+-      <default>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]</default>
+-      <summary>Wacom stylus button mapping</summary>
+-      <description>Set this to the logical button mapping.</description>
+-    </key>
+-    <key name="pressurethreshold" type="i">
+-      <default>-1</default>
+-      <summary>Wacom stylus pressure threshold</summary>
+-      <description>Set this to the pressure value at which a stylus click event is generated.</description>
+-    </key>
+-  </schema>
+-  <schema id="org.gnome.settings-daemon.peripherals.wacom.eraser.deprecated">
+-    <key name="pressurecurve" type="ai">
+-      <default>[0, 0, 100, 100]</default>
+-      <summary>Wacom eraser pressure curve</summary>
+-      <description>Set this to x1, y1 and x2, y2 of the pressure curve applied to the eraser.</description>
+-    </key>
+-    <key name="buttonmapping" type="ai">
+-      <default>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]</default>
+-      <summary>Wacom eraser button mapping</summary>
+-      <description>Set this to the logical button mapping.</description>
+-    </key>
+-    <key name="pressurethreshold" type="i">
+-      <default>-1</default>
+-      <summary>Wacom eraser pressure threshold</summary>
+-      <description>Set this to the pressure value at which an eraser click event is generated.</description>
+-    </key>
+-  </schema>
+-  <schema id="org.gnome.settings-daemon.peripherals.wacom.tablet-button.deprecated">
+-    <key name="action-type" enum="org.gnome.settings-daemon.GsdWacomActionType">
+-      <default>'none'</default>
+-      <summary>Wacom button action type</summary>
+-      <description>The type of action triggered by the button being pressed.</description>
+-    </key>
+-    <key name="custom-action" type="s">
+-      <default>''</default>
+-      <summary>Key combination for the custom action</summary>
+-      <description>The keyboard shortcut generated when the button is pressed for custom actions.</description>
+-    </key>
+-    <key name="custom-elevator-action" type="as">
+-      <default>['', '']</default>
+-      <summary>Key combinations for a touchring or touchstrip custom action</summary>
+-      <description>The keyboard shortcuts generated when a touchring or touchstrip is used for custom actions (up followed by down).</description>
+-    </key>
+-    <key name="oled-label" type="s">
+-      <default>''</default>
+-      <!-- Translators: This is the OLED display on an Intuos4 tablet:
+-           http://eu.shop.wacom.eu/images/articles/d9abd9f2d4d88aa0649cda97a8077e2b_8.jpg -->
+-      <summary>Button label for OLED display.</summary>
+-      <description>Label will be rendered to OLED display belonging to the button</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,91 @@
++<schemalist>
++  <schema id="org.gnome.settings-daemon.peripherals.wacom.deprecated">
++    <child name="stylus" schema="org.gnome.settings-daemon.peripherals.wacom.stylus.deprecated"/>
++    <child name="eraser" schema="org.gnome.settings-daemon.peripherals.wacom.eraser.deprecated"/>
++
++    <!-- is-absolute applies to all tools but PAD, CURSOR is hard-coded -->
++    <key name="is-absolute" type="b">
++      <default>true</default>
++      <_summary>Wacom stylus absolute mode</_summary>
++      <_description>Enable this to set the tablet to absolute mode.</_description>
++    </key>
++    <key name="area" type="ai">
++      <default>[-1, -1, -1, -1]</default>
++      <_summary>Wacom tablet area</_summary>
++      <_description>Set this to x1, y1 and x2, y2 of the area usable by the tools.</_description>
++    </key>
++    <key name="keep-aspect" type="b">
++      <default>false</default>
++      <_summary>Wacom tablet aspect ratio</_summary>
++      <_description>Enable this to restrict the Wacom tablet area to match the aspect ratio of the output.</_description>
++    </key>
++    <key name="rotation" enum="org.gnome.settings-daemon.GsdWacomRotation">
++      <default>'none'</default>
++      <_summary>Wacom tablet rotation</_summary>
++      <_description>Set this to “none”, “cw” for 90 degree clockwise, “half” for 180 degree, and “ccw” for 90 degree counterclockwise.</_description>
++    </key>
++    <key name="touch" type="b">
++      <default>true</default>
++      <_summary>Wacom touch feature</_summary>
++      <_description>Enable this to move the cursor when the user touches the tablet.</_description>
++    </key>
++  </schema>
++  <schema id="org.gnome.settings-daemon.peripherals.wacom.stylus.deprecated">
++    <key name="pressurecurve" type="ai">
++      <default>[0, 0, 100, 100]</default>
++      <_summary>Wacom stylus pressure curve</_summary>
++      <_description>Set this to x1, y1 and x2, y2 of the pressure curve applied to the stylus.</_description>
++    </key>
++    <key name="buttonmapping" type="ai">
++      <default>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]</default>
++      <_summary>Wacom stylus button mapping</_summary>
++      <_description>Set this to the logical button mapping.</_description>
++    </key>
++    <key name="pressurethreshold" type="i">
++      <default>-1</default>
++      <_summary>Wacom stylus pressure threshold</_summary>
++      <_description>Set this to the pressure value at which a stylus click event is generated.</_description>
++    </key>
++  </schema>
++  <schema id="org.gnome.settings-daemon.peripherals.wacom.eraser.deprecated">
++    <key name="pressurecurve" type="ai">
++      <default>[0, 0, 100, 100]</default>
++      <_summary>Wacom eraser pressure curve</_summary>
++      <_description>Set this to x1, y1 and x2, y2 of the pressure curve applied to the eraser.</_description>
++    </key>
++    <key name="buttonmapping" type="ai">
++      <default>[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]</default>
++      <_summary>Wacom eraser button mapping</_summary>
++      <_description>Set this to the logical button mapping.</_description>
++    </key>
++    <key name="pressurethreshold" type="i">
++      <default>-1</default>
++      <_summary>Wacom eraser pressure threshold</_summary>
++      <_description>Set this to the pressure value at which an eraser click event is generated.</_description>
++    </key>
++  </schema>
++  <schema id="org.gnome.settings-daemon.peripherals.wacom.tablet-button.deprecated">
++    <key name="action-type" enum="org.gnome.settings-daemon.GsdWacomActionType">
++      <default>'none'</default>
++      <_summary>Wacom button action type</_summary>
++      <_description>The type of action triggered by the button being pressed.</_description>
++    </key>
++    <key name="custom-action" type="s">
++      <default>''</default>
++      <_summary>Key combination for the custom action</_summary>
++      <_description>The keyboard shortcut generated when the button is pressed for custom actions.</_description>
++    </key>
++    <key name="custom-elevator-action" type="as">
++      <default>['', '']</default>
++      <_summary>Key combinations for a touchring or touchstrip custom action</_summary>
++      <_description>The keyboard shortcuts generated when a touchring or touchstrip is used for custom actions (up followed by down).</_description>
++    </key>
++    <key name="oled-label" type="s">
++      <default>''</default>
++      <!-- Translators: This is the OLED display on an Intuos4 tablet:
++           http://eu.shop.wacom.eu/images/articles/d9abd9f2d4d88aa0649cda97a8077e2b_8.jpg -->
++      <_summary>Button label for OLED display.</_summary>
++      <_description>Label will be rendered to OLED display belonging to the button</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,45 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.color" path="/org/gnome/settings-daemon/plugins/color/">
+-    <key name="recalibrate-display-threshold" type="u">
+-      <default>0</default>
+-      <summary>The duration a display profile is valid</summary>
+-      <description>This is the number of days after which the display color profile is considered invalid.</description>
+-    </key>
+-    <key name="recalibrate-printer-threshold" type="u">
+-      <default>0</default>
+-      <summary>The duration a printer profile is valid</summary>
+-      <description>This is the number of days after which the printer color profile is considered invalid.</description>
+-    </key>
+-    <key name="night-light-enabled" type="b">
+-      <default>false</default>
+-      <summary>If the night light mode is enabled</summary>
+-      <description>Night light mode changes the color temperature of your display when the sun has gone down or at present times.</description>
+-    </key>
+-    <key name="night-light-temperature" type="u">
+-      <default>4000</default>
+-      <summary>Temperature of the display when enabled</summary>
+-      <description>This temperature in Kelvin is used to modify the screen tones when night light mode is enabled. Higher values are bluer, lower redder.</description>
+-    </key>
+-    <key name="night-light-schedule-automatic" type="b">
+-      <default>true</default>
+-      <summary>Use the sunrise and sunset</summary>
+-      <description>Calculate the sunrise and sunset times automatically, from the current location.</description>
+-    </key>
+-    <key name="night-light-schedule-from" type="d">
+-      <default>20.00</default>
+-      <summary>The start time</summary>
+-      <description>When “night-light-schedule-automatic” is disabled, use this start time in hours from midnight.</description>
+-    </key>
+-    <key name="night-light-schedule-to" type="d">
+-      <default>6.00</default>
+-      <summary>The end time</summary>
+-      <description>When “night-light-schedule-automatic” is disabled, use this end time in hours from midnight.</description>
+-    </key>
+-    <key name="night-light-last-coordinates" type="(dd)">
+-      <default>(91,181)</default>
+-      <summary>The last detected position</summary>
+-      <description>When location services are available this represents the last detected location. The default value is an invalid value to ensure it is always updated at startup.</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,44 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.color" path="/org/gnome/settings-daemon/plugins/color/">
++    <key name="recalibrate-display-threshold" type="u">
++      <default>0</default>
++      <_summary>The duration a display profile is valid</_summary>
++      <_description>This is the number of days after which the display color profile is considered invalid.</_description>
++    </key>
++    <key name="recalibrate-printer-threshold" type="u">
++      <default>0</default>
++      <_summary>The duration a printer profile is valid</_summary>
++      <_description>This is the number of days after which the printer color profile is considered invalid.</_description>
++    </key>
++    <key name="night-light-enabled" type="b">
++      <default>false</default>
++      <_summary>If the night light mode is enabled</_summary>
++      <_description>Night light mode changes the color temperature of your display when the sun has gone down or at present times.</_description>
++    </key>
++    <key name="night-light-temperature" type="u">
++      <default>4000</default>
++      <_summary>Temperature of the display when enabled</_summary>
++      <_description>This temperature in Kelvin is used to modify the screen tones when night light mode is enabled. Higher values are bluer, lower redder.</_description>
++    </key>
++    <key name="night-light-schedule-automatic" type="b">
++      <default>true</default>
++      <_summary>Use the sunrise and sunset</_summary>
++      <_description>Calculate the sunrise and sunset times automatically, from the current location.</_description>
++    </key>
++    <key name="night-light-schedule-from" type="d">
++      <default>20.00</default>
++      <_summary>The start time</_summary>
++      <_description>When “night-light-schedule-automatic” is disabled, use this start time in hours from midnight.</_description>
++    </key>
++    <key name="night-light-schedule-to" type="d">
++      <default>6.00</default>
++      <_summary>The end time</_summary>
++      <_description>When “night-light-schedule-automatic” is disabled, use this end time in hours from midnight.</_description>
++    </key>
++    <key name="night-light-last-coordinates" type="(dd)">
++      <default>(91,181)</default>
++      <_summary>The last detected position</_summary>
++      <_description>When location services are available this represents the last detected location. The default value is an invalid value to ensure it is always updated at startup.</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,18 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins" path="/org/gnome/settings-daemon/plugins/">
+-    <key name="whitelisted-plugins" type="as">
+-      <default>['all']</default>
+-      <summary>List of plugins that are allowed to be loaded</summary>
+-      <description>
+-        A list of strings representing the plugins that are allowed to be loaded (default: “all”).
+-        This is only evaluated on startup.
+-      </description>
+-    </key>
+-    <child name="color" schema="org.gnome.settings-daemon.plugins.color"/>
+-    <child name="housekeeping" schema="org.gnome.settings-daemon.plugins.housekeeping"/>
+-    <child name="media-keys" schema="org.gnome.settings-daemon.plugins.media-keys"/>
+-    <child name="power" schema="org.gnome.settings-daemon.plugins.power"/>
+-    <child name="xsettings" schema="org.gnome.settings-daemon.plugins.xsettings"/>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,17 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins" path="/org/gnome/settings-daemon/plugins/">
++    <key name="whitelisted-plugins" type="as">
++      <default>['all']</default>
++      <_summary>List of plugins that are allowed to be loaded</_summary>
++      <_description>
++        A list of strings representing the plugins that are allowed to be loaded (default: “all”).
++        This is only evaluated on startup.
++      </_description>
++    </key>
++    <child name="color" schema="org.gnome.settings-daemon.plugins.color"/>
++    <child name="housekeeping" schema="org.gnome.settings-daemon.plugins.housekeeping"/>
++    <child name="media-keys" schema="org.gnome.settings-daemon.plugins.media-keys"/>
++    <child name="power" schema="org.gnome.settings-daemon.plugins.power"/>
++    <child name="xsettings" schema="org.gnome.settings-daemon.plugins.xsettings"/>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,32 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.housekeeping" path="/org/gnome/settings-daemon/plugins/housekeeping/">
+-    <key name="ignore-paths" type="as">
+-      <default>[]</default>
+-      <summary>Mount paths to ignore</summary>
+-      <description>Specify a list of mount paths to ignore when they run low on space.</description>
+-    </key>
+-    <key name="free-percent-notify" type="d">
+-      <default>0.05</default>
+-      <range min="0.0" max="1.0"/>
+-      <summary>Free percentage notify threshold</summary>
+-      <description>Percentage free space threshold for initial warning of low disk space. If the percentage free space drops below this, a warning will be shown.</description>
+-    </key>
+-    <key name="free-percent-notify-again" type="d">
+-      <default>0.01</default>
+-      <range min="0.0" max="1.0"/>
+-      <summary>Subsequent free space percentage notify threshold</summary>
+-      <description>Specify the percentage that the free disk space should reduce by before issuing a subsequent warning.</description>
+-    </key>
+-    <key name="free-size-gb-no-notify" type="i">
+-      <default>1</default>
+-      <summary>Free space notify threshold</summary>
+-      <description>Specify an amount in GB. If the amount of free space is more than this, no warning will be shown.</description>
+-    </key>
+-    <key name="min-notify-period" type="i">
+-      <default>10</default>
+-      <summary>Minimum notify period for repeated warnings</summary>
+-      <description>Specify a time in minutes. Subsequent warnings for a volume will not appear more often than this period.</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,31 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.housekeeping" path="/org/gnome/settings-daemon/plugins/housekeeping/">
++    <key name="ignore-paths" type="as">
++      <default>[]</default>
++      <_summary>Mount paths to ignore</_summary>
++      <_description>Specify a list of mount paths to ignore when they run low on space.</_description>
++    </key>
++    <key name="free-percent-notify" type="d">
++      <default>0.05</default>
++      <range min="0.0" max="1.0"/>
++      <_summary>Free percentage notify threshold</_summary>
++      <_description>Percentage free space threshold for initial warning of low disk space. If the percentage free space drops below this, a warning will be shown.</_description>
++    </key>
++    <key name="free-percent-notify-again" type="d">
++      <default>0.01</default>
++      <range min="0.0" max="1.0"/>
++      <_summary>Subsequent free space percentage notify threshold</_summary>
++      <_description>Specify the percentage that the free disk space should reduce by before issuing a subsequent warning.</_description>
++    </key>
++    <key name="free-size-gb-no-notify" type="i">
++      <default>1</default>
++      <_summary>Free space notify threshold</_summary>
++      <_description>Specify an amount in GB. If the amount of free space is more than this, no warning will be shown.</_description>
++    </key>
++    <key name="min-notify-period" type="i">
++      <default>10</default>
++      <_summary>Minimum notify period for repeated warnings</_summary>
++      <_description>Specify a time in minutes. Subsequent warnings for a volume will not appear more often than this period.</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,203 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.media-keys" path="/org/gnome/settings-daemon/plugins/media-keys/">
+-    <key name="custom-keybindings" type="as">
+-      <default>[]</default>
+-      <summary>Custom keybindings</summary>
+-      <description>List of custom keybindings</description>
+-    </key>
+-    <key name="calculator" type="s">
+-      <default>'XF86Calculator'</default>
+-      <summary>Launch calculator</summary>
+-      <description>Binding to launch the calculator.</description>
+-    </key>
+-    <key name="control-center" type="s">
+-      <default>'XF86Tools'</default>
+-      <summary>Launch settings</summary>
+-      <description>Binding to launch GNOME settings.</description>
+-    </key>
+-    <key name="email" type="s">
+-      <default>'XF86Mail'</default>
+-      <summary>Launch email client</summary>
+-      <description>Binding to launch the email client.</description>
+-    </key>
+-    <key name="eject" type="s">
+-      <default>'XF86Eject'</default>
+-      <summary>Eject</summary>
+-      <description>Binding to eject an optical disc.</description>
+-    </key>
+-    <key name="help" type="s">
+-      <default>''</default>
+-      <summary>Launch help browser</summary>
+-      <description>Binding to launch the help browser.</description>
+-    </key>
+-    <key name="home" type="s">
+-      <default>'XF86Explorer'</default>
+-      <summary>Home folder</summary>
+-      <description>Binding to open the Home folder.</description>
+-    </key>
+-    <key name="media" type="s">
+-      <default>'XF86AudioMedia'</default>
+-      <summary>Launch media player</summary>
+-      <description>Binding to launch the media player.</description>
+-    </key>
+-    <key name="next" type="s">
+-      <default>'XF86AudioNext'</default>
+-      <summary>Next track</summary>
+-      <description>Binding to skip to next track.</description>
+-    </key>
+-    <key name="pause" type="s">
+-      <default>'XF86AudioPause'</default>
+-      <summary>Pause playback</summary>
+-      <description>Binding to pause playback.</description>
+-    </key>
+-    <key name="play" type="s">
+-      <default>'XF86AudioPlay'</default>
+-      <summary>Play (or play/pause)</summary>
+-      <description>Binding to start playback (or toggle play/pause).</description>
+-    </key>
+-    <key name="logout" type="s">
+-      <default>'&lt;Control&gt;&lt;Alt&gt;Delete'</default>
+-      <summary>Log out</summary>
+-      <description>Binding to log out.</description>
+-    </key>
+-    <key name="previous" type="s">
+-      <default>'XF86AudioPrev'</default>
+-      <summary>Previous track</summary>
+-      <description>Binding to skip to previous track.</description>
+-    </key>
+-    <key name="screensaver" type="s">
+-      <default>'&lt;Super&gt;l'</default>
+-      <summary>Lock screen</summary>
+-      <description>Binding to lock the screen.</description>
+-    </key>
+-    <key name="search" type="s">
+-      <default>'XF86Search'</default>
+-      <summary>Search</summary>
+-      <description>Binding to launch the search tool.</description>
+-    </key>
+-    <key name="stop" type="s">
+-      <default>'XF86AudioStop'</default>
+-      <summary>Stop playback</summary>
+-      <description>Binding to stop playback.</description>
+-    </key>
+-    <key name="volume-down" type="s">
+-      <default>'XF86AudioLowerVolume'</default>
+-      <summary>Volume down</summary>
+-      <description>Binding to lower the system volume.</description>
+-    </key>
+-    <key name="volume-mute" type="s">
+-      <default>'XF86AudioMute'</default>
+-      <summary>Volume mute</summary>
+-      <description>Binding to mute the system volume.</description>
+-    </key>
+-    <key name="volume-up" type="s">
+-      <default>'XF86AudioRaiseVolume'</default>
+-      <summary>Volume up</summary>
+-      <description>Binding to raise the system volume.</description>
+-    </key>
+-    <key name="screenshot" type="s">
+-      <default>'Print'</default>
+-      <summary>Take a screenshot</summary>
+-      <description>Binding to take a screenshot.</description>
+-    </key>
+-    <key name="window-screenshot" type="s">
+-      <default>'&lt;Alt&gt;Print'</default>
+-      <summary>Take a screenshot of a window</summary>
+-      <description>Binding to take a screenshot of a window.</description>
+-    </key>
+-    <key name="area-screenshot" type="s">
+-      <default>'&lt;Shift&gt;Print'</default>
+-      <summary>Take a screenshot of an area</summary>
+-      <description>Binding to take a screenshot of an area.</description>
+-    </key>
+-    <key name="screenshot-clip" type="s">
+-      <default>'&lt;Ctrl&gt;Print'</default>
+-      <summary>Copy a screenshot to clipboard</summary>
+-      <description>Binding to copy a screenshot to clipboard.</description>
+-    </key>
+-    <key name="window-screenshot-clip" type="s">
+-      <default>'&lt;Ctrl&gt;&lt;Alt&gt;Print'</default>
+-      <summary>Copy a screenshot of a window to clipboard</summary>
+-      <description>Binding to copy a screenshot of a window to clipboard.</description>
+-    </key>
+-    <key name="area-screenshot-clip" type="s">
+-      <default>'&lt;Ctrl&gt;&lt;Shift&gt;Print'</default>
+-      <summary>Copy a screenshot of an area to clipboard</summary>
+-      <description>Binding to copy a screenshot of an area to clipboard.</description>
+-    </key>
+-    <key name="screencast" type="s">
+-      <default>'&lt;Ctrl&gt;&lt;Shift&gt;&lt;Alt&gt;R'</default>
+-      <summary>Record a short video of the screen</summary>
+-      <description>Binding to record a short video of the screen</description>
+-    </key>
+-    <key name="www" type="s">
+-      <default>'XF86WWW'</default>
+-      <summary>Launch web browser</summary>
+-      <description>Binding to launch the web browser.</description>
+-    </key>
+-    <key name="magnifier" type="s">
+-      <default>'&lt;Alt&gt;&lt;Super&gt;8'</default>
+-      <summary>Toggle magnifier</summary>
+-      <description>Binding to show the screen magnifier</description>
+-    </key>
+-    <key name="screenreader" type="s">
+-      <default>'&lt;Alt&gt;&lt;Super&gt;s'</default>
+-      <summary>Toggle screen reader</summary>
+-      <description>Binding to start the screen reader</description>
+-    </key>
+-    <key name="on-screen-keyboard" type="s">
+-      <default>''</default>
+-      <summary>Toggle on-screen keyboard</summary>
+-      <description>Binding to show the on-screen keyboard</description>
+-    </key>
+-    <key name="increase-text-size" type="s">
+-      <default>''</default>
+-      <summary>Increase text size</summary>
+-      <description>Binding to increase the text size</description>
+-    </key>
+-    <key name="decrease-text-size" type="s">
+-      <default>''</default>
+-      <summary>Decrease text size</summary>
+-      <description>Binding to decrease the text size</description>
+-    </key>
+-    <key name="toggle-contrast" type="s">
+-      <default>''</default>
+-      <summary>Toggle contrast</summary>
+-      <description>Binding to toggle the interface contrast</description>
+-    </key>
+-    <key name="magnifier-zoom-in" type="s">
+-      <default>'&lt;Alt&gt;&lt;Super&gt;equal'</default>
+-      <summary>Magnifier zoom in</summary>
+-      <description>Binding for the magnifier to zoom in</description>
+-    </key>
+-    <key name="magnifier-zoom-out" type="s">
+-      <default>'&lt;Alt&gt;&lt;Super&gt;minus'</default>
+-      <summary>Magnifier zoom out</summary>
+-      <description>Binding for the magnifier to zoom out</description>
+-    </key>
+-    <key name="max-screencast-length" type="u">
+-      <default>30</default>
+-      <summary>Maximum length of screen recordings</summary>
+-      <description>The maximum length of single screen cast recordings in seconds or 0 for unlimited</description>
+-    </key>
+-  </schema>
+-
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.media-keys.custom-keybinding">
+-    <key name="name" type="s">
+-      <default>''</default>
+-      <summary>Name</summary>
+-      <description>Name of the custom binding</description>
+-    </key>
+-    <key name="binding" type="s">
+-      <default>''</default>
+-      <summary>Binding</summary>
+-      <description>Binding for the custom binding</description>
+-    </key>
+-    <key name="command" type="s">
+-      <default>''</default>
+-      <summary>Command</summary>
+-      <description>Command to run when the binding is invoked</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,202 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.media-keys" path="/org/gnome/settings-daemon/plugins/media-keys/">
++    <key name="custom-keybindings" type="as">
++      <default>[]</default>
++      <_summary>Custom keybindings</_summary>
++      <_description>List of custom keybindings</_description>
++    </key>
++    <key name="calculator" type="s">
++      <default>'XF86Calculator'</default>
++      <_summary>Launch calculator</_summary>
++      <_description>Binding to launch the calculator.</_description>
++    </key>
++    <key name="control-center" type="s">
++      <default>'XF86Tools'</default>
++      <_summary>Launch settings</_summary>
++      <_description>Binding to launch GNOME settings.</_description>
++    </key>
++    <key name="email" type="s">
++      <default>'XF86Mail'</default>
++      <_summary>Launch email client</_summary>
++      <_description>Binding to launch the email client.</_description>
++    </key>
++    <key name="eject" type="s">
++      <default>'XF86Eject'</default>
++      <_summary>Eject</_summary>
++      <_description>Binding to eject an optical disc.</_description>
++    </key>
++    <key name="help" type="s">
++      <default>''</default>
++      <_summary>Launch help browser</_summary>
++      <_description>Binding to launch the help browser.</_description>
++    </key>
++    <key name="home" type="s">
++      <default>'XF86Explorer'</default>
++      <_summary>Home folder</_summary>
++      <_description>Binding to open the Home folder.</_description>
++    </key>
++    <key name="media" type="s">
++      <default>'XF86AudioMedia'</default>
++      <_summary>Launch media player</_summary>
++      <_description>Binding to launch the media player.</_description>
++    </key>
++    <key name="next" type="s">
++      <default>'XF86AudioNext'</default>
++      <_summary>Next track</_summary>
++      <_description>Binding to skip to next track.</_description>
++    </key>
++    <key name="pause" type="s">
++      <default>'XF86AudioPause'</default>
++      <_summary>Pause playback</_summary>
++      <_description>Binding to pause playback.</_description>
++    </key>
++    <key name="play" type="s">
++      <default>'XF86AudioPlay'</default>
++      <_summary>Play (or play/pause)</_summary>
++      <_description>Binding to start playback (or toggle play/pause).</_description>
++    </key>
++    <key name="logout" type="s">
++      <default>'&lt;Control&gt;&lt;Alt&gt;Delete'</default>
++      <_summary>Log out</_summary>
++      <_description>Binding to log out.</_description>
++    </key>
++    <key name="previous" type="s">
++      <default>'XF86AudioPrev'</default>
++      <_summary>Previous track</_summary>
++      <_description>Binding to skip to previous track.</_description>
++    </key>
++    <key name="screensaver" type="s">
++      <default>'&lt;Super&gt;l'</default>
++      <_summary>Lock screen</_summary>
++      <_description>Binding to lock the screen.</_description>
++    </key>
++    <key name="search" type="s">
++      <default>'XF86Search'</default>
++      <_summary>Search</_summary>
++      <_description>Binding to launch the search tool.</_description>
++    </key>
++    <key name="stop" type="s">
++      <default>'XF86AudioStop'</default>
++      <_summary>Stop playback</_summary>
++      <_description>Binding to stop playback.</_description>
++    </key>
++    <key name="volume-down" type="s">
++      <default>'XF86AudioLowerVolume'</default>
++      <_summary>Volume down</_summary>
++      <_description>Binding to lower the system volume.</_description>
++    </key>
++    <key name="volume-mute" type="s">
++      <default>'XF86AudioMute'</default>
++      <_summary>Volume mute</_summary>
++      <_description>Binding to mute the system volume.</_description>
++    </key>
++    <key name="volume-up" type="s">
++      <default>'XF86AudioRaiseVolume'</default>
++      <_summary>Volume up</_summary>
++      <_description>Binding to raise the system volume.</_description>
++    </key>
++    <key name="screenshot" type="s">
++      <default>'Print'</default>
++      <_summary>Take a screenshot</_summary>
++      <_description>Binding to take a screenshot.</_description>
++    </key>
++    <key name="window-screenshot" type="s">
++      <default>'&lt;Alt&gt;Print'</default>
++      <_summary>Take a screenshot of a window</_summary>
++      <_description>Binding to take a screenshot of a window.</_description>
++    </key>
++    <key name="area-screenshot" type="s">
++      <default>'&lt;Shift&gt;Print'</default>
++      <_summary>Take a screenshot of an area</_summary>
++      <_description>Binding to take a screenshot of an area.</_description>
++    </key>
++    <key name="screenshot-clip" type="s">
++      <default>'&lt;Ctrl&gt;Print'</default>
++      <_summary>Copy a screenshot to clipboard</_summary>
++      <_description>Binding to copy a screenshot to clipboard.</_description>
++    </key>
++    <key name="window-screenshot-clip" type="s">
++      <default>'&lt;Ctrl&gt;&lt;Alt&gt;Print'</default>
++      <_summary>Copy a screenshot of a window to clipboard</_summary>
++      <_description>Binding to copy a screenshot of a window to clipboard.</_description>
++    </key>
++    <key name="area-screenshot-clip" type="s">
++      <default>'&lt;Ctrl&gt;&lt;Shift&gt;Print'</default>
++      <_summary>Copy a screenshot of an area to clipboard</_summary>
++      <_description>Binding to copy a screenshot of an area to clipboard.</_description>
++    </key>
++    <key name="screencast" type="s">
++      <default>'&lt;Ctrl&gt;&lt;Shift&gt;&lt;Alt&gt;R'</default>
++      <_summary>Record a short video of the screen</_summary>
++      <_description>Binding to record a short video of the screen</_description>
++    </key>
++    <key name="www" type="s">
++      <default>'XF86WWW'</default>
++      <_summary>Launch web browser</_summary>
++      <_description>Binding to launch the web browser.</_description>
++    </key>
++    <key name="magnifier" type="s">
++      <default>'&lt;Alt&gt;&lt;Super&gt;8'</default>
++      <_summary>Toggle magnifier</_summary>
++      <_description>Binding to show the screen magnifier</_description>
++    </key>
++    <key name="screenreader" type="s">
++      <default>'&lt;Alt&gt;&lt;Super&gt;s'</default>
++      <_summary>Toggle screen reader</_summary>
++      <_description>Binding to start the screen reader</_description>
++    </key>
++    <key name="on-screen-keyboard" type="s">
++      <default>''</default>
++      <_summary>Toggle on-screen keyboard</_summary>
++      <_description>Binding to show the on-screen keyboard</_description>
++    </key>
++    <key name="increase-text-size" type="s">
++      <default>''</default>
++      <_summary>Increase text size</_summary>
++      <_description>Binding to increase the text size</_description>
++    </key>
++    <key name="decrease-text-size" type="s">
++      <default>''</default>
++      <_summary>Decrease text size</_summary>
++      <_description>Binding to decrease the text size</_description>
++    </key>
++    <key name="toggle-contrast" type="s">
++      <default>''</default>
++      <_summary>Toggle contrast</_summary>
++      <_description>Binding to toggle the interface contrast</_description>
++    </key>
++    <key name="magnifier-zoom-in" type="s">
++      <default>'&lt;Alt&gt;&lt;Super&gt;equal'</default>
++      <_summary>Magnifier zoom in</_summary>
++      <_description>Binding for the magnifier to zoom in</_description>
++    </key>
++    <key name="magnifier-zoom-out" type="s">
++      <default>'&lt;Alt&gt;&lt;Super&gt;minus'</default>
++      <_summary>Magnifier zoom out</_summary>
++      <_description>Binding for the magnifier to zoom out</_description>
++    </key>
++    <key name="max-screencast-length" type="u">
++      <default>30</default>
++      <_summary>Maximum length of screen recordings</_summary>
++      <_description>The maximum length of single screen cast recordings in seconds or 0 for unlimited</_description>
++    </key>
++  </schema>
++
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.media-keys.custom-keybinding">
++    <key name="name" type="s">
++      <default>''</default>
++      <_summary>Name</_summary>
++      <_description>Name of the custom binding</_description>
++    </key>
++    <key name="binding" type="s">
++      <default>''</default>
++      <_summary>Binding</_summary>
++      <_description>Binding for the custom binding</_description>
++    </key>
++    <key name="command" type="s">
++      <default>''</default>
++      <_summary>Command</_summary>
++      <_description>Command to run when the binding is invoked</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,45 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.power" path="/org/gnome/settings-daemon/plugins/power/">
+-    <key name="idle-brightness" type="i">
+-      <default>30</default>
+-      <summary>The brightness of the screen when idle</summary>
+-      <description>This is the laptop panel screen brightness used when the session is idle.</description>
+-    </key>
+-    <key name="idle-dim" type="b">
+-      <default>true</default>
+-      <summary>Dim the screen after a period of inactivity</summary>
+-      <description>If the screen should be dimmed to save power when the computer is idle.</description>
+-    </key>
+-    <key name="sleep-inactive-ac-timeout" type="i">
+-      <default>1200</default>
+-      <summary>Sleep timeout computer when on AC</summary>
+-      <description>The amount of time in seconds the computer on AC power needs to be inactive before it goes to sleep. A value of 0 means never.</description>
+-    </key>
+-    <key name="sleep-inactive-ac-type" enum="org.gnome.settings-daemon.GsdPowerActionType">
+-      <default>'suspend'</default>
+-      <summary>Whether to hibernate, suspend or do nothing when inactive</summary>
+-      <description>The type of sleeping that should be performed when the computer is inactive.</description>
+-    </key>
+-    <key name="sleep-inactive-battery-timeout" type="i">
+-      <default>1200</default>
+-      <summary>Sleep timeout computer when on battery</summary>
+-      <description>The amount of time in seconds the computer on battery power needs to be inactive before it goes to sleep. A value of 0 means never.</description>
+-    </key>
+-    <key name="sleep-inactive-battery-type" enum="org.gnome.settings-daemon.GsdPowerActionType">
+-      <default>'suspend'</default>
+-      <summary>Whether to hibernate, suspend or do nothing when inactive</summary>
+-      <description>The type of sleeping that should be performed when the computer is inactive.</description>
+-    </key>
+-    <key name="ambient-enabled" type="b">
+-      <default>true</default>
+-      <summary>Enable the ALS sensor</summary>
+-      <description>If the ambient light sensor functionality is enabled.</description>
+-    </key>
+-    <key name="power-button-action" enum="org.gnome.settings-daemon.GsdPowerButtonActionType">
+-      <default>'suspend'</default>
+-      <summary>Power button action</summary>
+-      <description>The action to take when the system power button is pressed. This action is hard-coded (and the setting ignored) on virtual machines (power off) and tablets (suspend).</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,44 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.power" path="/org/gnome/settings-daemon/plugins/power/">
++    <key name="idle-brightness" type="i">
++      <default>30</default>
++      <_summary>The brightness of the screen when idle</_summary>
++      <_description>This is the laptop panel screen brightness used when the session is idle.</_description>
++    </key>
++    <key name="idle-dim" type="b">
++      <default>true</default>
++      <_summary>Dim the screen after a period of inactivity</_summary>
++      <_description>If the screen should be dimmed to save power when the computer is idle.</_description>
++    </key>
++    <key name="sleep-inactive-ac-timeout" type="i">
++      <default>1200</default>
++      <_summary>Sleep timeout computer when on AC</_summary>
++      <_description>The amount of time in seconds the computer on AC power needs to be inactive before it goes to sleep. A value of 0 means never.</_description>
++    </key>
++    <key name="sleep-inactive-ac-type" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'suspend'</default>
++      <_summary>Whether to hibernate, suspend or do nothing when inactive</_summary>
++      <_description>The type of sleeping that should be performed when the computer is inactive.</_description>
++    </key>
++    <key name="sleep-inactive-battery-timeout" type="i">
++      <default>1200</default>
++      <_summary>Sleep timeout computer when on battery</_summary>
++      <_description>The amount of time in seconds the computer on battery power needs to be inactive before it goes to sleep. A value of 0 means never.</_description>
++    </key>
++    <key name="sleep-inactive-battery-type" enum="org.gnome.settings-daemon.GsdPowerActionType">
++      <default>'suspend'</default>
++      <_summary>Whether to hibernate, suspend or do nothing when inactive</_summary>
++      <_description>The type of sleeping that should be performed when the computer is inactive.</_description>
++    </key>
++    <key name="ambient-enabled" type="b">
++      <default>true</default>
++      <_summary>Enable the ALS sensor</_summary>
++      <_description>If the ambient light sensor functionality is enabled.</_description>
++    </key>
++    <key name="power-button-action" enum="org.gnome.settings-daemon.GsdPowerButtonActionType">
++      <default>'suspend'</default>
++      <_summary>Power button action</_summary>
++      <_description>The action to take when the system power button is pressed. This action is hard-coded (and the setting ignored) on virtual machines (power off) and tablets (suspend).</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,10 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.sharing.service">
+-    <key name="enabled-connections" type="as">
+-      <default>[]</default>
+-      <summary>On which connections the service is enabled</summary>
+-      <description>The list of NetworkManager connections (each one represented with its UUID) on which this service is enabled and started.</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,9 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.sharing.service">
++    <key name="enabled-connections" type="as">
++      <default>[]</default>
++      <_summary>On which connections the service is enabled</_summary>
++      <_description>The list of NetworkManager connections (each one represented with its UUID) on which this service is enabled and started.</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in
+--- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
++++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+@@ -1,35 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<schemalist>
+-  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.xsettings" path="/org/gnome/settings-daemon/plugins/xsettings/">
+-    <key name="antialiasing" enum="org.gnome.settings-daemon.GsdFontAntialiasingMode">
+-      <default>'grayscale'</default>
+-      <summary>Antialiasing</summary>
+-      <description>The type of antialiasing to use when rendering fonts. Possible values are: “none” for no antialiasing, “grayscale” for standard grayscale antialiasing, and “rgba” for subpixel antialiasing (LCD screens only).</description>
+-    </key>
+-    <key name="hinting" enum="org.gnome.settings-daemon.GsdFontHinting">
+-      <default>'slight'</default>
+-      <summary>Hinting</summary>
+-      <description>The type of hinting to use when rendering fonts. Possible values are: “none” for no hinting and “slight” for fitting only to the Y-axis like Microsoft’s ClearType, DirectWrite and Adobe’s proprietary font rendering engine. Ignores native hinting within the font, generates hints algorithmically. Used on Ubuntu by default. Recommended. The meaning of “medium” and “full” depends on the font format (.ttf, .otf, .pfa/.pfb) and the installed version of FreeType. They usually try to fit glyphs to both the X and the Y axis (except for .otf: Y-only). This can lead to distortion and/or inconsistent rendering depending on the quality of the font, the font format and the state of FreeType’s font engines.</description>
+-    </key>
+-    <key name="rgba-order" enum="org.gnome.settings-daemon.GsdFontRgbaOrder">
+-      <default>'rgb'</default>
+-      <summary>RGBA order</summary>
+-      <description>The order of subpixel elements on an LCD screen; only used when antialiasing is set to “rgba”. Possible values are: “rgb” for red on left (most common), “bgr” for blue on left, “vrgb” for red on top, “vbgr” for red on bottom.</description>
+-    </key>
+-    <key name="disabled-gtk-modules" type="as">
+-      <default>[]</default>
+-      <summary>List of explicitly disabled GTK+ modules</summary>
+-      <description>A list of strings representing the GTK+ modules that will not be loaded, even if enabled by default in their configuration.</description>
+-    </key>
+-    <key name="enabled-gtk-modules" type="as">
+-      <default>[]</default>
+-      <summary>List of explicitly enabled GTK+ modules</summary>
+-      <description>A list of strings representing the GTK+ modules that will be loaded, usually in addition to conditional and forcibly disabled ones.</description>
+-    </key>
+-    <key type="a{sv}" name="overrides">
+-      <default>{}</default>
+-      <summary>A dictionary of XSETTINGS to override</summary>
+-      <description>This dictionary maps XSETTINGS names to overrides values. The values must be either strings, signed int32s or (in the case of colors), 4-tuples of uint16 (red, green, blue, alpha; 65535 is fully opaque).</description>
+-    </key>
+-  </schema>
+-</schemalist>
+diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in
+--- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+@@ -0,0 +1,34 @@
++<schemalist>
++  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.xsettings" path="/org/gnome/settings-daemon/plugins/xsettings/">
++    <key name="antialiasing" enum="org.gnome.settings-daemon.GsdFontAntialiasingMode">
++      <default>'grayscale'</default>
++      <_summary>Antialiasing</_summary>
++      <_description>The type of antialiasing to use when rendering fonts. Possible values are: “none” for no antialiasing, “grayscale” for standard grayscale antialiasing, and “rgba” for subpixel antialiasing (LCD screens only).</_description>
++    </key>
++    <key name="hinting" enum="org.gnome.settings-daemon.GsdFontHinting">
++      <default>'slight'</default>
++      <_summary>Hinting</_summary>
++      <_description>The type of hinting to use when rendering fonts. Possible values are: “none” for no hinting and “slight” for fitting only to the Y-axis like Microsoft’s ClearType, DirectWrite and Adobe’s proprietary font rendering engine. Ignores native hinting within the font, generates hints algorithmically. Used on Ubuntu by default. Recommended. The meaning of “medium” and “full” depends on the font format (.ttf, .otf, .pfa/.pfb) and the installed version of FreeType. They usually try to fit glyphs to both the X and the Y axis (except for .otf: Y-only). This can lead to distortion and/or inconsistent rendering depending on the quality of the font, the font format and the state of FreeType’s font engines.</_description>
++    </key>
++    <key name="rgba-order" enum="org.gnome.settings-daemon.GsdFontRgbaOrder">
++      <default>'rgb'</default>
++      <_summary>RGBA order</_summary>
++      <_description>The order of subpixel elements on an LCD screen; only used when antialiasing is set to “rgba”. Possible values are: “rgb” for red on left (most common), “bgr” for blue on left, “vrgb” for red on top, “vbgr” for red on bottom.</_description>
++    </key>
++    <key name="disabled-gtk-modules" type="as">
++      <default>[]</default>
++      <_summary>List of explicitly disabled GTK+ modules</_summary>
++      <_description>A list of strings representing the GTK+ modules that will not be loaded, even if enabled by default in their configuration.</_description>
++    </key>
++    <key name="enabled-gtk-modules" type="as">
++      <default>[]</default>
++      <_summary>List of explicitly enabled GTK+ modules</_summary>
++      <_description>A list of strings representing the GTK+ modules that will be loaded, usually in addition to conditional and forcibly disabled ones.</_description>
++    </key>
++    <key type="a{sv}" name="overrides">
++      <default>{}</default>
++      <_summary>A dictionary of XSETTINGS to override</_summary>
++      <_description>This dictionary maps XSETTINGS names to overrides values. The values must be either strings, signed int32s or (in the case of colors), 4-tuples of uint16 (red, green, blue, alpha; 65535 is fully opaque).</_description>
++    </key>
++  </schema>
++</schemalist>
+diff '--exclude=.git' -urN a/gnome-settings-daemon/Makefile.am b/gnome-settings-daemon/Makefile.am
+--- a/gnome-settings-daemon/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/gnome-settings-daemon/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,93 @@
++NULL =
++BUILT_SOURCES = $(NULL)
++
++AM_CPPFLAGS = \
++	-DDATADIR=\""$(datadir)"\"				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DLIBEXECDIR=\""$(libexecdir)"\" 			\
++	$(WARN_CFLAGS)						\
++	$(DISABLE_DEPRECATED_CFLAGS)				\
++	$(WAYLAND_CFLAGS)					\
++	$(NULL)
++
++privlibdir = $(pkglibdir)-$(GSD_API_VERSION)
++
++privlib_LTLIBRARIES =		\
++	libgsd.la		\
++	$(NULL)
++
++session_manager_dbus_built_sources = gsd-session-manager-glue.c gsd-session-manager-glue.h
++BUILT_SOURCES += $(session_manager_dbus_built_sources)
++
++$(session_manager_dbus_built_sources) : Makefile.am org.gnome.SessionManager.xml
++	gdbus-codegen							\
++		--interface-prefix org.gnome.SessionManager.		\
++		--generate-c-code gsd-session-manager-glue		\
++		--c-namespace Gsd					\
++		--annotate "org.gnome.SessionManager"			\
++		           "org.gtk.GDBus.C.Name" SessionManager	\
++		$(srcdir)/org.gnome.SessionManager.xml
++
++screen_saver_dbus_built_sources = gsd-screen-saver-glue.c gsd-screen-saver-glue.h
++
++BUILT_SOURCES += $(screen_saver_dbus_built_sources)
++
++$(screen_saver_dbus_built_sources) : Makefile.am org.gnome.ScreenSaver.xml
++	gdbus-codegen						\
++		--interface-prefix org.gnome.ScreenSaver.	\
++		--generate-c-code gsd-screen-saver-glue		\
++		--c-namespace Gsd				\
++		--annotate "org.gnome.ScreenSaver"		\
++		           "org.gtk.GDBus.C.Name" ScreenSaver	\
++		$(srcdir)/org.gnome.ScreenSaver.xml
++
++shell_dbus_built_sources = gsd-shell-glue.c gsd-shell-glue.h
++
++BUILT_SOURCES += $(shell_dbus_built_sources)
++
++$(shell_dbus_built_sources) : Makefile.am org.gnome.Shell.xml
++	gdbus-codegen						\
++		--interface-prefix org.gnome.Shell.		\
++		--generate-c-code gsd-shell-glue		\
++		--c-namespace Gsd				\
++		--annotate "org.gnome.Shell"			\
++			   "org.gtk.GDBus.C.Name" Shell		\
++		$(srcdir)/org.gnome.Shell.xml
++
++libgsd_la_SOURCES =		\
++	$(session_manager_dbus_built_sources) \
++	$(screen_saver_dbus_built_sources) \
++	$(shell_dbus_built_sources)	\
++	gnome-settings-profile.c	\
++	gnome-settings-profile.h	\
++	gnome-settings-bus.c	\
++	gnome-settings-bus.h	\
++	$(NULL)
++
++libgsd_la_CPPFLAGS = 		\
++	$(AM_CPPFLAGS)			\
++	$(DISABLE_DEPRECATED_CFLAGS)	\
++	$(NULL)
++
++libgsd_la_CFLAGS = $(HELPER_CFLAGS)
++
++libgsd_la_LIBADD =		\
++	$(HELPER_LIBS)		\
++	$(WAYLAND_LIBS)		\
++	$(NULL)
++
++libgsd_la_LDFLAGS =		\
++	-export-dynamic		\
++	-avoid-version		\
++	-no-undefined		\
++	$(NULL)
++
++EXTRA_DIST = \
++	org.gnome.SessionManager.xml        \
++	org.gnome.ScreenSaver.xml           \
++	org.gnome.Shell.xml                 \
++	$(NULL)
++
++CLEANFILES = $(gsd_SCRIPTS)
++
++# vim: ts=8
+diff '--exclude=.git' -urN a/meson.build b/meson.build
+--- a/meson.build	2018-04-12 13:08:48.000000000 -0400
++++ b/meson.build	2018-04-22 00:25:35.436837000 -0400
+@@ -199,6 +199,11 @@
+ 
+ po_dir = join_paths(meson.source_root(), 'po')
+ 
++intltool_merge = find_program('intltool-merge')
++intltool_cache = join_paths(po_dir, '.intltool-merge-cache')
++intltool_desktop_cmd = [intltool_merge, '-d', '-u', '-c', intltool_cache, po_dir, '@INPUT@', '@OUTPUT@']
++intltool_xml_cmd = [intltool_merge, '-x', '-u', '-c', intltool_cache, po_dir, '@INPUT@', '@OUTPUT@']
++
+ top_inc = include_directories('.')
+ 
+ subdir('tests')
+diff '--exclude=.git' -urN a/plugins/Makefile.am b/plugins/Makefile.am
+--- a/plugins/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,47 @@
++NULL =
++
++enabled_plugins =	\
++	a11y-settings	\
++	clipboard	\
++	color		\
++	datetime	\
++	dummy		\
++	power		\
++	housekeeping    \
++	keyboard	\
++	media-keys	\
++	mouse		\
++	screensaver-proxy \
++	sharing		\
++	sound		\
++	xsettings	\
++	$(NULL)
++
++disabled_plugins = $(NULL)
++
++if SMARTCARD_SUPPORT
++enabled_plugins += smartcard
++else
++disabled_plugins += smartcard
++endif
++
++if HAVE_WACOM
++enabled_plugins += wacom
++else
++disabled_plugins += wacom
++endif
++
++if BUILD_PRINT_NOTIFICATIONS
++enabled_plugins += print-notifications
++else
++disabled_plugins += print-notifications
++endif
++
++if BUILD_RFKILL
++enabled_plugins += rfkill
++else
++disabled_plugins += rfkill
++endif
++
++SUBDIRS = common $(enabled_plugins)
++DIST_SUBDIRS = $(SUBDIRS) $(disabled_plugins)
+diff '--exclude=.git' -urN a/plugins/a11y-settings/Makefile.am b/plugins/a11y-settings/Makefile.am
+--- a/plugins/a11y-settings/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/a11y-settings/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+@@ -0,0 +1,37 @@
++plugin_name = a11y-settings
++
++libexec_PROGRAMS = gsd-a11y-settings
++
++gsd_a11y_settings_SOURCES =	\
++	gsd-a11y-settings-manager.h	\
++	gsd-a11y-settings-manager.c	\
++	main.c
++
++gsd_a11y_settings_CFLAGS =					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(PLUGIN_CFLAGS)					\
++	$(A11Y_SETTINGS_CFLAGS)
++
++gsd_a11y_settings_LDADD =					\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(A11Y_SETTINGS_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.A11ySettings.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.A11ySettings.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = 			\
++	$(desktop_in_files)
++
++CLEANFILES = 			\
++	$(desktop_DATA)
++
++DISTCLEANFILES =		\
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/clipboard/Makefile.am b/plugins/clipboard/Makefile.am
+--- a/plugins/clipboard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/clipboard/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,46 @@
++NULL =
++
++plugin_name = clipboard
++
++libexec_PROGRAMS = gsd-clipboard
++gsd_clipboard_SOURCES =	\
++	main.c			\
++	gsd-clipboard-manager.h	\
++	gsd-clipboard-manager.c	\
++	xutils.h		\
++	xutils.c		\
++	list.h			\
++	list.c			\
++	$(NULL)
++
++gsd_clipboard_CFLAGS =		\
++	$(CLIPBOARD_CFLAGS)	\
++	$(AM_CFLAGS)
++
++gsd_clipboard_CPPFLAGS =					\
++	$(PLUGIN_CFLAGS)					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"
++
++gsd_clipboard_LDADD = $(CLIPBOARD_LIBS) $(top_builddir)/gnome-settings-daemon/libgsd.la
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Clipboard.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Clipboard.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = 			\
++	$(desktop_in_files)	\
++	$(NULL)
++
++CLEANFILES = 			\
++	$(desktop_DATA)		\
++	$(NULL)
++
++DISTCLEANFILES =		\
++	$(desktop_DATA)		\
++	$(NULL)
+diff '--exclude=.git' -urN a/plugins/color/Makefile.am b/plugins/color/Makefile.am
+--- a/plugins/color/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/color/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,96 @@
++plugin_name = color
++
++check_PROGRAMS =			\
++	gcm-self-test
++
++gcm_self_test_CPPFLAGS = \
++	-DTESTDATADIR=\""$(top_srcdir)/plugins/color/test-data"\" \
++	$(AM_CPPFLAGS)
++
++gcm_self_test_CFLAGS =			\
++	$(COLOR_CFLAGS)			\
++	$(PLUGIN_CFLAGS)		\
++	$(AM_CFLAGS)
++
++gcm_self_test_SOURCES =			\
++	gcm-edid.c			\
++	gcm-edid.h			\
++	gsd-night-light.c		\
++	gsd-night-light.h		\
++	gsd-night-light-common.c	\
++	gsd-night-light-common.h	\
++	gnome-datetime-source.c		\
++	gnome-datetime-source.h		\
++	gcm-self-test.c
++
++gcm_self_test_LDADD =			\
++	$(COLOR_LIBS)			\
++	$(SETTINGS_PLUGIN_LIBS)		\
++	$(LIBM)
++
++TESTS = gcm-self-test
++
++BUILT_SOURCES = gschemas.compiled
++
++CLEANFILES = gschemas.compiled
++
++gschemas.compiled: $(top_builddir)/data/org.gnome.settings-daemon.plugins.color.gschema.xml
++	$(AM_V_GEN) $(GLIB_COMPILE_SCHEMAS) --schema-file=$< --targetdir=$(builddir)
++
++all-am: gschemas.compiled
++
++libexec_PROGRAMS = gsd-color
++gsd_color_SOURCES =			\
++	main.c				\
++	gnome-datetime-source.c		\
++	gnome-datetime-source.h		\
++	gcm-edid.c			\
++	gcm-edid.h			\
++	gsd-color-calibrate.c		\
++	gsd-color-calibrate.h		\
++	gsd-color-manager.c		\
++	gsd-color-manager.h		\
++	gsd-color-profiles.c		\
++	gsd-color-profiles.h		\
++	gsd-color-state.c		\
++	gsd-color-state.h		\
++	gsd-night-light.c		\
++	gsd-night-light.h		\
++	gsd-night-light-common.c	\
++	gsd-night-light-common.h	\
++	$(NULL)
++
++gsd_color_CFLAGS =			\
++	$(PLUGIN_CFLAGS)		\
++	$(COLOR_CFLAGS)
++
++gsd_color_CPPFLAGS =						\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DBINDIR=\"$(bindir)\"					\
++	$(AM_CPPFLAGS)
++
++gsd_color_LDADD =						\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(COLOR_LIBS)						\
++	$(LIBM)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Color.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Color.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = 					\
++	$(desktop_in_files)			\
++	test-data/Lenovo-T61-Internal.bin	\
++	test-data/LG-L225W-External.bin
++
++CLEANFILES += 				\
++	$(desktop_DATA)
++
++DISTCLEANFILES =			\
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/common/Makefile.am b/plugins/common/Makefile.am
+--- a/plugins/common/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/common/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,80 @@
++plugin_name = common
++
++noinst_LTLIBRARIES = libcommon.la
++
++GSD_COMMON_ENUM_FILES = gsd-common-enums.c gsd-common-enums.h
++BUILT_SOURCES = $(GSD_COMMON_ENUM_FILES)
++
++gsd-common-enums.h: gsd-device-manager.h Makefile
++	$(AM_V_GEN)($(GLIB_MKENUMS) \
++			--fhead "#ifndef GSD_COMMON_ENUMS_H\n#define GSD_COMMON_ENUMS_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
++			--fprod "/* enumerations from \"@filename@\" */\n" \
++			--vhead "GType @enum_name@_get_type (void) G_GNUC_CONST;\n#define GSD_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
++			--ftail "G_END_DECLS\n\n#endif /* !GSD_COMMON_ENUMS_H */" \
++		$(srcdir)/gsd-device-manager.h > $@)
++
++gsd-common-enums.c: gsd-device-manager.h Makefile gsd-common-enums.h
++	$(AM_V_GEN)($(GLIB_MKENUMS) \
++			--fhead "#include \"gsd-device-manager.h\"\n#include \"gsd-common-enums.h\"\n" \
++			--fprod "\n/* enumerations from \"@filename@\" */" \
++			--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
++			--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
++			--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
++		$(srcdir)/gsd-device-manager.h > $@)
++
++libcommon_la_SOURCES = \
++	gsd-common-enums.c	\
++	gsd-common-enums.h	\
++	gsd-device-manager.c	\
++	gsd-device-manager.h	\
++	gsd-device-manager-x11.c  \
++	gsd-device-manager-x11.h  \
++	gsd-device-mapper.c	\
++	gsd-device-mapper.h	\
++	gsd-input-helper.c	\
++	gsd-input-helper.h	\
++	gsd-resources.c		\
++	gsd-resources.h		\
++	gsd-settings-migrate.c	\
++	gsd-settings-migrate.h	\
++	gsd-shell-helper.c	\
++	gsd-shell-helper.h
++
++if HAVE_WAYLAND
++libcommon_la_SOURCES += \
++	gsd-device-manager-udev.c \
++	gsd-device-manager-udev.h
++endif
++
++libcommon_la_CPPFLAGS = \
++	-I$(top_srcdir)/gnome-settings-daemon	\
++	-I$(top_builddir)/gnome-settings-daemon	\
++	-I$(top_srcdir)/data/
++
++libcommon_la_CFLAGS = $(COMMON_CFLAGS)
++
++libcommon_la_LDFLAGS = \
++	$(GSD_PLUGIN_LDFLAGS)
++
++libcommon_la_LIBADD  = \
++	$(top_builddir)/gnome-settings-daemon/libgsd.la \
++	$(COMMON_LIBS)
++
++libexec_PROGRAMS = gsd-test-input-helper
++
++gsd_test_input_helper_SOURCES = test-input-helper.c
++gsd_test_input_helper_LDADD = libcommon.la
++gsd_test_input_helper_CFLAGS = $(libcommon_la_CFLAGS)
++
++EXTRA_DIST = $(scripts_DATA) daemon-skeleton.h daemon-skeleton-gtk.h
++
++CLEANFILES = \
++	$(GSD_COMMON_ENUM_FILES)
++
++DISTCLEANFILES =
++
++glib_resources_c = gsd-resources.c
++glib_resources_h = gsd-resources.h
++glib_resources_xml = gsd.gresources.xml
++glib_resources_namespace = gsd
++include Makefile.am.gresources
+diff '--exclude=.git' -urN a/plugins/common/Makefile.am.gresources b/plugins/common/Makefile.am.gresources
+--- a/plugins/common/Makefile.am.gresources	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/common/Makefile.am.gresources	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,34 @@
++resources_xml=$(addprefix $(srcdir)/,$(glib_resources_xml))
++resources_srcdir=$(dir $(resources_xml))
++
++DISTCLEANFILES += $(glib_resources_h) $(glib_resources_c)
++BUILT_SOURCES += $(glib_resources_h) $(glib_resources_c)
++CLEANFILES += stamp-resources $(glib_resources_c) $(glib_resources_h)
++EXTRA_DIST += \
++	$(glib_resources_xml) \
++	$(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(resources_srcdir) --generate-dependencies $(resources_xml)) \
++	$(NULL)
++
++stamp-resources: $(glib_resources_c) $(resources_xml)
++	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) \
++		--target=xgen-gr.h \
++		--sourcedir=$(resources_srcdir) \
++		--generate-header \
++		--c-name $(glib_resources_namespace) \
++		$(resources_xml) \
++	&& (cmp -s xgen-gr.h $(glib_resources_h) || cp -f xgen-gr.h $(glib_resources_h)) \
++	&& rm -f xgen-gr.h \
++	&& echo timestamp > $(@F)
++
++$(glib_resources_h): stamp-resources
++	@true
++
++$(glib_resources_c): $(resources_xml) $(shell $(GLIB_COMPILE_RESOURCES) --sourcedir=$(resources_srcdir) --generate-dependencies $(resources_xml))
++	$(AM_V_GEN)$(GLIB_COMPILE_RESOURCES) \
++		--target=xgen-gr.c \
++		--sourcedir=$(resources_srcdir) \
++		--generate-source \
++		--c-name $(glib_resources_namespace) \
++		$(resources_xml) \
++	&& (cmp -s xgen-gr.c $(glib_resources_c) || cp -f xgen-gr.c $(glib_resources_c)) \
++	&& rm -f xgen-gr.c
+diff '--exclude=.git' -urN a/plugins/datetime/Makefile.am b/plugins/datetime/Makefile.am
+--- a/plugins/datetime/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/datetime/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,61 @@
++plugin_name = datetime
++
++timedated.c: timedated.h
++timedated.h: Makefile.am timedated1-interface.xml
++	gdbus-codegen						\
++		--interface-prefix org.freedesktop.		\
++		--generate-c-code timedated			\
++		$(srcdir)/timedated1-interface.xml
++
++BUILT_SOURCES =			\
++	timedated.c		\
++	timedated.h
++
++tzdatadir = $(pkgdatadir)/datetime
++dist_tzdata_DATA = backward
++
++libexec_PROGRAMS = gsd-datetime
++
++gsd_datetime_SOURCES =	\
++	$(BUILT_SOURCES)	\
++	gsd-datetime-manager.c	\
++	gsd-datetime-manager.h	\
++	gsd-timezone-monitor.c	\
++	gsd-timezone-monitor.h	\
++	main.c			\
++	tz.c			\
++	tz.h			\
++	weather-tz.c		\
++	weather-tz.h
++
++gsd_datetime_CFLAGS =					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DGNOMECC_DATA_DIR="\"$(pkgdatadir)\""			\
++	$(DATETIME_CFLAGS)					\
++	$(PLUGIN_CFLAGS)
++
++gsd_datetime_LDADD =					\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(DATETIME_LIBS)					\
++	$(LIBM)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Datetime.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Datetime.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST =				\
++	timedated1-interface.xml	\
++	$(desktop_in_files)
++
++CLEANFILES = \
++	$(desktop_DATA)
++
++DISTCLEANFILES = \
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/dummy/Makefile.am b/plugins/dummy/Makefile.am
+--- a/plugins/dummy/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/dummy/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,45 @@
++plugin_name = dummy
++
++libexec_PROGRAMS = gsd-dummy
++gsd_dummy_SOURCES =			\
++	main.c				\
++	gsd-dummy-manager.c		\
++	gsd-dummy-manager.h
++
++gsd_dummy_CFLAGS =			\
++	$(PLUGIN_CFLAGS)		\
++	$(DUMMY_CFLAGS)
++
++gsd_dummy_CPPFLAGS =			\
++	-I$(top_srcdir)/gnome-settings-daemon		\
++	-I$(top_builddir)/gnome-settings-daemon		\
++	-I$(top_srcdir)/plugins/common			\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\" \
++	$(AM_CPPFLAGS)
++
++gsd_dummy_LDADD = $(DUMMY_LIBS) $(top_builddir)/gnome-settings-daemon/libgsd.la
++
++desktopdir = $(sysconfdir)/xdg/autostart
++
++desktop_DATA =
++if !SMARTCARD_SUPPORT
++desktop_DATA += org.gnome.SettingsDaemon.Smartcard.desktop
++endif
++if !HAVE_WACOM
++desktop_DATA += org.gnome.SettingsDaemon.Wacom.desktop
++endif
++if !BUILD_PRINT_NOTIFICATIONS
++desktop_DATA += org.gnome.SettingsDaemon.PrintNotifications.desktop
++endif
++if !BUILD_RFKILL
++desktop_DATA += org.gnome.SettingsDaemon.Rfkill.desktop
++endif
++
++%.desktop: org.gnome.SettingsDaemon.Dummy.desktop.in Makefile
++	$(AM_V_GEN) PLUGINNAME=`echo $@ | sed 's,.desktop,,'` && sed -e "s|\@pluginname\@|$$PLUGINNAME|" -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = org.gnome.SettingsDaemon.Dummy.desktop.in
++
++CLEANFILES = $(NULL)
++
++DISTCLEANFILES = $(NULL)
+diff '--exclude=.git' -urN a/plugins/housekeeping/Makefile.am b/plugins/housekeeping/Makefile.am
+--- a/plugins/housekeeping/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/housekeeping/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,67 @@
++plugin_name = housekeeping
++
++COMMON_FILES =				\
++	gsd-disk-space.c		\
++	gsd-disk-space.h		\
++	gsd-disk-space-helper.h		\
++	gsd-disk-space-helper.c
++
++noinst_PROGRAMS = gsd-disk-space-test gsd-empty-trash-test gsd-purge-temp-test
++
++gsd_disk_space_test_SOURCES =		\
++	gsd-disk-space-test.c		\
++	$(COMMON_FILES)
++gsd_disk_space_test_LDADD = $(HOUSEKEEPING_LIBS)
++gsd_disk_space_test_CFLAGS =		\
++	$(HOUSEKEEPING_CFLAGS)
++
++gsd_empty_trash_test_SOURCES =		\
++	gsd-empty-trash-test.c		\
++	$(COMMON_FILES)
++gsd_empty_trash_test_LDADD = $(HOUSEKEEPING_LIBS)
++gsd_empty_trash_test_CFLAGS = $(HOUSEKEEPING_CFLAGS)
++
++gsd_purge_temp_test_SOURCES =		\
++	gsd-purge-temp-test.c		\
++	$(COMMON_FILES)
++gsd_purge_temp_test_LDADD = $(HOUSEKEEPING_LIBS)
++gsd_purge_temp_test_CFLAGS = $(HOUSEKEEPING_CFLAGS)
++
++libexec_PROGRAMS = gsd-housekeeping
++
++gsd_housekeeping_SOURCES =		\
++	main.c				\
++	gsd-housekeeping-manager.c	\
++	gsd-housekeeping-manager.h	\
++	$(COMMON_FILES)
++
++gsd_housekeeping_CPPFLAGS =					\
++	-I$(top_srcdir)/data/					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DLIBEXECDIR=\""$(libexecdir)"\"			\
++	$(AM_CPPFLAGS)
++
++gsd_housekeeping_CFLAGS =		\
++	$(PLUGIN_CFLAGS)		\
++	$(HOUSEKEEPING_CFLAGS)
++
++gsd_housekeeping_LDADD =					\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(HOUSEKEEPING_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Housekeeping.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Housekeeping.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = $(desktop_in_files)
++
++CLEANFILES = $(desktop_DATA)
++
++DISTCLEANFILES = $(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/keyboard/Makefile.am b/plugins/keyboard/Makefile.am
+--- a/plugins/keyboard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/keyboard/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,47 @@
++NULL =
++
++plugin_name = keyboard
++
++libexec_PROGRAMS = gsd-keyboard
++gsd_keyboard_SOURCES =		\
++	main.c			\
++	gsd-keyboard-manager.h	\
++	gsd-keyboard-manager.c	\
++	$(NULL)
++
++gsd_keyboard_CFLAGS =			\
++	$(PLUGIN_CFLAGS)		\
++	$(KEYBOARD_CFLAGS)
++
++gsd_keyboard_CPPFLAGS =						\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/data					\
++	-I$(top_srcdir)/plugins/common				\
++	-DDATADIR=\""$(pkgdatadir)"\"				\
++	-DLIBEXECDIR=\""$(libexecdir)"\"			\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(AM_CPPFLAGS)
++
++gsd_keyboard_LDADD =					\
++	$(top_builddir)/plugins/common/libcommon.la	\
++	$(KEYBOARD_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Keyboard.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Keyboard.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = 			\
++	$(desktop_in_files)	\
++	$(NULL)
++
++CLEANFILES = 			\
++	$(desktop_DATA)		\
++	$(NULL)
++
++DISTCLEANFILES =		\
++	$(desktop_DATA)		\
++	$(NULL)
+diff '--exclude=.git' -urN a/plugins/media-keys/Makefile.am b/plugins/media-keys/Makefile.am
+--- a/plugins/media-keys/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/media-keys/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,95 @@
++icondir = $(datadir)/icons/hicolor
++context = actions
++
++plugin_name = media-keys
++
++noinst_PROGRAMS = audio-selection-test
++
++audio_selection_test_CFLAGS = $(MEDIA_KEYS_CFLAGS)
++audio_selection_test_LDADD = $(MEDIA_KEYS_LIBS)
++
++NULL =
++
++SUBDIRS =
++
++BUILT_SOURCES = 			\
++	gsd-marshal.h			\
++	gsd-marshal.c			\
++	shell-key-grabber.c		\
++	shell-key-grabber.h		\
++	$(NULL)
++
++gsd-marshal.c: gsd-marshal.list
++	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=gsd_marshal $< --header --body --internal > $@
++
++gsd-marshal.h: gsd-marshal.list
++	$(AM_V_GEN) $(GLIB_GENMARSHAL) --prefix=gsd_marshal $< --header --internal > $@
++
++shell-key-grabber.c: shell-key-grabber.h
++shell-key-grabber.h: Makefile.am org.gnome.ShellKeyGrabber.xml
++	gdbus-codegen --interface-prefix org.gnome.		\
++	              --generate-c-code shell-key-grabber	\
++	              --c-namespace Shell			\
++	              $(srcdir)/org.gnome.ShellKeyGrabber.xml
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.MediaKeys.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.MediaKeys.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++libexec_PROGRAMS = gsd-media-keys
++
++gsd_media_keys_SOURCES =			\
++	gsd-media-keys-manager.c		\
++	gsd-media-keys-manager.h		\
++	gsd-screenshot-utils.h			\
++	gsd-screenshot-utils.c			\
++	bus-watch-namespace.c			\
++	bus-watch-namespace.h			\
++	mpris-controller.c			\
++	mpris-controller.h			\
++	media-keys.h				\
++	shell-action-modes.h			\
++	shortcuts-list.h			\
++	main.c					\
++	$(BUILT_SOURCES)			\
++	$(NULL)
++
++gsd_media_keys_CPPFLAGS = \
++	-I$(top_srcdir)/data/					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-I$(top_srcdir)/subprojects/gvc				\
++	-DBINDIR=\"$(bindir)\"					\
++	-DPIXMAPDIR=\""$(pkgdatadir)"\"				\
++	-DGTKBUILDERDIR=\""$(pkgdatadir)"\"			\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(AM_CPPFLAGS)
++
++gsd_media_keys_CFLAGS =			\
++	$(PLUGIN_CFLAGS)		\
++	$(MEDIA_KEYS_CFLAGS)
++
++gsd_media_keys_LDADD = \
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(top_builddir)/subprojects/gvc/libgvc.la		\
++	$(MEDIA_KEYS_LIBS)					\
++	$(LIBM)
++
++EXTRA_DIST = 				\
++	gsd-marshal.list		\
++	README.media-keys-API		\
++	org.gnome.ShellKeyGrabber.xml	\
++	$(plugin_in_files)		\
++	$(desktop_in_files)
++
++CLEANFILES = 			\
++	$(BUILT_SOURCES)	\
++	$(desktop_DATA)
++
++DISTCLEANFILES =		\
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/mouse/Makefile.am b/plugins/mouse/Makefile.am
+--- a/plugins/mouse/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/mouse/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,50 @@
++plugin_name = mouse
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Mouse.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Mouse.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++libexec_PROGRAMS = gsd-locate-pointer
++
++gsd_locate_pointer_SOURCES = 	\
++	gsd-locate-pointer.h	\
++	gsd-locate-pointer.c	\
++	gsd-timeline.h		\
++	gsd-timeline.c
++
++gsd_locate_pointer_CFLAGS = $(MOUSE_LOCATE_POINTER_CFLAGS)
++
++gsd_locate_pointer_LDADD  = $(MOUSE_LOCATE_POINTER_LIBS) $(LIBM)
++
++libexec_PROGRAMS += gsd-mouse
++
++gsd_mouse_SOURCES =			\
++	main.c				\
++	gsd-mouse-manager.c		\
++	gsd-mouse-manager.h
++
++gsd_mouse_CPPFLAGS =						\
++	-I$(top_srcdir)/data/					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DLIBEXECDIR=\""$(libexecdir)"\"			\
++	$(AM_CPPFLAGS)
++
++gsd_mouse_CFLAGS =		\
++	$(PLUGIN_CFLAGS)	\
++	$(MOUSE_CFLAGS)
++
++gsd_mouse_LDADD =						\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(MOUSE_LIBS)						\
++	$(LIBM)
++
++EXTRA_DIST = $(desktop_in_files)
++CLEANFILES = $(desktop_DATA)
++DISTCLEANFILES = $(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/power/Makefile.am b/plugins/power/Makefile.am
+--- a/plugins/power/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/power/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,131 @@
++BUILT_SOURCES =
++
++plugin_name = power
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Power.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Power.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++org.gnome.settings-daemon.plugins.power.policy.in: org.gnome.settings-daemon.plugins.power.policy.in.in Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++@INTLTOOL_POLICY_RULE@
++polkit_policydir = $(datadir)/polkit-1/actions
++polkit_policy_in_files = org.gnome.settings-daemon.plugins.power.policy.in
++polkit_policy_DATA = $(polkit_policy_in_files:.policy.in=.policy)
++
++# so it always gets included in the tarball
++gsd_backlight_helper_SOURCES =				\
++	gsd-backlight-linux.c				\
++	gsd-backlight-linux.h				\
++	gsd-backlight-helper.c
++
++libexec_PROGRAMS = gsd-power
++gsd_power_SOURCES =				\
++	gpm-common.c					\
++	gpm-common.h					\
++	gsd-backlight-linux.c				\
++	gsd-backlight-linux.h				\
++	gsd-power-manager.c				\
++	gsd-power-manager.h				\
++	gsm-inhibitor-flag.h				\
++	gsm-presence-flag.h				\
++	gsm-manager-logout-mode.h			\
++	gsd-power-constants.h				\
++	main.c
++
++gsd_power_CFLAGS =					\
++	$(PLUGIN_CFLAGS)				\
++	$(POWER_CFLAGS)
++
++gsd_power_CPPFLAGS =					\
++	-I$(top_srcdir)/data/				\
++	-I$(top_srcdir)/gnome-settings-daemon		\
++	-I$(top_builddir)/gnome-settings-daemon		\
++	-I$(top_srcdir)/plugins/common			\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\" \
++	-DGTKBUILDERDIR=\""$(pkgdatadir)"\"		\
++	-DSBINDIR=\"$(sbindir)\"			\
++	-DLIBEXECDIR=\"$(libexecdir)\"			\
++	$(AM_CPPFLAGS)
++
++gsd_power_LDADD =					\
++	$(top_builddir)/plugins/common/libcommon.la	\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la \
++	$(POWER_LIBS)					\
++	$(LIBM)
++
++EXTRA_DIST = 						\
++	$(desktop_in_files)				\
++	$(gsd_backlight_helper_SOURCES)			\
++	$(NULL)
++
++if HAVE_GUDEV
++libexec_PROGRAMS += gsd-backlight-helper
++
++gsd_backlight_helper_LDFLAGS =				\
++	$(BACKLIGHT_HELPER_LIBS)			\
++	$(LIBM)
++
++gsd_backlight_helper_CFLAGS =				\
++	$(BACKLIGHT_HELPER_CFLAGS)
++
++EXTRA_DIST += 						\
++	org.gnome.settings-daemon.plugins.power.policy.in.in
++endif
++
++# Enums
++GSD_POWER_ENUM_FILES = gsd-power-enums.c gsd-power-enums.h
++
++gsd-power-enums.h: gsm-inhibitor-flag.h gsm-presence-flag.h Makefile
++	$(AM_V_GEN)($(GLIB_MKENUMS) \
++			--fhead "#ifndef GSD_POWER_ENUMS_H\n#define GSD_POWER_ENUMS_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
++			--fprod "/* enumerations from \"@filename@\" */\n" \
++			--vhead "GType @enum_name@_get_type (void) G_GNUC_CONST;\n#define GSD_POWER_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
++			--ftail "G_END_DECLS\n\n#endif /* !GSD_POWER_ENUMS_H */" $(srcdir)/gsm-inhibitor-flag.h $(srcdir)/gsm-presence-flag.h > $@)
++
++gsd-power-enums.c: gsd-power-constants.h gsm-inhibitor-flag.h gsm-presence-flag.h Makefile gsd-power-enums.h
++	$(AM_V_GEN)($(GLIB_MKENUMS) \
++			--fhead "#include \"gsm-inhibitor-flag.h\"\n#include \"gsm-presence-flag.h\"\n#include \"gsd-power-enums.h\"" \
++			--fprod "\n/* enumerations from \"@filename@\" */" \
++			--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
++			--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
++			--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
++		$(srcdir)/gsm-inhibitor-flag.h $(srcdir)/gsm-presence-flag.h > $@)
++
++BUILT_SOURCES += $(GSD_POWER_ENUM_FILES)
++
++gsdpowerconstants.py: gsd-power-constants-update.pl gsd-power-constants.h
++	$(AM_V_GEN) $(srcdir)/gsd-power-constants-update.pl gsd-power-constants.h $@
++
++gsdpowerenums.py: gsd-power-enums-update gsd-power-enums.h gsd-power-enums.c
++	$(AM_V_GEN) $(builddir)/gsd-power-enums-update > $@
++
++noinst_PROGRAMS = gsd-power-enums-update
++gsd_power_enums_update_SOURCES =		\
++	gsd-power-enums-update.c		\
++	gsd-power-enums.h			\
++	gsd-power-enums.c
++gsd_power_enums_update_CFLAGS = $(gsd_power_CFLAGS)
++gsd_power_enums_update_CPPFLAGS = $(gsd_power_CPPFLAGS) -I$(top_builddir)/plugins/power
++gsd_power_enums_update_LDFLAGS = $(POWER_LIBS)
++
++EXTRA_DIST += gsd-power-constants-update.pl gsdpowerconstants.py gsdpowerenums.py test.py
++
++check-local: $(top_builddir)/tests/shiftkey gsd-power test.py gsdpowerconstants.py gsdpowerenums.py
++# This is how you run a single test
++#	BUILDDIR=$(builddir) TOP_BUILDDIR=$(top_builddir) ${PYTHON} $(srcdir)/test.py PowerPluginTest.test_sleep_inactive_blank
++	BUILDDIR=$(builddir) TOP_BUILDDIR=$(top_builddir) ${PYTHON} $(srcdir)/test.py
++
++clean-local:
++	rm -f *~
++
++CLEANFILES = 							\
++	$(desktop_DATA)						\
++	org.gnome.settings-daemon.plugins.power.policy		\
++	org.gnome.settings-daemon.plugins.power.policy.in	\
++	$(GSD_POWER_ENUM_FILES)					\
++	gsdpowerenums.pyc gsdpowerenums.py
+diff '--exclude=.git' -urN a/plugins/power/meson.build b/plugins/power/meson.build
+--- a/plugins/power/meson.build	2018-04-12 13:08:48.000000000 -0400
++++ b/plugins/power/meson.build	2018-04-22 00:25:35.436837000 -0400
+@@ -67,11 +67,11 @@
+     configuration: plugins_conf
+   )
+ 
+-  i18n.merge_file(
++  custom_target(
+     policy,
+     input: policy_in,
+     output: policy,
+-    po_dir: po_dir,
++    command: intltool_xml_cmd,
+     install: true,
+     install_dir: join_paths(gsd_datadir, 'polkit-1', 'actions')
+   )
+diff '--exclude=.git' -urN a/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in b/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in
+--- a/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in	2018-04-12 13:08:48.000000000 -0400
++++ b/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in	2018-04-22 00:25:35.436837000 -0400
+@@ -18,8 +18,8 @@
+           - A normal active user on the local machine does not need permission
+             to change the backlight brightness.
+      -->
+-    <description>Modify the laptop brightness</description>
+-    <message>Authentication is required to modify the laptop brightness</message>
++    <_description>Modify the laptop brightness</_description>
++    <_message>Authentication is required to modify the laptop brightness</_message>
+     <defaults>
+       <allow_any>no</allow_any>
+       <allow_inactive>no</allow_inactive>
+diff '--exclude=.git' -urN a/plugins/print-notifications/Makefile.am b/plugins/print-notifications/Makefile.am
+--- a/plugins/print-notifications/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/print-notifications/Makefile.am	2018-04-22 00:28:31.755014702 -0400
+@@ -0,0 +1,57 @@
++plugin_name = print-notifications
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.PrintNotifications.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.PrintNotifications.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++libexec_PROGRAMS = gsd-printer
++
++gsd_printer_SOURCES = 	\
++	gsd-printer.c
++
++gsd_printer_CFLAGS = \
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(PRINT_NOTIFICATIONS_CFLAGS)				\
++	$(AM_CFLAGS)
++
++gsd_printer_LDADD  =			\
++	$(PRINT_NOTIFICATIONS_LIBS)	\
++	$(CUPS_LIBS)
++
++libexec_PROGRAMS += gsd-print-notifications
++
++gsd_print_notifications_SOURCES =		\
++	gsd-print-notifications-manager.c	\
++	gsd-print-notifications-manager.h	\
++	main.c
++
++gsd_print_notifications_CPPFLAGS =				\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DLIBEXECDIR=\""$(libexecdir)"\"			\
++	-DBINDIR=\""$(bindir)"\"			\
++	$(AM_CPPFLAGS)						\
++	$(CUPS_CPPFLAGS)
++
++gsd_print_notifications_CFLAGS =			\
++	$(PLUGIN_CFLAGS)				\
++	$(PRINT_NOTIFICATIONS_CFLAGS)
++
++gsd_print_notifications_LDADD =				\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(CUPS_LIBS)						\
++	$(PRINT_NOTIFICATIONS_LIBS)
++
++EXTRA_DIST = 			\
++	$(desktop_in_files)
++
++CLEANFILES = 			\
++	$(desktop_DATA)
++
++DISTCLEANFILES =		\
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/rfkill/Makefile.am b/plugins/rfkill/Makefile.am
+--- a/plugins/rfkill/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/rfkill/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,38 @@
++plugin_name = rfkill
++
++libexec_PROGRAMS = gsd-rfkill
++
++gsd_rfkill_SOURCES =		\
++	gsd-rfkill-manager.h	\
++	gsd-rfkill-manager.c	\
++	rfkill-glib.c		\
++	rfkill-glib.h		\
++	rfkill.h		\
++	main.c
++
++gsd_rfkill_CFLAGS =						\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(PLUGIN_CFLAGS)					\
++	$(RFKILL_CFLAGS)
++
++gsd_rfkill_LDADD =						\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(RFKILL_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Rfkill.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Rfkill.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++udevrulesdir = $(prefix)/lib/udev/rules.d
++udevrules_DATA = 61-gnome-settings-daemon-rfkill.rules
++
++EXTRA_DIST = $(udevrules_DATA) $(desktop_in_files)
++CLEANFILES = $(desktop_DATA)
++DISTCLEANFILES = $(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/screensaver-proxy/Makefile.am b/plugins/screensaver-proxy/Makefile.am
+--- a/plugins/screensaver-proxy/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/screensaver-proxy/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,39 @@
++plugin_name = screensaver-proxy
++
++libexec_PROGRAMS = gsd-screensaver-proxy
++
++gsd_screensaver_proxy_SOURCES =				\
++	main.c						\
++	gsd-screensaver-proxy-manager.c		\
++	gsd-screensaver-proxy-manager.h
++
++gsd_screensaver_proxy_CPPFLAGS =				\
++	-I$(top_srcdir)/data/					\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon		\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	-DLIBEXECDIR=\""$(libexecdir)"\"
++
++gsd_screensaver_proxy_CFLAGS =		\
++	$(PLUGIN_CFLAGS)		\
++	$(SCREENSAVER_PROXY_CFLAGS)	\
++	$(AM_CFLAGS)
++
++gsd_screensaver_proxy_LDADD =					\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(SCREENSAVER_PROXY_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.ScreensaverProxy.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.ScreensaverProxy.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = $(desktop_in_files)
++
++CLEANFILES = $(desktop_DATA)
++
++DISTCLEANFILES = $(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/sharing/Makefile.am b/plugins/sharing/Makefile.am
+--- a/plugins/sharing/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/sharing/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,32 @@
++plugin_name = sharing
++
++libexec_PROGRAMS = gsd-sharing
++gsd_sharing_SOURCES =					\
++	gsd-sharing-manager.c				\
++	gsd-sharing-manager.h				\
++	gsd-sharing-enums.h				\
++	main.c
++
++gsd_sharing_CFLAGS =			\
++	-I$(top_srcdir)/plugins/common	\
++	$(SHARING_CFLAGS)		\
++	$(PLUGIN_CFLAGS)
++gsd_sharing_CPPFLAGS =						\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(AM_CPPFLAGS)
++gsd_sharing_LDADD =					\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la \
++	$(SHARING_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Sharing.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Sharing.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = $(desktop_in_files)
++CLEANFILES = $(desktop_DATA)
++DISTCLEANFILES = $(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/smartcard/Makefile.am b/plugins/smartcard/Makefile.am
+--- a/plugins/smartcard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/smartcard/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+@@ -0,0 +1,77 @@
++plugin_name = smartcard
++libsmartcard_headers = gsd-smartcard-manager.h \
++		       gsd-smartcard-utils.h
++dbus_built_sources = org.gnome.SettingsDaemon.Smartcard.c org.gnome.SettingsDaemon.Smartcard.h
++enum_built_sources = gsd-smartcard-enum-types.h gsd-smartcard-enum-types.c
++BUILT_SOURCES = $(dbus_built_sources) $(enum_built_sources)
++
++libexec_PROGRAMS = gsd-smartcard
++
++$(dbus_built_sources) : Makefile.am org.gnome.SettingsDaemon.Smartcard.xml
++	$(AM_V_GEN) gdbus-codegen \
++	--interface-prefix org.gnome.SettingsDaemon.Smartcard. \
++	--c-namespace GsdSmartcardService \
++	--c-generate-object-manager \
++	--generate-c-code org.gnome.SettingsDaemon.Smartcard \
++	$(srcdir)/org.gnome.SettingsDaemon.Smartcard.xml
++
++gsd-smartcard-enum-types.h: gsd-smartcard-enum-types.h.in $(libsmartcard_headers)
++	$(AM_V_GEN) $(GLIB_MKENUMS) --template $^ > $@
++
++gsd-smartcard-enum-types.c: gsd-smartcard-enum-types.c.in $(libsmartcard_headers)
++	$(AM_V_GEN) $(GLIB_MKENUMS) --template $^ > $@
++
++gsd_smartcard_SOURCES =        \
++	gsd-smartcard-service.c \
++	gsd-smartcard-service.h \
++	gsd-smartcard-manager.c \
++	gsd-smartcard-manager.h \
++	gsd-smartcard-utils.h \
++	gsd-smartcard-utils.c   \
++	main.c
++
++nodist_gsd_smartcard_SOURCES = \
++	$(dbus_built_sources) \
++	$(enum_built_sources)
++
++gsd_smartcard_CPPFLAGS =                                        \
++	-I$(top_srcdir)/data/                                   \
++	-I$(top_srcdir)/gnome-settings-daemon                   \
++	-I$(top_builddir)/gnome-settings-daemon			\
++	-I$(top_srcdir)/plugins/common                          \
++	-DSYSCONFDIR=\""$(sysconfdir)"\"                        \
++	-DLIBDIR=\""$(libdir)"\"                                \
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"      \
++	-DGSD_SMARTCARD_MANAGER_NSS_DB=\""$(NSS_DATABASE)"\"    \
++	$(AM_CPPFLAGS)
++
++gsd_smartcard_CFLAGS =                                          \
++	 $(PLUGIN_CFLAGS)                                       \
++	 $(SMARTCARD_CFLAGS)                                    \
++	 $(AM_CFLAGS)
++
++gsd_smartcard_LDADD =                                           \
++	$(top_builddir)/gnome-settings-daemon/libgsd.la         \
++	$(top_builddir)/plugins/common/libcommon.la             \
++	$(SMARTCARD_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Smartcard.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Smartcard.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = \
++	gsd-smartcard-enum-types.c.in \
++	gsd-smartcard-enum-types.h.in \
++	org.gnome.SettingsDaemon.Smartcard.xml \
++	$(desktop_in_files)
++
++CLEANFILES = \
++	$(BUILT_SOURCES) \
++	$(desktop_DATA)
++
++DISTCLEANFILES = \
++	$(BUILT_SOURCES) \
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/sound/Makefile.am b/plugins/sound/Makefile.am
+--- a/plugins/sound/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/sound/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+@@ -0,0 +1,37 @@
++plugin_name = sound
++
++libexec_PROGRAMS = gsd-sound
++
++gsd_sound_SOURCES =		\
++	gsd-sound-manager.h	\
++	gsd-sound-manager.c	\
++	main.c
++
++gsd_sound_CFLAGS =						\
++	-I$(top_srcdir)/gnome-settings-daemon			\
++	-I$(top_builddir)/gnome-settings-daemon		\
++	-I$(top_srcdir)/plugins/common				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"	\
++	$(SOUND_CFLAGS)						\
++	$(PLUGIN_CFLAGS)
++
++gsd_sound_LDADD =						\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(top_builddir)/plugins/common/libcommon.la		\
++	$(SOUND_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Sound.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Sound.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = \
++	$(desktop_in_files)
++
++CLEANFILES = \
++	$(desktop_DATA)
++
++DISTCLEANFILES = \
++	$(desktop_DATA)
+diff '--exclude=.git' -urN a/plugins/wacom/Makefile.am b/plugins/wacom/Makefile.am
+--- a/plugins/wacom/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/wacom/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+@@ -0,0 +1,73 @@
++plugin_name = wacom
++
++org.gnome.settings-daemon.plugins.wacom.policy.in: org.gnome.settings-daemon.plugins.wacom.policy.in.in Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++@INTLTOOL_POLICY_RULE@
++polkit_policydir = $(datadir)/polkit-1/actions
++polkit_policy_in_files = org.gnome.settings-daemon.plugins.wacom.policy.in
++polkit_policy_DATA = $(polkit_policy_in_files:.policy.in=.policy)
++
++libexec_PROGRAMS = gsd-wacom
++
++if HAVE_GUDEV
++libexec_PROGRAMS += gsd-wacom-led-helper gsd-wacom-oled-helper
++
++gsd_wacom_led_helper_LDFLAGS =				\
++	$(BACKLIGHT_HELPER_LIBS)			\
++	$(LIBM)
++
++gsd_wacom_oled_helper_LDFLAGS =				\
++	$(WACOM_OLED_LIBS)				\
++	$(LIBM)
++
++gsd_wacom_led_helper_CFLAGS =				\
++	$(BACKLIGHT_HELPER_CFLAGS)
++
++gsd_wacom_oled_helper_CFLAGS =				\
++	$(WACOM_OLED_CFLAGS)
++endif
++
++EXTRA_DIST = org.gnome.settings-daemon.plugins.wacom.policy.in.in
++
++gsd_wacom_SOURCES =            \
++	main.c                  \
++	gsd-wacom-manager.c     \
++	gsd-wacom-manager.h     \
++	gsd-wacom-oled-constants.h \
++	gsd-wacom-oled.h        \
++	gsd-wacom-oled.c
++
++gsd_wacom_CPPFLAGS = \
++	-I$(top_srcdir)/data/                                   \
++	-I$(top_srcdir)/gnome-settings-daemon                   \
++	-I$(top_builddir)/gnome-settings-daemon         \
++	-I$(top_srcdir)/plugins/common                          \
++	-DBINDIR=\"$(bindir)\"                                  \
++	-DPIXMAPDIR=\""$(pkgdatadir)"\"                         \
++	-DGTKBUILDERDIR=\""$(pkgdatadir)"\"                     \
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"      \
++	-DLIBEXECDIR=\""$(libexecdir)"\"
++
++gsd_wacom_CFLAGS =                     \
++	$(PLUGIN_CFLAGS)                \
++	$(WACOM_CFLAGS)
++
++gsd_wacom_LDADD =                                              \
++	$(top_builddir)/gnome-settings-daemon/libgsd.la         \
++	$(top_builddir)/plugins/common/libcommon.la             \
++	$(WACOM_LIBS)                                           \
++	$(LIBM)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.Wacom.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.Wacom.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST += $(desktop_in_files)
++CLEANFILES =						\
++	$(desktop_DATA)					\
++	org.gnome.settings-daemon.plugins.wacom.policy	\
++	org.gnome.settings-daemon.plugins.wacom.policy.in
+diff '--exclude=.git' -urN a/plugins/wacom/meson.build b/plugins/wacom/meson.build
+--- a/plugins/wacom/meson.build	2018-04-12 13:08:48.000000000 -0400
++++ b/plugins/wacom/meson.build	2018-04-22 00:25:35.436837000 -0400
+@@ -6,11 +6,11 @@
+   configuration: plugins_conf
+ )
+ 
+-i18n.merge_file(
++custom_target(
+   policy,
+   input: policy_in,
+   output: policy,
+-  po_dir: po_dir,
++  command: intltool_xml_cmd,
+   install: true,
+   install_dir: join_paths(gsd_datadir, 'polkit-1', 'actions')
+ )
+diff '--exclude=.git' -urN a/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in b/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in
+--- a/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in	2018-04-12 13:08:48.000000000 -0400
++++ b/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in	2018-04-22 00:25:35.436837000 -0400
+@@ -17,8 +17,8 @@
+           - A normal active user on the local machine does not need permission
+             to change the LED setting for a Wacom tablet
+      -->
+-    <description>Modify the lit LED for a Wacom tablet</description>
+-    <message>Authentication is required to modify the lit LED for a Wacom tablet</message>
++    <_description>Modify the lit LED for a Wacom tablet</_description>
++    <_message>Authentication is required to modify the lit LED for a Wacom tablet</_message>
+     <defaults>
+       <allow_any>no</allow_any>
+       <allow_inactive>no</allow_inactive>
+@@ -32,8 +32,8 @@
+           - A normal active user on the local machine does not need permission
+             to change the OLED images for a Wacom tablet
+      -->
+-    <description>Modify the OLED image for a Wacom tablet</description>
+-    <message>Authentication is required to modify the OLED image for a Wacom tablet</message>
++    <_description>Modify the OLED image for a Wacom tablet</_description>
++    <_message>Authentication is required to modify the OLED image for a Wacom tablet</_message>
+     <defaults>
+       <allow_any>no</allow_any>
+       <allow_inactive>no</allow_inactive>
+diff '--exclude=.git' -urN a/plugins/xsettings/Makefile.am b/plugins/xsettings/Makefile.am
+--- a/plugins/xsettings/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/plugins/xsettings/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+@@ -0,0 +1,106 @@
++NULL =
++
++plugin_name = xsettings
++
++noinst_PROGRAMS = test-gtk-modules
++
++test_gtk_modules_SOURCES =	\
++	gsd-xsettings-gtk.c	\
++	gsd-xsettings-gtk.h	\
++	test-gtk-modules.c
++
++test_gtk_modules_CFLAGS = $(PLUGIN_CFLAGS) $(XSETTINGS_CFLAGS)
++
++test_gtk_modules_LDADD =					\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(XSETTINGS_LIBS)
++
++test_gtk_modules_CPPFLAGS =				\
++	-I$(top_srcdir)/gnome-settings-daemon		\
++	-I$(top_builddir)/gnome-settings-daemon		\
++	-I$(top_srcdir)/data/				\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\" \
++	-DGTK_MODULES_DIRECTORY=\""$(libdir)/gnome-settings-daemon-@GSD_API_VERSION@/gtk-modules/"\"
++
++noinst_PROGRAMS += test-fontconfig-monitor
++
++test_fontconfig_monitor_SOURCES =	\
++	fc-monitor.c			\
++	fc-monitor.h
++
++test_fontconfig_monitor_CFLAGS = $(PLUGIN_CFLAGS) $(XSETTINGS_CFLAGS)
++
++test_fontconfig_monitor_LDADD = $(XSETTINGS_LIBS)
++
++test_fontconfig_monitor_CPPFLAGS =			\
++	-I$(top_srcdir)/gnome-settings-daemon		\
++	-I$(top_builddir)/gnome-settings-daemon		\
++	-I$(top_srcdir)/data/				\
++	-DFONTCONFIG_MONITOR_TEST
++
++noinst_PROGRAMS += test-wm-button-layout-translations
++
++test_wm_button_layout_translations_SOURCES =	\
++	test-wm-button-layout-translations.c	\
++	wm-button-layout-translation.c		\
++	wm-button-layout-translation.h
++
++test_wm_button_layout_translations_CFLAGS = $(XSETTINGS_CFLAGS)
++
++test_wm_button_layout_translations_LDADD = $(XSETTINGS_LIBS)
++
++libexec_PROGRAMS = gsd-xsettings
++
++gsd_xsettings_SOURCES =		\
++	gsd-xsettings-gtk.c	\
++	gsd-xsettings-gtk.h	\
++	gsd-xsettings-manager.c	\
++	gsd-xsettings-manager.h	\
++	gsd-xsettings-gtk.h	\
++	xsettings-common.c	\
++	xsettings-common.h	\
++	xsettings-manager.c	\
++	xsettings-manager.h	\
++	fc-monitor.c	\
++	fc-monitor.h	\
++	gsd-remote-display-manager.c \
++	gsd-remote-display-manager.h \
++	wm-button-layout-translation.c	\
++	wm-button-layout-translation.h	\
++	main.c
++
++gsd_xsettings_CFLAGS =			\
++	$(PLUGIN_CFLAGS)		\
++	$(XSETTINGS_CFLAGS)
++
++gsd_xsettings_CPPFLAGS =										\
++	-I$(top_srcdir)/gnome-settings-daemon								\
++	-I$(top_builddir)/gnome-settings-daemon								\
++	-I$(top_srcdir)/plugins/common/									\
++	-I$(top_srcdir)/data/										\
++	-DGNOME_SETTINGS_LOCALEDIR=\""$(datadir)/locale"\"						\
++	-DGTK_MODULES_DIRECTORY=\""$(libdir)/gnome-settings-daemon-@GSD_API_VERSION@/gtk-modules/"\"
++
++gsd_xsettings_LDADD =						\
++	$(top_builddir)/gnome-settings-daemon/libgsd.la		\
++	$(XSETTINGS_LIBS)
++
++desktopdir = $(sysconfdir)/xdg/autostart
++desktop_in_files = org.gnome.SettingsDaemon.XSettings.desktop.in
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
++
++org.gnome.SettingsDaemon.XSettings.desktop: $(desktop_in_files) Makefile
++	$(AM_V_GEN) sed -e "s|\@libexecdir\@|$(libexecdir)|" $< > $@
++
++EXTRA_DIST = 			\
++	README.xsettings	\
++	$(desktop_in_files)	\
++	$(NULL)
++
++CLEANFILES = 			\
++	$(desktop_DATA)		\
++	$(NULL)
++
++DISTCLEANFILES =		\
++	$(desktop_DATA)		\
++	$(NULL)
+diff '--exclude=.git' -urN a/po/POTFILES.in b/po/POTFILES.in
+--- a/po/POTFILES.in	2018-04-12 13:08:48.000000000 -0400
++++ b/po/POTFILES.in	2018-04-22 00:25:35.436837000 -0400
+@@ -1,14 +1,14 @@
+ # Files with translatable strings.
+ # Please keep this file in alphabetical order.
+-data/org.gnome.settings-daemon.peripherals.gschema.xml.in
+-data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.color.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in
+-data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in
++data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in
++data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in
++data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in
+ plugins/color/gsd-color-calibrate.c
+ plugins/color/gsd-color-manager.c
+ plugins/datetime/gsd-datetime-manager.c
+diff '--exclude=.git' -urN a/po/POTFILES.skip b/po/POTFILES.skip
+--- a/po/POTFILES.skip	2018-04-12 13:08:48.000000000 -0400
++++ b/po/POTFILES.skip	2018-04-22 00:25:35.436837000 -0400
+@@ -1,5 +1,15 @@
+ # Files with translatable strings to skip.
+ # Please keep this file in alphabetical order.
++#
++data/org.gnome.settings-daemon.peripherals.gschema.xml.in
++data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.color.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in
++data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in
+ plugins/automount/gnome-fallback-mount-helper.desktop.in
+ plugins/power/org.gnome.settings-daemon.plugins.power.policy.in
+ plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in
+diff '--exclude=.git' -urN a/tests/Makefile.am b/tests/Makefile.am
+--- a/tests/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/tests/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+@@ -0,0 +1,11 @@
++noinst_PROGRAMS = shiftkey
++
++shiftkey_SOURCES = shiftkey.c
++shiftkey_CFLAGS = -I$(top_builddir) $(XTEST_CFLAGS)
++shiftkey_LDADD = $(XTEST_LIBS)
++
++EXTRA_DIST =			\
++	gsdtestcase.py		\
++	dummy.session		\
++	dummyapp.desktop	\
++	$(NULL)

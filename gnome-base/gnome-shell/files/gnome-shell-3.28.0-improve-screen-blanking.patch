@@ -1,0 +1,56 @@
+diff '--exclude=.git' -urN a/js/ui/screenShield.js b/js/ui/screenShield.js
+--- a/js/ui/screenShield.js	2018-03-12 16:51:03.000000000 -0400
++++ b/js/ui/screenShield.js	2018-04-22 23:00:27.449443745 -0400
+@@ -36,6 +36,9 @@
+ const LOCKDOWN_SCHEMA = 'org.gnome.desktop.lockdown';
+ const DISABLE_LOCK_KEY = 'disable-lock-screen';
+ 
++const SESSION_SCHEMA = 'org.gnome.desktop.session';
++const IDLE_DELAY_KEY = 'idle-delay';
++
+ const LOCKED_STATE_STR = 'screenShield.locked';
+ // fraction of screen height the arrow must reach before completing
+ // the slide up automatically
+@@ -543,6 +546,7 @@
+ 
+         this._settings = new Gio.Settings({ schema_id: SCREENSAVER_SCHEMA });
+         this._settings.connect('changed::' + LOCK_ENABLED_KEY, this._syncInhibitor.bind(this));
++        this._sessionSettings = new Gio.Settings({ schema_id: SESSION_SCHEMA });
+ 
+         this._lockSettings = new Gio.Settings({ schema_id: LOCKDOWN_SCHEMA });
+         this._lockSettings.connect('changed::' + DISABLE_LOCK_KEY, this._syncInhibitor.bind(this));
+@@ -1125,8 +1129,23 @@
+     },
+ 
+     _completeLockScreenShown() {
+-        this._setActive(true);
+-        this.emit('lock-screen-shown');
++        let prevIsActive = this._isActive;
++        this._isActive = true;
++
++        let idleTimeout = this._sessionSettings.get_uint(IDLE_DELAY_KEY);
++
++        let id = Mainloop.timeout_add(1000 * idleTimeout, Lang.bind(this, function() {
++            if (this._isActive) {
++                if (prevIsActive != this._isActive)
++                    this.emit('active-changed');
++
++                this._syncInhibitor();
++
++                this.emit('lock-screen-shown');
++            }
++            return GLib.SOURCE_REMOVE;
++        }));
++        GLib.Source.set_name_by_id(id, '[gnome-shell] this._completeLockScreenShown');
+     },
+ 
+     // Some of the actors in the lock screen are heavy in
+@@ -1280,7 +1299,7 @@
+         }
+ 
+         this._resetLockScreen({ animateLockScreen: animate,
+-                                fadeToBlack: true });
++                                fadeToBlack: false });
+         // On wayland, a crash brings down the entire session, so we don't
+         // need to defend against being restarted unlocked
+         if (!Meta.is_wayland_compositor())

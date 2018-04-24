@@ -1,0 +1,52 @@
+diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
+--- a/Makefile.am	2017-11-09 17:30:36.000000000 -0500
++++ b/Makefile.am	2018-04-23 19:52:15.231839021 -0400
+@@ -25,13 +25,15 @@
+ 	org.gnome.gnome-system-monitor.policy.in.in \
+ 	gnome-system-monitor.desktop.in \
+ 	gnome-system-monitor-kde.desktop.in \
+-	gnome-system-monitor.doap
++	gnome-system-monitor.doap \
++	intltool-extract.in \
++	intltool-merge.in \
++	intltool-update.in
+ 
++@INTLTOOL_POLICY_RULE@
+ polkit_policydir = $(datadir)/polkit-1/actions
+ polkit_policy_in_files = org.gnome.gnome-system-monitor.policy.in
+ polkit_policy_DATA = $(polkit_policy_in_files:.policy.in=.policy)
+-$(polkit_policy_DATA): %.policy: %.policy.in
+-	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
+ 
+ Applicationsdir = $(datadir)/applications
+ Applications_in_files = gnome-system-monitor.desktop.in gnome-system-monitor-kde.desktop.in
+@@ -40,6 +42,8 @@
+ appdatadir = $(datadir)/metainfo
+ appdata_DATA = $(appdata_in_files:.xml.in=.xml)
+ appdata_in_files = gnome-system-monitor.appdata.xml.in
++@INTLTOOL_DESKTOP_RULE@
++@INTLTOOL_XML_RULE@
+ $(appdata_DATA): $(appdata_in_files)
+ 	$(AM_V_GEN)$(MSGFMT) --xml --template $< -d $(top_srcdir)/po -o $@
+ 
+@@ -71,6 +75,9 @@
+              $(DESKTOP_FILE_VALIDATE) $(Applications_DATA)
+ 
+ DISTCLEANFILES = \
++	intltool-extract              \
++	intltool-merge                \
++	intltool-update               \
+     $(appdata_DATA) \
+ 	gnome-system-monitor.desktop  \
+ 	gnome-system-monitor-kde.desktop  \
+diff '--exclude=.git' -urN a/configure.ac b/configure.ac
+--- a/configure.ac	2017-11-13 17:16:04.000000000 -0500
++++ b/configure.ac	2018-04-23 19:45:04.115044342 -0400
+@@ -115,6 +115,7 @@
+ GLIB_GSETTINGS
+ 
+ # i18n stuff
++IT_PROG_INTLTOOL([0.41.0])
+ AM_GNU_GETTEXT_VERSION([0.19.8])
+ AM_GNU_GETTEXT([external])
+ 

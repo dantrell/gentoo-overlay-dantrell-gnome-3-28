@@ -1,0 +1,21 @@
+diff '--exclude=.git' -urN a/src/org.gnome.Terminal.gschema.xml b/src/org.gnome.Terminal.gschema.xml
+--- a/src/org.gnome.Terminal.gschema.xml	2018-04-09 15:41:44.000000000 -0400
++++ b/src/org.gnome.Terminal.gschema.xml	2018-04-21 23:08:53.434410081 -0400
+@@ -454,7 +454,7 @@
+       <summary>Keyboard shortcut to open the Preferences dialog</summary>
+     </key>
+     <key name="full-screen" type="s">
+-      <default>'F11'</default>
++      <default>'disabled'</default>
+       <summary>Keyboard shortcut to toggle full screen mode</summary>
+     </key>
+     <key name="toggle-menubar" type="s">
+@@ -696,7 +696,7 @@
+     </key>
+ 
+     <key name="menu-accelerator-enabled" type="b">
+-      <default>true</default>
++      <default>false</default>
+       <summary>Whether the standard GTK shortcut for menubar access is enabled</summary>
+       <description>
+         Normally you can access the menubar with F10. This can also
