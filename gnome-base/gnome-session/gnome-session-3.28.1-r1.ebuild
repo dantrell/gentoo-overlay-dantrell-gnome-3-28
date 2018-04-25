@@ -2,7 +2,7 @@
 
 EAPI="6"
 
-inherit gnome2 meson
+inherit autotools gnome2
 
 DESCRIPTION="Gnome session manager"
 HOMEPAGE="https://git.gnome.org/browse/gnome-session"
@@ -11,7 +11,7 @@ LICENSE="GPL-2 LGPL-2 FDL-1.1"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="consolekit doc elibc_FreeBSD elogind systemd wayland"
+IUSE="consolekit doc elibc_FreeBSD elogind gconf ipv6 systemd wayland"
 REQUIRED_USE="
 	?? ( consolekit elogind systemd )
 	wayland? ( || ( elogind systemd ) )
@@ -28,6 +28,7 @@ COMMON_DEPEND="
 	>=dev-libs/json-glib-0.10
 	>=gnome-base/gnome-desktop-3.18:3=
 	elibc_FreeBSD? ( || ( dev-libs/libexecinfo >=sys-freebsd/freebsd-lib-10.0 ) )
+	gconf? ( >=gnome-base/gconf-2:2 )
 	wayland? ( media-libs/mesa[egl,gles2] )
 	!wayland? ( media-libs/mesa[gles2] )
 
@@ -71,20 +72,40 @@ DEPEND="${COMMON_DEPEND}
 # gnome-common needed for eautoreconf
 # gnome-base/gdm does not provide gnome.desktop anymore
 
+src_prepare() {
+	# From GNOME:
+	# 	https://git.gnome.org/browse/gnome-session/commit/?id=926c3fce17d9665047412046a7298fad55934b2d
+	# 	https://git.gnome.org/browse/gnome-session/commit/?id=ffb1f23d3e5fb99c5a41a73218084250af7215a9
+	# 	https://git.gnome.org/browse/gnome-session/commit/?id=d8b8665dae18700cc4caae5e857b1c23a005a62e
+	eapply "${FILESDIR}"/${PN}-3.28.1-support-gconf.patch
+	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
+	eapply "${FILESDIR}"/${PN}-3.28.1-support-old-upower.patch
+
+	eapply "${FILESDIR}"/${PN}-3.24.1-support-elogind.patch
+
+	eautoreconf
+	gnome2_src_prepare
+}
+
 src_configure() {
-	local emesonargs=(
-		-Ddeprecation_flags=false
-		-Dsession_selector=true
-		-Dsystemd=$(usex systemd true false)
-		-Dsystemd_journal=$(usex systemd true false)
-		-Dconsolekit=$(usex systemd false true)
-		-Ddocbook=$(usex doc false true)
-	)
-	meson_src_configure
+	# 1. Avoid automagic on old upower releases
+	# 2. xsltproc is always checked due to man configure
+	#    switch, even if USE=-doc
+	# 3. Enable old gconf support
+	gnome2_src_configure \
+		--enable-session-selector \
+		$(use_enable consolekit) \
+		$(use_enable doc docbook-docs) \
+		$(use_enable elogind) \
+		$(use_enable gconf) \
+		$(use_enable ipv6) \
+		$(use_enable systemd) \
+		UPOWER_CFLAGS="" \
+		UPOWER_LIBS=""
 }
 
 src_install() {
-	meson_src_install
+	gnome2_src_install
 
 	dodir /etc/X11/Sessions
 	exeinto /etc/X11/Sessions
