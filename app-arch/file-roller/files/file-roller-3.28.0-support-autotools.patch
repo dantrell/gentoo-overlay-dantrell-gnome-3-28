@@ -1,0 +1,2853 @@
+diff '--exclude=.git' -urNa a/INSTALL b/INSTALL
+--- a/INSTALL	1969-12-31 19:00:00.000000000 -0500
++++ b/INSTALL	2018-04-25 00:48:55.282557894 -0400
+@@ -0,0 +1,237 @@
++Installation Instructions
++*************************
++
++Copyright (C) 1994, 1995, 1996, 1999, 2000, 2001, 2002, 2004, 2005,
++2006, 2007 Free Software Foundation, Inc.
++
++This file is free documentation; the Free Software Foundation gives
++unlimited permission to copy, distribute and modify it.
++
++Basic Installation
++==================
++
++Briefly, the shell commands `./configure; make; make install' should
++configure, build, and install this package.  The following
++more-detailed instructions are generic; see the `README' file for
++instructions specific to this package.
++
++   The `configure' shell script attempts to guess correct values for
++various system-dependent variables used during compilation.  It uses
++those values to create a `Makefile' in each directory of the package.
++It may also create one or more `.h' files containing system-dependent
++definitions.  Finally, it creates a shell script `config.status' that
++you can run in the future to recreate the current configuration, and a
++file `config.log' containing compiler output (useful mainly for
++debugging `configure').
++
++   It can also use an optional file (typically called `config.cache'
++and enabled with `--cache-file=config.cache' or simply `-C') that saves
++the results of its tests to speed up reconfiguring.  Caching is
++disabled by default to prevent problems with accidental use of stale
++cache files.
++
++   If you need to do unusual things to compile the package, please try
++to figure out how `configure' could check whether to do them, and mail
++diffs or instructions to the address given in the `README' so they can
++be considered for the next release.  If you are using the cache, and at
++some point `config.cache' contains results you don't want to keep, you
++may remove or edit it.
++
++   The file `configure.ac' (or `configure.in') is used to create
++`configure' by a program called `autoconf'.  You need `configure.ac' if
++you want to change it or regenerate `configure' using a newer version
++of `autoconf'.
++
++The simplest way to compile this package is:
++
++  1. `cd' to the directory containing the package's source code and type
++     `./configure' to configure the package for your system.
++
++     Running `configure' might take a while.  While running, it prints
++     some messages telling which features it is checking for.
++
++  2. Type `make' to compile the package.
++
++  3. Optionally, type `make check' to run any self-tests that come with
++     the package.
++
++  4. Type `make install' to install the programs and any data files and
++     documentation.
++
++  5. You can remove the program binaries and object files from the
++     source code directory by typing `make clean'.  To also remove the
++     files that `configure' created (so you can compile the package for
++     a different kind of computer), type `make distclean'.  There is
++     also a `make maintainer-clean' target, but that is intended mainly
++     for the package's developers.  If you use it, you may have to get
++     all sorts of other programs in order to regenerate files that came
++     with the distribution.
++
++  6. Often, you can also type `make uninstall' to remove the installed
++     files again.
++
++Compilers and Options
++=====================
++
++Some systems require unusual options for compilation or linking that the
++`configure' script does not know about.  Run `./configure --help' for
++details on some of the pertinent environment variables.
++
++   You can give `configure' initial values for configuration parameters
++by setting variables in the command line or in the environment.  Here
++is an example:
++
++     ./configure CC=c99 CFLAGS=-g LIBS=-lposix
++
++   *Note Defining Variables::, for more details.
++
++Compiling For Multiple Architectures
++====================================
++
++You can compile the package for more than one kind of computer at the
++same time, by placing the object files for each architecture in their
++own directory.  To do this, you can use GNU `make'.  `cd' to the
++directory where you want the object files and executables to go and run
++the `configure' script.  `configure' automatically checks for the
++source code in the directory that `configure' is in and in `..'.
++
++   With a non-GNU `make', it is safer to compile the package for one
++architecture at a time in the source code directory.  After you have
++installed the package for one architecture, use `make distclean' before
++reconfiguring for another architecture.
++
++Installation Names
++==================
++
++By default, `make install' installs the package's commands under
++`/usr/local/bin', include files under `/usr/local/include', etc.  You
++can specify an installation prefix other than `/usr/local' by giving
++`configure' the option `--prefix=PREFIX'.
++
++   You can specify separate installation prefixes for
++architecture-specific files and architecture-independent files.  If you
++pass the option `--exec-prefix=PREFIX' to `configure', the package uses
++PREFIX as the prefix for installing programs and libraries.
++Documentation and other data files still use the regular prefix.
++
++   In addition, if you use an unusual directory layout you can give
++options like `--bindir=DIR' to specify different values for particular
++kinds of files.  Run `configure --help' for a list of the directories
++you can set and what kinds of files go in them.
++
++   If the package supports it, you can cause programs to be installed
++with an extra prefix or suffix on their names by giving `configure' the
++option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
++
++Optional Features
++=================
++
++Some packages pay attention to `--enable-FEATURE' options to
++`configure', where FEATURE indicates an optional part of the package.
++They may also pay attention to `--with-PACKAGE' options, where PACKAGE
++is something like `gnu-as' or `x' (for the X Window System).  The
++`README' should mention any `--enable-' and `--with-' options that the
++package recognizes.
++
++   For packages that use the X Window System, `configure' can usually
++find the X include and library files automatically, but if it doesn't,
++you can use the `configure' options `--x-includes=DIR' and
++`--x-libraries=DIR' to specify their locations.
++
++Specifying the System Type
++==========================
++
++There may be some features `configure' cannot figure out automatically,
++but needs to determine by the type of machine the package will run on.
++Usually, assuming the package is built to be run on the _same_
++architectures, `configure' can figure that out, but if it prints a
++message saying it cannot guess the machine type, give it the
++`--build=TYPE' option.  TYPE can either be a short name for the system
++type, such as `sun4', or a canonical name which has the form:
++
++     CPU-COMPANY-SYSTEM
++
++where SYSTEM can have one of these forms:
++
++     OS KERNEL-OS
++
++   See the file `config.sub' for the possible values of each field.  If
++`config.sub' isn't included in this package, then this package doesn't
++need to know the machine type.
++
++   If you are _building_ compiler tools for cross-compiling, you should
++use the option `--target=TYPE' to select the type of system they will
++produce code for.
++
++   If you want to _use_ a cross compiler, that generates code for a
++platform different from the build platform, you should specify the
++"host" platform (i.e., that on which the generated programs will
++eventually be run) with `--host=TYPE'.
++
++Sharing Defaults
++================
++
++If you want to set default values for `configure' scripts to share, you
++can create a site shell script called `config.site' that gives default
++values for variables like `CC', `cache_file', and `prefix'.
++`configure' looks for `PREFIX/share/config.site' if it exists, then
++`PREFIX/etc/config.site' if it exists.  Or, you can set the
++`CONFIG_SITE' environment variable to the location of the site script.
++A warning: not all `configure' scripts look for a site script.
++
++Defining Variables
++==================
++
++Variables not defined in a site shell script can be set in the
++environment passed to `configure'.  However, some packages may run
++configure again during the build, and the customized values of these
++variables may be lost.  In order to avoid this problem, you should set
++them in the `configure' command line, using `VAR=value'.  For example:
++
++     ./configure CC=/usr/local2/bin/gcc
++
++causes the specified `gcc' to be used as the C compiler (unless it is
++overridden in the site shell script).
++
++Unfortunately, this technique does not work for `CONFIG_SHELL' due to
++an Autoconf bug.  Until the bug is fixed you can use this workaround:
++
++     CONFIG_SHELL=/bin/bash /bin/bash ./configure CONFIG_SHELL=/bin/bash
++
++`configure' Invocation
++======================
++
++`configure' recognizes the following options to control how it operates.
++
++`--help'
++`-h'
++     Print a summary of the options to `configure', and exit.
++
++`--version'
++`-V'
++     Print the version of Autoconf used to generate the `configure'
++     script, and exit.
++
++`--cache-file=FILE'
++     Enable the cache: use and save the results of the tests in FILE,
++     traditionally `config.cache'.  FILE defaults to `/dev/null' to
++     disable caching.
++
++`--config-cache'
++`-C'
++     Alias for `--cache-file=config.cache'.
++
++`--quiet'
++`--silent'
++`-q'
++     Do not print messages saying which checks are being made.  To
++     suppress all normal output, redirect it to `/dev/null' (any error
++     messages will still be shown).
++
++`--srcdir=DIR'
++     Look for the package's source code in directory DIR.  Usually
++     `configure' can determine that directory automatically.
++
++`configure' also accepts some other, not widely useful, options.  Run
++`configure --help' for more details.
++
+diff '--exclude=.git' -urNa a/Makefile.am b/Makefile.am
+--- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/Makefile.am	2018-04-25 00:48:55.282557894 -0400
+@@ -0,0 +1,96 @@
++ACLOCAL_AMFLAGS=-I m4 ${ACLOCAL_FLAGS}
++
++if ENABLE_NAUTILUS_ACTIONS
++NAUTILUS = nautilus
++else
++NAUTILUS =
++endif
++
++SUBDIRS =		\
++	data		\
++	src		\
++	help		\
++	$(NAUTILUS)	\
++	po
++
++distcleancheck_listfiles = find . -type f -print | grep -v 'omf\.out'
++
++distuninstallcheck_listfiles = find . -type f -print | grep -v '^\./var/scrollkeeper' | grep -v 'omf' | grep -v 'figures'
++
++
++EXTRA_DIST = 			\
++	AUTHORS			\
++	HACKING			\
++	MAINTAINERS		\
++	NEWS			\
++	README			\
++	README_COMMANDLINE	\
++	file-roller.spec	\
++	file-roller.spec.in	\
++	intltool-merge.in	\
++	intltool-update.in	\
++	intltool-extract.in
++	
++DISTCLEANFILES =                        \
++	po/.intltool-merge-cache        \
++	intltool-extract                \
++	intltool-merge                  \
++	intltool-update
++
++DISTCHECK_CONFIGURE_FLAGS = --disable-scrollkeeper
++
++MAINTAINERCLEANFILES = \
++	$(srcdir)/ABOUT-NLS \
++	$(srcdir)/INSTALL \
++	$(srcdir)/aclocal.m4 \
++	$(srcdir)/autoscan.log \
++	$(srcdir)/compile \
++	$(srcdir)/config.guess \
++	$(srcdir)/config.h.in \
++	$(srcdir)/config.rpath \
++	$(srcdir)/config.sub \
++	$(srcdir)/configure.scan \
++	$(srcdir)/depcomp \
++ 	$(srcdir)/install-sh \
++	$(srcdir)/ltmain.sh \
++	$(srcdir)/m4 \
++	$(srcdir)/missing \
++	$(srcdir)/mkinstalldirs \
++	$(srcdir)/omf.make \
++	$(srcdir)/xmldocs.make \
++	$(srcdir)/gtk-doc.make \
++	$(srcdir)/ChangeLog \
++	$(srcdir)/po/Makevars.template \
++	$(srcdir)/po/Rules-quot \
++	$(srcdir)/po/boldquot.sed \
++	$(srcdir)/po/en@boldquot.header \
++	$(srcdir)/po/en@quot.header \
++	$(srcdir)/po/insert-header.sin \
++	$(srcdir)/po/quot.sed \
++	$(srcdir)/po/remove-potcdate.sin \
++	`find "$(srcdir)" -type f -name Makefile.in -print`
++
++GITIGNOREFILES = build .cdt* .cproject .project .settings/ .autotools *.patch
++
++CLEANFILES = ChangeLog
++
++# Build ChangeLog from GIT history
++ChangeLog:
++	@echo Creating $@
++	@if test -d $(top_srcdir)/.git; then \
++		(GIT_DIR=$(top_srcdir)/.git $(top_srcdir)/missing --run git log --stat -M -C --name-status  --date=short --no-color) | fmt --split-only > $@.tmp \
++		 && mv -f $@.tmp $@ \
++		 || ($(RM) $@.tmp; \
++		     echo Failed to generate ChangeLog, your ChangeLog may be outdated >&2; \
++		     (test -f $@ || echo git-log is required to generate this file >> $@)); \
++	else \
++		test -f $@ || \
++		(echo A git checkout and git-log is required to generate ChangeLog >&2 && \
++		echo A git checkout and git-log is required to generate this file >> $@); \
++	fi
++
++dist: ChangeLog
++
++.PHONY: ChangeLog
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/README b/README
+--- a/README	2018-03-12 14:52:57.000000000 -0400
++++ b/README	2018-04-25 00:48:55.282557894 -0400
+@@ -67,15 +67,15 @@
+   properly.
+ 
+   Also you need the following libraries:
+-  	* glib >= 2.36
+-  	* gtk+ >= 3.13.2
++  	* glib >= 2.16.0
++  	* gtk+ >= 2.12.0
++  	* libgnome >= 2.6.0
++  	* libgnomeui >= 2.6.0
++        * libglade >= 2.4.0
+         * libnautilus-extension >= 2.22.2 (optional)
+-        * libarchive >= 3.0.0 (optional)
+ 
+ * Install
+ 
+-  mkdir build
+-  cd build
+-  meson ..
+-  ninja
+-  ninja install
++  ./configure
++  make
++  make install
+diff '--exclude=.git' -urNa a/autogen.sh b/autogen.sh
+--- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
++++ b/autogen.sh	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,15 @@
++#!/bin/sh
++srcdir=`dirname $0`
++[ -z "$srcdir" ] && srcdir=.
++
++if [ ! -f "$srcdir/configure.ac" ]; then
++ echo "$srcdir doesn't look like source directory for $PKG_NAME" >&2
++ exit 1
++fi
++
++which gnome-autogen.sh || {
++	echo "You need to install gnome-common from GNOME Git"
++	exit 1
++}
++
++. gnome-autogen.sh "$@"
+diff '--exclude=.git' -urNa a/configure.ac b/configure.ac
+--- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
++++ b/configure.ac	2018-04-25 00:49:07.805502135 -0400
+@@ -0,0 +1,328 @@
++dnl Process this file with autoconf to produce a configure script.
++
++AC_PREREQ([2.68])
++
++AC_INIT([file-roller],[3.28.0],[http://bugzilla.gnome.org/enter_bug.cgi?product=file-roller],[file-roller])
++AM_INIT_AUTOMAKE([1.11 foreign no-dist-gzip dist-xz tar-ustar])
++m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
++
++AC_CONFIG_SRCDIR([config.h.in])
++AC_CONFIG_HEADER([config.h])
++AC_CONFIG_MACRO_DIR([m4])
++AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
++
++AC_PROG_CC
++LT_INIT
++PKG_PROG_PKG_CONFIG
++GLIB_GSETTINGS
++
++AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
++AC_PATH_PROG(GLIB_MKENUMS, glib-mkenums)
++AC_PATH_PROG(GLIB_COMPILE_RESOURCES, glib-compile-resources)
++
++GLIB_REQUIRED=2.36.0
++GIO_REQUIRED=2.36.0
++GTK_REQUIRED=3.13.2
++NAUTILUS_REQUIRED=2.22.2
++JSON_GLIB_REQUIRED=0.14.0
++LIBNOTIFY_REQUIRED=0.4.3
++LIBARCHIVE_REQUIRED=3.0.0
++
++dnl ===========================================================================
++
++PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= $GTK_REQUIRED])
++AC_SUBST([GTK_CFLAGS])
++AC_SUBST([GTK_LIBS])
++
++dnl ===========================================================================
++
++AC_ARG_ENABLE(debug,
++	      AS_HELP_STRING([--enable-debug], [enable compilation of debugging messages]),
++	      [case "${enableval}" in
++	      yes) ENABLE_DEBUG=yes ;;
++	      no) ENABLE_DEBUG=no ;;
++	      *) AC_MSG_ERROR([bad value ${enableval} for --enable-debug]) ;;
++	      esac],
++	      [ENABLE_DEBUG=no])
++if test x$ENABLE_DEBUG = xyes; then
++	AC_DEFINE(DEBUG, 1, [enable compilation of debugging messages])
++	CFLAGS="$CFLAGS -g -O0 -DDEBUG"
++else
++	CFLAGS="$CFLAGS -Wno-deprecated-declarations"
++fi
++
++dnl ===========================================================================
++
++if test x$ENABLE_DEBUG = xyes; then
++WARN_CFLAGS="-Wall -Wcast-align -Wtype-limits -Wclobbered -Wempty-body -Wignored-qualifiers -Wmissing-prototypes -Wnested-externs -Wpointer-arith -Wno-sign-compare -Wformat-security"
++else
++WARN_CFLAGS="-Wall"
++fi
++
++for option in $WARN_CFLAGS; do
++	SAVE_CFLAGS="$CFLAGS"
++	CFLAGS="$CFLAGS $option"
++	AC_MSG_CHECKING([whether gcc understands $option])
++	AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[has_option=yes],[has_option=no])
++	if test x$has_option = xyes; then
++		WARNINGS="$WARNINGS $option"
++	fi
++	AC_MSG_RESULT($has_option)
++	CFLAGS="$SAVE_CFLAGS"
++	unset has_option
++	unset SAVE_CFLAGS
++done
++unset option
++CFLAGS="$CFLAGS $WARNINGS"
++
++dnl ===========================================================================
++dnl
++dnl run_in_place
++dnl
++AC_ARG_ENABLE([run_in_place],
++	      AS_HELP_STRING([--enable-run-in-place],
++			     [load ui data and extensions from source tree]),,
++	      [enable_run_in_place=no])
++
++AM_CONDITIONAL(RUN_IN_PLACE, test x"$enable_run_in_place" != x"no")
++
++dnl ===========================================================================
++
++PKG_CHECK_MODULES(FR,			\
++	glib-2.0 >= $GLIB_REQUIRED	\
++	gthread-2.0			\
++	gio-unix-2.0			\
++	gtk+-3.0 >= $GTK_REQUIRED)
++AC_SUBST(FR_CFLAGS)
++AC_SUBST(FR_LIBS)
++
++dnl ******************************
++dnl
++dnl nautilus actions
++dnl
++AC_ARG_ENABLE([nautilus_actions],
++	      [AS_HELP_STRING([--disable-nautilus-actions],
++			      [do not build the nautilus context menu actions])],,
++	      [enable_nautilus_actions=yes])
++
++if test x"$enable_nautilus_actions" != x"no" ; then
++	PKG_CHECK_MODULES(NAUTILUS,					\
++			  		  [libnautilus-extension >= $NAUTILUS_REQUIRED	\
++			 		   glib-2.0					\
++			  		   gio-2.0],
++		  			  [enable_nautilus_actions=yes],
++					  [enable_nautilus_actions=no])
++	NAUTILUS_EXTENSION_DIR=`$PKG_CONFIG --variable=extensiondir libnautilus-extension`
++fi
++
++AC_SUBST(NAUTILUS_CFLAGS)
++AC_SUBST(NAUTILUS_LIBS)
++AC_SUBST(NAUTILUS_EXTENSION_DIR)
++AM_CONDITIONAL(ENABLE_NAUTILUS_ACTIONS, test x"$enable_nautilus_actions" != x"no")
++
++dnl ******************************
++dnl
++dnl json-glib-1.0
++dnl
++PKG_CHECK_MODULES(JSON_GLIB,
++		  [json-glib-1.0 >= $JSON_GLIB_REQUIRED
++		   glib-2.0],
++		  [enable_json_glib=yes],
++		  [enable_json_glib=no])
++
++if test x$enable_json_glib = xyes ; then
++	AC_DEFINE(HAVE_JSON_GLIB, 1, [Define to 1 if json-glib support is included])
++fi
++
++AC_SUBST(JSON_GLIB_CFLAGS)
++AC_SUBST(JSON_GLIB_LIBS)
++
++AM_CONDITIONAL(ENABLE_JSON_GLIB, test x"$enable_json_glib" != x"no")
++
++dnl ******************************
++dnl
++dnl Checks for mkdtemp function
++dnl
++mkdtemp_missing=false
++AC_CHECK_FUNC(mkdtemp,
++    [AC_DEFINE([HAVE_MKDTEMP], 1, [Have GlibC function to make temp dirs])],
++    mkdtemp_missing=true)
++AM_CONDITIONAL(MKDTEMP_MISSING, test x$mkdtemp_missing = xtrue)
++
++AC_CHECK_LIB(m, floor)
++
++dnl ==========================================================================
++dnl
++dnl packagekit
++dnl
++AC_ARG_ENABLE(packagekit,
++	      [AS_HELP_STRING([--disable-packagekit],[build without PackageKit support])],,
++	      [enable_packagekit=yes])
++if test "x$enable_packagekit" != "xno"; then
++	AC_DEFINE(ENABLE_PACKAGEKIT, 1, [define to enable PackageKit installer])
++fi
++
++dnl ===========================================================================
++dnl
++dnl libnotify
++dnl
++AC_ARG_ENABLE(notification,[AC_HELP_STRING([--enable-notification],[enable operation completion notification [default=yes]])],, [enable_notification="yes"])
++AM_CONDITIONAL(ENABLE_NOTIFICATION, test "x$enable_notification" = xyes)
++
++LIBNOTIFY_LIBS=""
++LIBNOTIFY_CFLAGS=""
++if test x"$enable_notification" = xyes; then
++   AC_MSG_CHECKING(for notification support)
++
++   if ${PKG_CONFIG} --atleast-version=$LIBNOTIFY_REQUIRED libnotify; then
++      LIBNOTIFY_LIBS=`${PKG_CONFIG} --libs libnotify`
++      LIBNOTIFY_CFLAGS=`${PKG_CONFIG} --cflags libnotify`
++      AC_DEFINE(ENABLE_NOTIFICATION, 1, [Have libnotify])
++   else
++      enable_notification=no
++   fi
++fi
++AC_MSG_RESULT($enable_notification)
++AC_SUBST(LIBNOTIFY_LIBS)
++AC_SUBST(LIBNOTIFY_CFLAGS)
++
++dnl ******************************
++dnl
++dnl magic
++dnl
++AC_ARG_ENABLE([magic],
++              AS_HELP_STRING([--enable-magic], [use libmagic to detect file type]),,
++              [enable_magic=yes])
++
++if test x"$enable_magic" = x"yes" ; then
++	save_LIBS="$LIBS"
++	LIBS="$LIBS -lmagic"
++	AC_MSG_CHECKING([whether libmagic works])
++	AC_LINK_IFELSE([AC_LANG_SOURCE([
++#include <magic.h>
++int main () { magic_t m = magic_open(MAGIC_NONE); }
++])],
++		       [AC_MSG_RESULT([yes])],
++		       [AC_MSG_RESULT([no])
++		        enable_magic=no])
++	LIBS="$save_LIBS"
++fi
++
++if test x"$enable_magic" = x"yes" ; then
++	MAGIC_CFLAGS=
++	MAGIC_LIBS=-lmagic
++
++	AC_SUBST(MAGIC_CFLAGS)
++	AC_SUBST(MAGIC_LIBS)
++
++	AC_DEFINE(ENABLE_MAGIC, 1, [define to enable magic])
++fi
++
++AM_CONDITIONAL(ENABLE_MAGIC, test x"$enable_magic" != x"no")
++
++dnl ===========================================================================
++dnl
++dnl libarchive
++dnl
++AC_ARG_ENABLE([libarchive],
++			  [AC_HELP_STRING([--enable-libarchive], [enable code that requires libarchive [default=yes]])],,
++			  [enable_libarchive="yes"])
++
++LIBARCHIVE_LIBS=""
++LIBARCHIVE_CFLAGS=""
++if test x"$enable_libarchive" = xyes; then
++   AC_MSG_CHECKING(for libarchive support)
++
++   if ${PKG_CONFIG} --atleast-version=$LIBARCHIVE_REQUIRED libarchive; then
++      LIBARCHIVE_LIBS=`${PKG_CONFIG} --libs libarchive`
++      LIBARCHIVE_CFLAGS=`${PKG_CONFIG} --cflags libarchive`
++      AC_DEFINE(ENABLE_LIBARCHIVE, 1, [define to enable libarchive support])
++   else
++      enable_libarchive=no
++   fi
++fi
++AC_MSG_RESULT($enable_libarchive)
++AC_SUBST(LIBARCHIVE_LIBS)
++AC_SUBST(LIBARCHIVE_CFLAGS)
++AM_CONDITIONAL(ENABLE_LIBARCHIVE, test x"$enable_libarchive" = xyes)
++
++AC_ARG_VAR([CPIO], [Path to the `cpio` command])
++AC_PATH_PROGS(CPIO, gcpio cpio, cpio)
++AC_DEFINE_UNQUOTED(CPIO_PATH, "${CPIO}", [Path to cpio])
++
++dnl ******************************
++
++IT_PROG_INTLTOOL([0.50.1])
++
++GETTEXT_PACKAGE=file-roller
++AC_SUBST(GETTEXT_PACKAGE)
++AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE", [GetText Package])
++
++dnl ******************************
++
++YELP_HELP_INIT
++
++dnl ******************************
++
++AC_ARG_ENABLE(deprecated,
++              AS_HELP_STRING([--disable-deprecated],[warn about deprecated usages]),
++              [disable_deprecated=yes],
++              [disable_deprecated=no])
++if test "x$disable_deprecated" = "xyes"; then
++        DISABLE_DEPRECATED="-DGSEAL_ENABLE -DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED"
++fi
++AC_SUBST(DISABLE_DEPRECATED)
++
++dnl ******************************
++
++AC_CHECK_PROG(desktop_validate, desktop-file-validate, true)
++AM_CONDITIONAL([DESKTOP_VALIDATE], [test "$desktop_validate" = "true"])
++
++dnl ******************************
++
++AC_CONFIG_FILES([Makefile
++		 file-roller.spec
++		 data/Makefile
++		 data/org.gnome.FileRoller.desktop.in
++		 data/icons/Makefile
++		 data/icons/16x16/Makefile
++		 data/icons/16x16/apps/Makefile
++		 data/icons/22x22/Makefile
++		 data/icons/22x22/apps/Makefile
++		 data/icons/24x24/Makefile
++		 data/icons/24x24/apps/Makefile
++		 data/icons/256x256/Makefile
++		 data/icons/256x256/apps/Makefile
++		 data/icons/32x32/Makefile
++		 data/icons/32x32/apps/Makefile
++		 data/icons/48x48/Makefile
++		 data/icons/48x48/apps/Makefile
++ 		 data/icons/scalable/Makefile
++		 data/icons/scalable/apps/Makefile
++		 src/Makefile
++		 src/commands/Makefile
++		 src/sh/Makefile
++		 src/ui/Makefile
++		 nautilus/Makefile
++		 help/Makefile
++		 po/Makefile.in])
++AC_OUTPUT
++
++echo "
++Configuration:
++
++	Source code location    : ${srcdir}
++	Prefix                  : ${prefix}
++	Compiler                : ${CC}
++	CFLAGS                  : ${CFLAGS}
++	Enable debug code       : ${ENABLE_DEBUG}
++	Disable deprecated code : ${disable_deprecated}
++	Run in place            : ${enable_run_in_place}
++	Internal mkdtemp        : ${mkdtemp_missing}
++	Nautilus module         : ${enable_nautilus_actions}
++	PackageKit support      : ${enable_packagekit}
++	Use libmagic            : ${enable_magic}
++	JSON support            : ${enable_json_glib}
++	Notifications support   : ${enable_notification}
++	Use libarchive          : ${enable_libarchive}
++"
+diff '--exclude=.git' -urNa a/data/Makefile.am b/data/Makefile.am
+--- a/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/Makefile.am	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,70 @@
++SUBDIRS = icons
++
++desktopdir = $(datadir)/applications
++desktop_in_in_files = org.gnome.FileRoller.desktop.in.in
++desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in) 
++desktop_DATA = $(desktop_in_files:.desktop.in=.desktop) 
++@INTLTOOL_DESKTOP_RULE@
++
++matchdir = $(datadir)/file-roller
++match_DATA = packages.match
++
++servicedir = $(datadir)/dbus-1/services
++service_in_files = org.gnome.FileRoller.service.in org.gnome.FileRoller.ArchiveManager1.service.in
++service_DATA = $(service_in_files:.service.in=.service)
++%.service : %.service.in Makefile
++	$(AM_V_GEN) $(SED) -e "s|\@bindir\@|$(bindir)|" $< > $@
++
++gsettings_SCHEMAS = org.gnome.FileRoller.gschema.xml
++
++appdatadir = $(datadir)/metainfo
++appdata_DATA = $(appdata_in_files:.xml.in=.xml)
++appdata_in_files = org.gnome.FileRoller.appdata.xml.in
++
++@INTLTOOL_XML_RULE@
++
++@GSETTINGS_RULES@
++
++convertdir = $(datadir)/GConf/gsettings
++convert_DATA = file-roller.convert
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook: update-cache
++uninstall-hook: update-cache
++update-cache:
++	if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After (un)install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++
++EXTRA_DIST = 				\
++	file-roller.convert		\
++	org.gnome.ArchiveManager1.xml	\
++	packages.match.in		\
++	packages.match			\
++	$(appdata_in_files)		\
++	$(appdata_DATA)			\
++	$(desktop_in_in_files)		\
++	$(desktop_in_files)		\
++	$(desktop_DATA)			\
++	$(gsettings_SCHEMAS)		\
++	$(service_in_files)		\
++	$(NULL)
++
++DISTCLEANFILES =			\
++	$(desktop_in_files)		\
++	$(appdata_DATA)			\
++	$(desktop_DATA)			\
++	$(service_DATA)			\
++	$(NULL)
++
++dist-hook:
++if DESKTOP_VALIDATE
++	desktop-file-validate $(desktop_DATA)
++endif
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/file-roller.convert b/data/file-roller.convert
+--- a/data/file-roller.convert	1969-12-31 19:00:00.000000000 -0500
++++ b/data/file-roller.convert	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,45 @@
++[org.gnome.FileRoller.Listing]
++sort-method = /apps/file-roller/listing/sort_method
++sort-type = /apps/file-roller/listing/sort_type
++list-mode = /apps/file-roller/listing/list_mode
++show-type = /apps/file-roller/listing/show_type
++show-size = /apps/file-roller/listing/show_size
++show-time = /apps/file-roller/listing/show_time
++show-path = /apps/file-roller/listing/show_path
++name-column-width = /apps/file-roller/listing/name_column_width
++
++[org.gnome.FileRoller.UI]
++history-len = /apps/file-roller/ui/history_len
++window-width = /apps/file-roller/ui/window_width
++window-height = /apps/file-roller/ui/window_height
++sidebar-width = /apps/file-roller/ui/sidebar_width
++view-toolbar = /apps/file-roller/ui/view_toolbar
++view-statusbar = /apps/file-roller/ui/view_statusbar
++view-folders = /apps/file-roller/ui/view_folders
++
++[org.gnome.FileRoller.General]
++editors = /apps/file-roller/general/editors
++compression-level = /apps/file-roller/general/compression_level
++encrypt-header = /apps/file-roller/general/encrypt_header
++
++[org.gnome.FileRoller.Dialogs.Extract]
++skip-newer = /apps/file-roller/dialogs/extract/skip_newer
++recreate-folders = /apps/file-roller/dialogs/extract/recreate_folders
++
++[org.gnome.FileRoller.Dialogs.Add]
++current-folder = /apps/file-roller/dialogs/add/current_folder
++filename = /apps/file-roller/dialogs/add/filename
++include-files = /apps/file-roller/dialogs/add/include_files
++exclude-files = /apps/file-roller/dialogs/add/exclude_files
++exclude-folders = /apps/file-roller/dialogs/add/exclude_folders
++update = /apps/file-roller/dialogs/add/update
++recursive = /apps/file-roller/dialogs/add/recursive
++no-symlinks = /apps/file-roller/dialogs/add/no_symlinks
++
++[org.gnome.FileRoller.Dialogs.New]
++default-extension = /apps/file-roller/dialogs/batch-add/default_extension
++other-options = /apps/file-roller/dialogs/batch-add/other_options
++
++[org.gnome.FileRoller.Dialogs.LastOutput]
++width = /apps/file-roller/dialogs/last_output/width
++height = /apps/file-roller/dialogs/last_output/height
+diff '--exclude=.git' -urNa a/data/icons/16x16/Makefile.am b/data/icons/16x16/Makefile.am
+--- a/data/icons/16x16/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/16x16/Makefile.am	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps	
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/16x16/apps/Makefile.am b/data/icons/16x16/apps/Makefile.am
+--- a/data/icons/16x16/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/16x16/apps/Makefile.am	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,26 @@
++themedir = $(datadir)/icons/hicolor
++size = 16x16
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller.png
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/16x16/apps/file-roller.png b/data/icons/16x16/apps/file-roller.png
+--- a/data/icons/16x16/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/16x16/apps/file-roller.png	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,5 @@
++‰PNG
++
++   IHDR         óÿa   sBIT|dˆ   	pHYs  ×  ×B(›x   tEXtSoftware www.inkscape.org›î<   tEXtTitle Aisleriot$eÏç   tEXtAuthor Lapo Calamandreiß‘*   5tEXtDescription Distribuited under the terms of the GPL3+×][#   tEXtCreation Time 2011-03-16ƒ­ô>  IDAT8u’]h[eÇï{ŞszÒf‰mš¤ŸYfÛ,³I©ÚÕâ†–	^x¥("‚½Ù.DeŞ‰"è¢b'2PñR/¼°Š u*“).®Yj»Zí’µMÎ9ÍéIòz±Z­ÿÕÿùú?<bzzš"ÜÙyô›ÿv ŞuÖÖ0†‡‡wI¹ÜO®×j¯:y’ùÒÉxl‡éÔ “\(ÇF†ÒO'ûå]òùì3-­O¬­Wm)´(üTÀq×ÁÛôØØØ Ÿc ¯WÇãqµº²2%şnáğá;[7OoÌÌ°²Z¡ÑZÛRÀ²,‚ñÜşî|>/
++…òÏâÙÙYQ®”ÏJ5Şt£n7•ˆ„BÆ6“‘P(iFÂ6dÂ4MÑji-¥dgƒDO×ó££¹ÿ¸¿P­V¤T*5@oª÷ñC·ßqlx(Ã÷?|·+9ÖÕM8¼€V«E›ÕÆéÓŸcš&Bˆ†êˆvÜ–¹~äµ©É[å™o¾äècOìjğÖÛ3´··3Ğ?H<à½÷ß¡¾U ÙjâÙ‡Òpx!„®Œóà±WR „äãOfÉf²ŒóÂ‹ÏaYû3Y‚`‹b±ØPfçPpßñ—Œ ğ‘BrîÓS|ğòı °GáÒÒ"™L¥=É^Òé}‹ „’Î%<¯ŠãTÍCĞ7~ï¶Í¾º‹¥¥E”R¸®ËâÂ"óó8wQ5ƒMm­bWkĞP©üĞ ¿^Ç/_¡rõ*J)ü­:ç?bÛmx®»¬,]ŞXû:B8&‚-{®æZh¬P~3`îÛHï»…å_!z]„ÁÁ?/”®÷ätBËĞ”´BF¥VÃó67¯Ñó\úGÆX¿øA½J`&HíM‹usùòoô$Íœ!úïş,Z;sÀÔltï¤aYÒ00MÓ´ñı:–¥°:(ÃÃq+8Î
++–åkSZ Ğ}üHÇS‰HëÑvéGÿëû´´i 4ZW…a4d¨Kkwõì£Å,»–È»    IEND®B`‚
+\ No newline at end of file
+diff '--exclude=.git' -urNa a/data/icons/22x22/Makefile.am b/data/icons/22x22/Makefile.am
+--- a/data/icons/22x22/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/22x22/Makefile.am	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps	
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/22x22/apps/Makefile.am b/data/icons/22x22/apps/Makefile.am
+--- a/data/icons/22x22/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/22x22/apps/Makefile.am	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,26 @@
++themedir = $(datadir)/icons/hicolor
++size = 22x22
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller.png
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/22x22/apps/file-roller.png b/data/icons/22x22/apps/file-roller.png
+--- a/data/icons/22x22/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/22x22/apps/file-roller.png	2018-04-25 00:48:55.283557890 -0400
+@@ -0,0 +1,8 @@
++‰PNG
++
++   IHDR         Ä´l;   sBIT|dˆ   	pHYs  ×  ×B(›x   tEXtSoftware www.inkscape.org›î<   tEXtTitle Aisleriot$eÏç   tEXtAuthor Lapo Calamandreiß‘*   5tEXtDescription Distribuited under the terms of the GPL3+×][#   tEXtCreation Time 2011-03-16ƒ­ô>  5IDAT8µÓ[lSuğïÿœÛÓ2JwéºMÚ]zÊetİJä¢‰™8ƒŠÁcö¤™<i”ˆáI}ÀMTDƒ¢DŒ‰J4AcØÜFéîsv÷‹e=×szş¾Pe‘m¾ğKşÉÿá›O~ÿË455áA÷@T ôÿ„
++
++[ öÅêIrFN§›€EqÅh4Z{è$}zúäIDÄ0¤Å¿ğ/Yo½yıƒƒ±H¸êp ¢t~E¸®nÓÛ6cGÒw2GùáÜ÷yÉb`°,>Ÿë+Ê™ßï§³33;W¼Š¬iîyîÙç}Ç>û¼ÿø‰S…„ÜÿM:º’ hˆnôÄb1 ÷²p|kìŒÍlqzfÊÚ©vë²R¾Rñx}KÎ¶>	®Ù}}ı·—ı¦iö>ıL°«³S"à®„€Í¬WÅH„o½rÙ @÷}áx¼¾ÅãñTŒ‚2ÙÕ•8µ*lÛe5Õ5TQÕD¢§ù?ğùóç‰ÍrŸ|ªf` ß$„ô®†ÆãÑW‚Áª¢ÄÍ›Oø/€Ü;y¥eEïoÙ=²toe2H’œÙßZLŞšLŞê÷Hy¨üàîÇv½&†7 ^X"„  °m.§mW[oˆ{ƒÁëéI&ó9š?ş»ï½óÆÎí®¹vã*^z±ù¾¨eY8vü#ìilÂââ"®·_ƒ¢*°m¿\¼€ÔDêD>ËÀşû‰7Ä+Ã  (2TU¦©ĞuÙ¬Ë20üÇbuõ())¬È˜‚¿Ä`00F\.áğ’7ó—ûààãö³ˆÕÕ#úÄËà8B8x½^$İØöğ¸İüúÛE‚€@ mm­#°(eJ€¹aGaØÜ÷ú‡¼ifÁİN£÷Æêü„  -ŒÀrø@ôyìÚó(¥(”£ªª###  ÔáZÒ1'ß†ªf Ë ›w@Õö}0ënŒÁ4uèš„Ä¥oP¹q(¥Pc£cÈfPJa†¶Î™Z6^2ÒÀ€……i°|‚±»4à¼Èê:Rã ”"kèèéMB\ày
++UQÆ—ÀN6¿8>pİ‹‚bbÙ»Ë7ûÏŞç³àt¯A*y	UÕ;0>‘Â:ŸÁ`}½=¦ejóMş+ÄÒ¾æEQDØ= œ{'çtó’U•¡i
++4M†¦åˆŒtzEb˜î†é(E¨2„ââLMM"5>Æ×ÖVlqùÃkssƒE¼(Š8ñİpG­o.&pVØW¹s:à8
++‡Ó‡C€Ã!ÀépÁépAÏêp:)§BSg!Ésà8eek™ƒ˜Lıı«ÑÃg•Æüä­ûàœt¼ùñ.=ògçŞµÔX³Üäå‹pLP–ËåTÂÓ\N(bjzvğÛvå( áoœÑ}ÊÒKs    IEND®B`‚
+\ No newline at end of file
+diff '--exclude=.git' -urNa a/data/icons/24x24/Makefile.am b/data/icons/24x24/Makefile.am
+--- a/data/icons/24x24/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/24x24/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/24x24/apps/Makefile.am b/data/icons/24x24/apps/Makefile.am
+--- a/data/icons/24x24/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/24x24/apps/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,27 @@
++themedir = $(datadir)/icons/hicolor
++size = 24x24
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller.png
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/24x24/apps/file-roller.png b/data/icons/24x24/apps/file-roller.png
+--- a/data/icons/24x24/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/24x24/apps/file-roller.png	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,6 @@
++‰PNG
++
++   IHDR         àw=ø   sBIT|dˆ   	pHYs  ×  ×B(›x   tEXtSoftware www.inkscape.org›î<   tEXtTitle Aisleriot$eÏç   tEXtAuthor Lapo Calamandreiß‘*   5tEXtDescription Distribuited under the terms of the GPL3+×][#   tEXtCreation Time 2011-03-16ƒ­ô>  ~IDATH‰½•_lSUÇ¿çö¶½íFéş”n“vÚògl%òG#3ç>(ŒÙ“yÒ(Ã“ò€/’¨0	ˆy0Æ?DcEĞlŒ Û(íş;†lk7K{ÿöŞÛ{|Yg‘A}Á_r’{ÏùïçüîïœsIkk+e0Ôıÿ °ÿUX\R² _V’ÓB2Ù–{3ùış‚Sê÷Şåù#'GÀïŸúnWÙ=í½w÷¢ØÎahd$ğÕìsW­˜‹Ï&®46®yß tònšc%?œı‚(ÜÓ((t]‡ÓéÄÊªJêr¹Øøìì–D|îPÁO”Ñ´–—^|Ùyøó£CíÇN”²tİzú¢ Xß°Úí l@„6OÔğÏÌNëkµ6E+ª5íÎúg•^cppèP`išæŞşü¾Ş^€9øĞTTÓ˜:/v¨è( jÚm·Û«Ç'n‚r§¯/r¢ À0*êjëXQ’b‘H¬í€p8LšİÓüìsuÃÃC!d y(Ôğ†ÇSS¹~]6Ó—¹~òï«bEEéGëÖ5ì/d˜ét</¤7„6G£7îDozrc÷¹Ò[¹gÛS[ßòûV!™œ !! a°Z¬èºÔ‰ĞúÃãñÒX,Í×.Âá0ùğÀïlÙôdÑå«—ğÚ«m÷€®ë8Üş	Zš[‘J¥p¥û2DI„aøõü9LŞ<–¯_¬ÁÎ];Ÿ­U©ª
++P@H’Y– (22º®bìQ›P^^A033W¹ ”X­Ü¾%3XkêéúiØ4L€ ŸvŸA°±	Ï¼†! „Ãá@$Òo†ÍfÇo¿ŸÇqp»+ĞÕÕ	`R|ºHÜ0—ø´o2iZaĞî$®şˆÑŞ_@ °%èf'ˆ2‡­-¯€eYT¸+QSS‹ññq°¬ÙºdŒp’”† ¤P¬İ¶5›v@Uõ…¦)Pd‘_£zõF°,Q1qs™Œ
++–e¡ªª¼$ «É™drKóó æçg@sƒ”.  ç@FQ0y{
++,Ë"£*ˆDÁqV˜L,$QœZ`¡s©©á+—MÍ,ÒÜâŸN[&£PS»S·'±Üé€ÇãÅà@LÓ5y®Õuq˜èòW?'[,^×>Û¨›0¶-ŒÅfšçyH’ Y!Ëd9·£$“	<">ÖÍ¼Şj/ÊÊÊ1=}“S¦úúªuV—oY61RzôÛÁã‹€cßõÔ;AÑ}ÎêMŒÅbÃ°0[¬0›9˜Í,f+,f+”Œ‹…a$ÈR¼ ÃÈ¨¨XFÍD£ÒµS7÷›dòOòòÏòímO÷)?{·/cÕ"ÂpĞÀÒl6+›Ír¥TJÆG¾éà 0ù ÀÔ©ù€Ü¿× @ğÏ¤yzH@vAG”@]ğ’ X9ğ	Hw    IEND®B`‚
+\ No newline at end of file
+diff '--exclude=.git' -urNa a/data/icons/256x256/Makefile.am b/data/icons/256x256/Makefile.am
+--- a/data/icons/256x256/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/256x256/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps	
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/256x256/apps/Makefile.am b/data/icons/256x256/apps/Makefile.am
+--- a/data/icons/256x256/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/256x256/apps/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,26 @@
++themedir = $(datadir)/icons/hicolor
++size = 256x256
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller.png
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/256x256/apps/file-roller.png b/data/icons/256x256/apps/file-roller.png
+--- a/data/icons/256x256/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/256x256/apps/file-roller.png	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,111 @@
++‰PNG
++
++   IHDR         \r¨f   sBIT|dˆ   	pHYs  ×  ×B(›x   tEXtSoftware www.inkscape.org›î<   tEXtTitle Aisleriot$eÏç   tEXtAuthor Lapo Calamandreiß‘*   5tEXtDescription Distribuited under the terms of the GPL3+×][#   tEXtCreation Time 2011-03-16ƒ­ô>    IDATxœì½y¸eWY'ü[kÏg¼çÎ÷·*	™*©¤B&JTb&vc EZ  1@%JR‰!øB#jl‚­âÓQZÀFÛV¿VÚC?>Q?ĞfªR©TªêÎó½çiÏk}ì½Ït‡ºó»ÏsŸ»÷ÚÓÚû¬÷÷¾ë]ïz¹ıöÛ"Dˆ½	ºİ"Äö!$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Bb#$€!ö0Äí®@ˆT:•«–«Êv×c· &Åì™™™í®ÇzÀD>Ÿ—Ÿ~úwåà?eæ~×µÓ„
++š@!çÏŸÃÌìÌvWuK¡i"Zä‚çqpÎKDY’GÓ<Y©”s,öùb±ènAU7äöÛoßî:„Ø"äóyúƒ|ïÁá‘‘G˜ËºDI„  ”‚R
++B àG?ú††‡¶»º[J(.ºèbôt÷ „¬ø:Q”Àƒ^Õ166Š‰‰ñ±‘ñ±·OOÿë&VwCZ {ù|^úÛ¿ı›¯JŞ¨(
++D"E„RÔš<!8wîÌç‘H$¶³º[Š+.¿}}éŸ/I2:;:  ëÂ¶lô÷ç066Ö§øÑ7Dà¿}ñ‹_~ïwÜÁ7«Î… öşæoÿæO¾IÓ4(Šâ›ú¤Iã
++s8?p”îßpoO/²ÙÜŠÏ—e]] „€sA!‰EöºÑ(‰¨Ñwÿê»ß5à¡Í«ùÆ $€]´ÎUœ—rÎ/wºx‹ÅzşfMÓ ª
++¨ xÂß‚Áó[Uíƒ}ûö_ø$^WäÉDÒ~€3Î\×ÁÀà `&8s¡ªÚÇÒé7JËº=!ÄÆ¢?$¥ÂÈ)f“<yòìzŞm%	`— ŸÏG ôˆŒÉùWy×Àù³ovë ,KT’%H’QA‰ Æ8CGOWTU…¬È TğL~ŞlVªLOÏÀóì$IhZÌ­ûíšŞ¾áq Š¢@’d0ÆÀ9ã¦¡ãŸşùŸP*A© €ƒŠ—¼æ"àò•Ôƒs]7^Ç‡ãÚ°L¦­ãÒË/y±««ço»ûmøÑ~ÔÚ—nAèÜÈçó .ùçş§w¾IYQ€ÀnY†$I¼Feèøş¾Ş®>ttv@–ePº¸“k`à<^:ıÒ–¾×vã’K^ƒş\m¿™ù‚òîîD£Ş(gŒ1ŒMŒÂ´Lä29p †¡¯ºŒ1”ËepÆàº¶m1]×Q*•P)—&/¾ì²#Ï<ıÌß¯á5—Ehìpäóy	ÀÅÓÓÓ7ÿøÄEcÑÌ7Ü€H$J)cp]„¿O .c0ÿ÷…oA‹h gàKRŠó0-s+_mÛA)…iY x³ğ·hşÚù„Àq  c¶kÃ²ôõöá5—\×u1;;ÆÙªëÂºê×PA„$`œ£Z­bhh°ûÌ™Wşêïø¥ã_ıê_şçUß|„°óÑ100pğÄ‰=uÍ5‡"™L†nÀ²MX–Ó4À9oø˜ë‚sR±ÀÓX®»ôu¡P€inŠ•¹cA…iÔI7Š;_XF(ëxßĞeº^­}sÛ±aè:\æ}÷5VŠ,CQD#1‚€t_„På{ßûîgo¸áĞ/¼ğıo®íÀÇùóçÛş¿oüË§.¹ä’HOo§éA Š*UåJ	…ù9Ø–Æ™×?eÌÓöœc¾0Ë²j>õÆY' (Ía™{Ë`Ì…i –éûûÛ²,×”sæ2Ø–ém3†¡áAægÁÙêµ?% €,ÉhK¦ ‰^wğ”öïÛÑ±Qéì¹³që­·^ñÜsÏ•ÖôÒ-	`‡ãÏ¾üÅ/\´ÿ¢¾T{
++Ìe€è5Àr¥Œb±€bi…BÜø Á¶Ã”Ëe¸®J©ß¶yí¸·Ë˜{Œ æó@ra9_¤à¸nÍüçŒ×4=ç•j„”JE°5 !‚àùm‚áE ˆF£$xb‰z{{FÓãÓc¿à×Vı EÀÆu7\ó+ó…ÂO§ÚSˆF¢0MÏì7Mår	U½
++]×á86 4uÄc1
++Øv¢(xÃWà5-ìPX–½ê:.6œ¸İX©	^(ÌCQÔEMÿ…÷á0M‚ ÀusÁ\OûW*eôv÷!¢E›ïµÈ=­/8J¥"fç¼ĞëJµâiÿQ ‹C”dPBÑÑŞtº§Nş¥;ï¼óè×¾öµu3vH ;ù|}àCŸÎd2H$’%	–eÁqmT«UTªT*Tª8Çvà¸lÛñ­ï>©öÆFGÑİİI’<¡/ôÜ“~_ˆ9\_Ãµ
++uã~};øÏ¹†øe¯¯_·²¨Û¥=ó¼åøB)k=Öj!UÊeØí©¦Ë9ç5!n"S”KeD£Q¸®—¹`.mÛ:K/¹¬¦Á½ûx•XzßûşÌeˆhQ”Ê%T«T*eB|¯ƒX,Jhš†Ş^œ??Ğ6:1ü« şøÂ_py„°CñøÇTUu®¿‰Dœ¹0-•jåJzµ‚R¹]×Q.—P.WP­TaZVÓ¸¶ëºxå•³DªªÖ¢ü‚FN@@…‰6JlmT€øû P”£v¡Ïö©ßÚ9µgÏ¯—ÕÀ„0ğÒ_`›1¾ œqÖDxAˆ1¹ù2,ãOîñÏ«=·QX]×ÅìÜ,$Yö…ß…ëº0ã£`ÌÅK/­lµÕB±M†eâÒK.‡QAm[p]*ˆˆhˆ’„¶¶6$	‹ó¯GH ¯N>|X›|ä¢ıûÑÓİƒX4æi¬J…ù*Õ2lÛ¡ë˜œœÄøè8fçæ`Û¶.ËÒyîë³@Ø4MILLŒgãñ8$IòÎïo"@Ä¢Q”ËAàZ ´\RB=&´F T ¨BPNh<¼	F>4îûó¼y>y¿¶	4ø(8ç^Ô¸ïàôşs ”8ãjÚµé<Oà›Ê9‡mY(—ËˆhZışs[ïë8^yåRm)Ÿ¸.8G"šÀØÄ8Šó8®Ó41;;bhªzÁ~%TD¡4<4¼ÿşıBoow-¨Ëql8B$Q„¦iˆF£˜šœ¾z#ÚZH ;ºYùT<ëÎd³èho‡¬(p]º¡Ã4¿Aº(WªE¡0÷R<ÿºş/Ÿ}öÙÅÇò(ÿ›”nÜåE³‰5Á AğfŠ¢Ó´À9 ,)Üğ¢	ÉâÇ÷‰Â{m ƒæsˆO“ ø5ámÔô¬E 9g¾ ³æsÊ‰‚1ÑÑ1d³9ÿœº#•7œã2Ç3û]ƒèíé…ãº	8.8:Û;ÆQ(00;ˆıèÇ_ïlïºc5¿û5×\óú¡¡¡o&’q¤òº~×ŒsQ!ËŠĞ%1ŸÏ“õN8
++	`‡á–[nIşúe—]Ş^Äã	xf†aÀe R†b¡Ó4¾—Íì{ÃsÏ=WúÎw¾¿ä}‹…Ò;İø·h4rH‘ˆ’èMö5{ AD©T¬™ûÀÓÚv­k°D7ú&iíJ¶±è~c¡†š5P7ã‡3º@S7¡Á‚h8Æ8C©TÀ‘L¶5œ×¨ı=Â®N<	Q”D`Û6Çi™Ğus³³ÁK/½ô’k³w¬ö·/gÛ£±DA„$ID	 Ë<ò¡T |ƒ$Iá0à«Ó3“¿›jk‹gÒ}hOµC–eØİĞaÛ$Q„$)°Ì¦g¦+]õñÅ¿¸`cH$:€ëİ8^,–“$).P
++*PP*Ô|A´›ey†ÄRÁÅƒuáÅÒç,p"6ËúJFšyMGš/6,ÚàÃ9G±XD6›C$©•5^Ë\€×b+şõ›ßÄe—_MU¡ë:*Õ*æçç1;3eÎÌÌ}î›ßü×ã·ß~ûê53!ŸnïhG[*…h4Q='!ãp]ïÙ–eÂ0hŠrzÕ÷_!ì ÜğS7ì+NÎ½ó’K/FoO/¢±( Oû›–	I’Ä@Å©OA ô+ïyÇ{†ÿâ‹±âgH’ò™‰‰©/RŠ§c¯åÀ~RÅï€×00•ÃJ‡şúƒE‡é LOÏ@Q”Zˆõ‚ëZHáå3/CQ¨ªæH’4Q.•~˜JE?âºì•µÌ¯¹òªËŞ+âÕ¹lİ]ˆFb`Ì…ÄpÓt0??R±Èº³é§WıEÀ‚>W~¦££CÉ¤3H¥Ú!K2LË„aèàH&Ú%044ˆáááÒ¡C¯yh-}Àl6;à `š¦8::zØuí×1uÃ_j¡\ª`³+:—Ä–òmQT¿™Íf-B(
++…ÕO€Ã‡‹S3ãOîß²¹,R©¥Ğ*¨ïüã Êå
++¦&'J~xôƒG_Üˆ„#!ìÜtÓu×Í—Êw¦³tw÷ ‰€ùzlÛFDÓjk‡eZ8ıÒiJşàÎ;ßYøüçÿl]ÏUÅ¹è¢‹¾àó&!V‹B±ğ©TGvÿ¾}èîê¢j0Ìõ’$ÃqLOOallœwwôş€5Ä/ÄŞIı²ÃQªVŸéîî2é4ÚÚÚ Š",Û‚a „xÁ@¢ˆÁ¡AŒLıÄë~ò7wCÊ©ËãğáÃmÌuèïÏ¡¯¯Ñh€7¹ˆUU!ˆ"*å2†‡‡á8î¿=zô7ê·	`àğá¯Ïd³èêêFDó´¿®ëp\Z$‚h$†R©„'~E?}Ë-·ì­ÀıW!òù<™/Î}¶£³£-›Í¢­-A`Y\Çñ†ı$®ã`|bCÃÃN&} €³Qu	``®0ÿ»½½=$İ—F2ÙJ˜–	Ó2@)E,š 8pîÜ9LNNøØ£ŸµÿîÇƒ>¸q~o.—COw7EíØ0- ªªRÅbCƒƒ „í½ï}ï°i›BØf\ıõÿQ’¥«³Ù,ºº:¡©*\æB×«p-‚h$ŠÂ|'Nüš=êÿ…Ø>äóy=ÓÓÓ­e³YÄŞ´DÓ4à:.$I‚,É°mãããÓ\qğ îF’H Ûˆ|>OKå¹Oõõõ¢¯¯‰xÒKRaşÌ3‰xŒ1¼üòË˜ŸŸÿÁC=ô?Bí¿ûñøãÜHAÿC?ººº È2lÛËH(ª¨ „`~~%ñ¿İu×]#wÜqÇ†’H Ûˆã=|,õg3YtvtAQ8®İÏ,Æ ªfffğâ©Y2p£@ˆ­G>Ÿ'¥rõ™t¦OÈd2ˆÇàœÃ´8Ì…,yÉGMËÂÈè(&'§fïü¹7?`ÃW
++	`›pûí·kÕjå¡t:¾tâñ8 ?èÇ4 IñÛÁK§OA¯T¿qôèGÿe›«bğĞ£İ¥¨êMı¹~ttt@òG|,Ë„(P(Š·DãÜì,‹GŸ>xğ`i3È?$€mÂØøÈ§’‰dg&›E{{‡òkÃ0t0Î‹Æ!Ë
++&&'ğÒK/9±Tâ#¡ößıÈçóÔÔßÊfÒ¤/F,óÒ‹›ã$’(C×Œ P(~ôcOc´?À¶àoxC‡iHg2èíí­M÷B~YA<–€eY8uêEØıw~øÁow½C¬ÇşèG‰Ø¥ıııhoï€ ˆ°,–mA(ŠÎ9fff080€d*õ k³ü>!lfç&ŸN¥ÚãÙlí©v/ÛmA7t€{i $IÂèè(ÎœyÅèÛŸ9:şv?>¬Z–õh6“Eo_"šVKLÊ÷%T«¡Z­üğè‡~›8êÀã'òÆKlÛùål6‹zÈ¯®ë°-Š¢ ‹C×uœ<y„ò/½ï÷lw½C¬ù|ËÅOµ··÷ds9¤ü Ó2`Ûvm®¿ë2LMMcphuöô<ÀÙLò	`‹1[(®««KÉd3õ_Âˆ'!Pƒƒƒ(^öš+×4á'ÄÎÂ“O>Ùå8ö¯yÄßUU½\~&fEQ!^ÈïĞĞ \Çùç¾ïƒßÄ&Ç|„°…¸áğ7qÆîÈf³èîê†¦E¼L?z¶ã@Õ¼ßr¥Œ“'O@ÅÏ¿ıío/nw½C¬ù|Š³OwwwÆs¹Ú’IJ½a?Û† ˆŞº~Èïğğ°ÕŸóB~7›üCØ"äóyR.¯·¯GHg2H&“(…išĞ”ÄcqBpîÜYŒMÜõ–»?jÿİÇ;v9!äí¹lİ~È¯cÛö'š¦A ŠÅ‡A)ıë{îy÷)lÁJ­!l>şäc?'Rñp.›CWW7TEƒãº¨êU¸®MÕD1??'OBQ#Ÿ:pàÀêõ‡ØQÈçóD7¬Ï÷ôôÊ™l‰x `˜ÇñRIlÛÆøøÆÇÆÊ7Şpó1lpÈïR	`ÏçIq®ôÛétéK§‘H$@)ñ‡ıT@"ŞÆWÎÁìÌìÙGzäCí¿ûññ?úQ’níïÏ¡«³«ïaY&¥Ş„BQ(x!¿Šªıñ­·Ş:¹U1!lyì¡÷jí@.ç5UQ`;C‡ë2D£Qhš†ÙÙœ8yñdôá0èg÷#ŸÏ“ùrù?§Ó}4“Î ûñ\×…"ËD	¦ibtlÓ3ÓSwßu÷'±IA?‹!$€MÆ‘#GS7>á…ü¦Ç½uäõ*Ã€(
++ˆÇ’p]/¿|•ré{½ÿ¡¿Ùîz‡X?=rìŞ¨¹6—ëGGg$?ŞÃ[¬U€"+ fgg1p~ ñDü?]|ñÅ•­$ÿ 6/|÷ÛÇcñx.—Ë¡£½’äÍúÒ.cˆEâP“““8uêkK&†Ú÷ãøñã¢e˜ŸÊd3H§ÓˆF¢`®Ó0À™I’!J2CÇÈÈŠ¥â+÷øÁ?ÂOõ	`qÛm·EÃx0“É İ×‡XÌùÕõ*¬ ä7€mY8uêLÓø—£G?ö¯Û]ïëÇ?üÃ×ikKìëÏåĞj÷3ı˜°lTôC~™ò;4Ä;»:Ãù	àÕ‚‰©±O§R©\.‹Tª¢(Á²ı,¿Œ#‹y!¿c£xùÌi§·§ë¾Ğñ·ûqíµ×ÆMËüh&ë…üjZ.c0LœŠ¬z!¿zCCC0Œê¿ö¾ûşÛè%$€MÂáÛwÛ–u$›Í¢·§×ùõ‚~LË„¬ªˆÇâ0/¾ø"\ÆşöøğÊV—±c‘Ïç‰Ã¬ßjïhoÏårhkkƒ xI^lÛ† 
++eŒ1LMNahhÈÍíÛÿ  {;È?$€M@>Ÿ'ÅÉùßëììŠf³$ÛR†i@×½Üññh‚ bphçÎ5.ÙŸ'ü¼
++ğøãg™ë¾;—Ë¡§§Ç‹÷hùU¢ ¡ì‡ürÎ¾~ï;îı¶)Í[H ›€Ç|ìRæºoËå2èéî…¦i~¦Ÿ*lÛ‚ªhˆEã¨”+~È/ıÓ{ïıÀøv×;ÄúÏçIY/}®»»GËf³H&“ „À48N}Âã8˜˜˜ÀÈÈˆqÉ•—m›öBØpäóy¢ËÏôôôÈ™lÉd”P†ª^@ÇA(Áùs¿æêë	µÿîÇO<zH$ôÍıı9twuC‘ØÃ4 ‚z–ßRƒƒ$áÏßúóoÀ„ü.… 6O>ùøÍ”oÊe3èîê‚ªx³¾ôjå7ŠX$†b±ˆ'OBÓ”ß{Ë[ŞRŞîz‡X¼<úç{Ó}b&“A<á…üš¦	×q ‰rmx|l“óoºíçÅLøY!l òù<™-Ì®/İGÓ™,ñ$@t£
++İĞA(E<ãgÎœÁäÄÄøënúÉ§Bí¿ûqü7ÿI¢¿?‡ÎÎ®Z|¿i T€ªª „b~¾€ÁÁAD¢êç¯¹æš9l£öBØP<şøñ·(²rS-î[ñòºW«¸®ƒ¨ED‹bnn'O€Q?ù™Ï|fÃVy	±=ÈçóT¯T~'“Ít:S÷00×…,K^–_ÓÄÈÈfgçFîÿÈÇ~[4ág9„°AÈçó´X®|&“I#İ—ñB~9PÕ«0TOx!¿§O¿„¹ùÂ™GyüÛ]ïëÇÃÇşµh,zE®í^¼‡m™°,T ËŞêësss@"™ü$ c'D|†°AxèøÇŞ‹E¯Èöç¼TÏ’Ë2=íÏâÑ84EÃÔô^<õ"Úâ©c;¡„Xî¼óNÅ2õç²Yô¥ûÆÀ˜ëı¸%²äeùF¥R9ù¡_ÿĞ—±CVw
++	`pøğaÙ0ÌgÒ¤ûÒ~#`¨ê˜¦Y’'aÙ6^<õ"ª•Êw;ö¿¶»Ş!Ö‡|>O†FH¶¥úrı9¤R©Úº–e
++E­eùd]=cB~—BH ë„—ì±ğh[2™Éå²hOu@E˜¦jµ
++æºˆEãPcc£8}ú4K¶Ç?²İ}¿ëÇ“O>™2MëÃÙl==½Ğ´×›æÍƒ¢¨E	•ŠòkÛÖ¿9rä9látß!$€uâ³ŸılÌ²¬û³Ù,zûÒˆD½<5í¯¨H$0/¾x¶e>wìGÿ}»ëb}Èçó¤X*ünggGÂËó—õƒ~³ü2æbjz
++ÃÃCv6ó 61ÇÿZÀ:ÏçÉøäèg:;:S¹\í©D*À4uT«pîeùE	CCC8{ö§·'ó¡Ô B¬>úè%Œ¹¿,í­ªJme'ÎY((•Ëçü½ãïúvHß?@H ëÀSO=v÷İ¹şœŸêYƒíØ(W*0-š¦!£R©àä‰`ÿóCúĞËÛ]ïëƒ—ç¯üû==½J6›E"‘@`^?Q”ı_©^qÍ‡°ÍA?‹!$€5"ŸÏ“é™âÓİ=İ‘l&‹¶¶6PJ ë:ôjñX0pş<‡«ûrûïßi ÄêñÄı„7åúsèêê‚,+°ı•8 EQ¼ßâ< *ÊŸ¾ùgß<‚¦ı ÖŒc»„ÜÕßßïÏúRaÙ6*Õ2,Ç†‰ O X,áÇ'O@éŸ¼ï}ï›Üîz‡Xòù<)æŸI§Ó4XÚà0L®ëB–$ccã˜œšš¹ó;?¨ı Ö„|>OÍŠş¹¾Ş^9›É"áÇ}ëÕ*ôj”/^–ßñ±ÑÂ×¿.œğó*ÀCÇúe-¢½¶¿¿^ROË„a „@UTPBP˜+àüÀyhZäw¯¸âŠ"¶9äw)„°<öØÃ¯WdùÖş}ıèêê‚¢(°,åJ¶ë ‰!ann'Nœ€Q~÷÷ÿ÷«Û]ïëÃ‘#GË¨>•Î¤‘îëC4c†nÀq]È²ì‡üZÁü\aà£|; äw)„°JäóyZªVŸNg24öB~ã¨V+0Œ*D* ™lƒË^~ù4ff¦Æ~êõ·~f»ëbıøÖÿıÖÇ¢±øÅ¹\?:::!ŠLËğ×v P„ÌÍÍb`` `î” ŸÅÀ*ÏçÉ±cŞ­)êı¹º::=Æ·LTª¸®‹h,M‹bjj
++'Nœ@¢-ùñpÂÏîÇm·ŒZ¦şP6“E__4ioÃĞı	?j-äwxx½úı÷¿ÿƒÿ;(èg1„°JTõêS½}½èéé‰Àq”Ë%èÕ*AD[¢cã¥—N¡\.~ôáÇÿd»ëb}ÈçódtÌşt[*Õ„ü
++‚Ã0`š¦ò«€séé)²Ş¾¾a…ü.… Vûîûà=„Ë’‰„?ÙÇÂü|³³3¨ê:4-I–1:6ŠOB<™úèNíû…X9>ıéßèµmë}¹l½==ĞTcC×«à~È¯,ù!¿ÃÃp\ç¹÷¼ë=Ïc‡k $€Uajzê–ec~~###xå•Wpê¥S8óòËC¥TÅèè(¾óÂ0tã…ÇyìowC¬ù|LL?×ÕİÉærH&S ”B7o…Q„"+p]†ÉÉI[W8¸ãB~—‚¸İØ:t(i‰VL´Dwffˆ
++çœ»ÅbÑ5M“»¥RÉ˜˜`háKüÇ=÷üÊ;'§&_ãÍç?ù=6    IDATÉÉIT€a¨ê(%xå•³`Œa||W\uù»¡¬_ÿú×	 üæoş&,Ë:;]Ò>jY–`k¶ ¥„Ä©ã8‚$9‚ë2 P(cºàºL „P@¦„8¢·
++H”W@]×)ôö¦FµdW—ª¨ÑˆD§m[˜úÊW¾RÙŠ÷|âSO\à®ş\?º»º½u-†QÀ½,¿¢ˆbÉ[Ú[ äÜyçg°ƒ~¹ıöÛ·»kÆ4Aæ·º6ùYv˜ iŞA@TR;‚Ec9g`œƒ0Æ F'` çœ`„P*€PpŒP0×eŒ¹Œ€1ppÆ9wÃ¬pÆ	a ÷[7!Ş6@@8¨WOÂ9!Ä«tp^	@Aà¿‚zğ~Ä¿#8ÀıBN8áÛşC¼m|NB9!!àœr€ øO¸g)zœSBAMXÚ—nøæ,o)~'A!ÉD‘ú à”£şã	… º(IßWTåÉØ?œ;=ô­çŸ~C….ŸÏ“ûüÈ?õöö¼á†nÄşıA‘e”JE”ËeH²T‹÷8{ö,¾û½ï–~æo<póÍ7İqÇ;Şüv©pèĞU×Ú¶û0ˆ{7¤j¢(AJáµÏúù5YZ¼Ö¸ıİ(m¾èæâ%¼µtáÅ|ÙòE^Si~MÒ¼A”·\³ÈÅË[Á¡åkèoŠ¢I–¡i*( Î½ßœòÚ«rpÎÁ\Çu5Û¶—æ‹‡³s&#Ãoû¥»şKDM|áÏşìÏæ–¯ÅÊğè£¿‰RúÓ¹\?º»º ÈßÇ0t€p¨ŠAüL?ƒPUõ7ß|óv‰öv™põuWßÈmçw!?¥¨*Q’$AP*€RâÿZá&ƒóÕYşyşjß}³Ï_¢(BUTDbT€ã8ü< Æàº.\Ç…e[0¦a@’d£­=õG©xûÇŸ}öÙ5g[ÎçóôÃùõíß¿ÿÀõ7Ü€şş}ÅbåjŠ,#‘hs½xşğ‡÷¼ó]Wö÷÷ÏïtÏ#v…pğàÁ(cÎosÇı€ÑUÕ ËDQ¬	üv}#vR]v"(¥àG5oÖœëÀq€\øÛ„ E\æP˜MÓ`š&ôª®NNL<P­”éïzç‡ÿüK¾¦¥Ö?úĞïÑ´È\¿ï!‹S÷ò;MÕ PŠÙ™Y"™Hş§şşş
++vhÈïRØñ£ ×^{àÇµNIŠøëÉdBH$ˆD4È²ìk~
++Ü.‚$IˆÅH¦’D–my—5ÀóËPˆ¢EQ‹ÅĞ–jC[[ÃLüõÛåî/?~|UŠîî»ï–Lİ|2“Ë Î ‹Áe.ªz¶ë@–È²Ó41::‚b±ğò}÷}øYìĞ	?ËaGÀÁƒWŞj9ì¹h4’M&’ˆF£5Á…~÷AQD£1ÄãQ8×İ8?!‚ xK®ÇbH¥Ú¼4l£ã÷9ûÒß9rD[É}òù<9yêäã‰D<“ËzK{‹‚—âÍ4¼_MÕ@Áìì,Îğ®îG˜ØeÚØÁ]€ƒ×üEÂøWÚQ-‹BQ”gê‡X9TU…¦jPTÅË˜»J¿ÇJA(@hTóGm(ÆÆÆïp{îïxÇÏ}õ«_-,wı“O>™´LãşK_s1Ò}}ˆD¢p]•jË‰xÁ^AÈ¯¡ß~àèƒyìà	?ËaGÀ7¾ö=Œ±/ÄÛâR,ƒ,Ë tG+!–¦E ª
++¨H¡ëú¦	€ÀPUÄ÷+LNN¾®³³ã_ï½÷ŞÛ¾üå/-v]>Ÿ'>xô·;:Ú“¹\©T;¢R)Ã2M…¦ª ˜™™Æàà“Ëö;|ÂÏrØqpãÍ7~ŒRòÙd<Fc±8dY
++…#B’e€sTõÊ¦#(¥5Ë‘‚éé™,ÅşıŞ#÷¾ñËÏ~ùLëù>úà>Ë²ïÍe³èéõVu¶U½
++—3ÄÔDIF¥RÅàà8Üü=÷Üó]ì¢a¿Vì(xıë_ÿ¡üÉd2X,I
++…7#AE8®Ê J)dYöVd&³ssıüù{ÜsıWıÊ`p^>Ÿ':zßï÷ôv«Ù\?RÉ C¯Â4Mˆ‚7dÉ™ò;::¢_ÿÚ?oiï Ö‹Ûn»å6Ëq?‘Jµ!‡Â¿Ë¡(
++TU…e¨T·Gø$‹ÇÀÌÍÎuªŠüß>üSAôà#?r£ rG.—COOÕKòRÕ« 4Mƒ$I(K„ _yãß8ˆ]0ág9ì¸ã;ÚLSÿb{*ES©¶°Ï¿Ë!¢Ñ,ÛD¥ºù}ş•€PY’‹Eá:&'¦~â¢Kr¿ñüóÏ*ŸÏ“û>üÁÏg2Y!“­§x3–eA–$¨Š
++×u11>ñ‰ñÂ›ï|Ëãğ´ÿö¿Ü:°#Àuí?'â™T{
++‘H$ş]B¢Ñ˜·8Jµ
++Ç±·»J5Jü8„,ÛÆÔÔô'îy÷=ÿçØ±3²$İÔßŸEwgdÙ[É·Z­‚€@Õ"Esss8?p‘ˆöÌÕW_]À.îûØvøùŸÿ¹#„Ò»:::ˆ' ŠÛ^¥ë€¦j E¹\„nèÛ]ŠêÅ
++ÌÎÍ	•bé«½Ê.¾è"dÒYÄ	pÆ¡ëUØUQ¡Ê*lÛÁèè(æfg†üi¼
++´?°Íğ¿ğ3nÿ^{{ÚÚ<Ó%ãü;Á¤ÜíØŒx
++Q” ª*
++…Y”+åû;	‚ -¢!fÛÚÑ"ÈåúÑÙé…üVõ*ªº·¶ƒªi ‚€Ùéi ­­ı“ tìÂ ŸÅ°mÏçÉşÑùïm‰T¼}…¦$A2Ù†h$MÓÂ  UB×«˜šÂèèˆ¿xÅÆ…QBDP*—P,—à8;7"!~W ÅË§_Æ¥¯yúÒ}ˆÕB~+p-UVaYFF†Q®T~|üáG¿Š]ò»¶ şëŸü×'"‘èMˆ¯ÀôÇã¸hÿÅ¡Ğ¯²,#™lƒ¦Fğâ©“H&Û IÒ†Ü[UU0Î0_š‡®ïüè”RLNN!£?×ö‚ˆJ¥C÷'ühAÈïy¦¯ï ^%ÚØ&¸ç{¢cŞßÙÑÔ
++LI’±¯(ü„L&ƒï|ç(²ŒˆÖ¾n§+¥^„ÜÄä*•5ÏÀİmˆ¹##£8påèM§‰Fı<~vçh²¬À0Ã6­o¼ë]ïşìÒß¥°-@)ıX,–Hµ¥RĞ.`úBËöC„-¬á«’$¡\® ½£â:­ EQà:.æ‹ØöÎñúu¯+/YÌéÓ§ÑjC.—Cª-R”«è†*ˆPUoîĞôô4††‡ìK®¸tW‡ü.…-'€ûï¿_™››ıP{{;ñÄµGG'EÙÂ¾úáº.^|ñ®¸â
++ˆ‚I”Öl]á¶#³Ã¨êÛëõor+ÈAVK˜f&'¦qí5ÑÓÛ‡HDƒe{«:sæ"‹B‘Tªsşÿ¾õ-o=‰WÁ°_+¶œ ªÕêÑX<ÖjOA‹hËjöh$ŠX,¶…µÛøñ‰C(ÚÛSˆD#ë²®$I‚ã8˜+ÌÁ²Ì¬å…±”v¯¥3kü á©S/¡»«Ù\©¶6 €^­À2o$C‰€q†É‰IŒTn¹åcäø_¶” ?.NOOİßjG<‡"+KjBˆ¿îzˆçÏÿÛóèííE{{û²¿Á…@,Ë˜˜CµºùIz—øºÜ/øÆ$¤Åùyççqİõ¯EOw¿®£…Jµ
++U‹@’%”J^È¯$)zÓM7c—‡ü.…-%€J¥òX<iïè@$]Öó¯ªjèôÛœ:u
++¶ccßşıH¶µA^G÷JDØ…é™†±µ\¹9ß(Ü‹–ù×JpòÄIôõõ"›Îx!¿¨V«°,²$CS5?äw““ãÓïyÏû?…]’ã-Ø2Èçóäïÿşïuvt#™Hxóª—ÑşŠ,/HÃÚñ­oı;²™úzû]GØu0ç~xt•ĞşkÕîõCK~pÒäø,ÛBnºº<í¯ªÕ
++"‘($Qªeù'“¿ÓÓÓ3Waß?À–À?şã?¾;]ÔÑÑ‰h4v´^Œq4·ÖO%ˆ¡ñX+û„{gÎœa˜8tèb¤R)(Šºæ{QJaÛ6&§&¼4Ù«Ä²ßğ{.gÎ¯Tğƒ²“'O"“É"“É ‘ˆÃuª•2lÛ‚¢ªPU¶mctlÅRÑùÀû?øÇxı,†-ì°÷··w"‘ˆû™ZJ/54©%ŠNód`1Rà<¸¯‘Ãr¤@)Y´Ü»îÕKßşö·‘ÍfÉ¤‹E×5şO)ÅäÔ8ªÕêC~×Ögo.«í5ô‚²¦ë×; 8÷ÊY¢€ş\ŞÒŞU½‚jµ
++‚ˆ… ˆ˜ÂÀÀ É„øÂ÷_8ôÆ7¼ñŸ×ü‘v¶„ >ùÉOvT*•S©vD£^¢¥Í4­¦E=êmËşÆc•P/Xx]0¹nó³)­7ĞW«u188Ã0pèĞ!¤RíëÒş€'Ô3330Í…ÿ­0çW*ø c§OŸÆ%—\Œt:ƒX,îåù+—a;6"‘TE…e™ñcŒªñ–;î¸ãŸÖõ¡v8¶„ t]ÿeUUEUUkZg1­ái†…‡ï†5“BóuK[H
++^rÚF"!×Õ­‹úñÆc‹ÆÎ³.¾õ­o¡·×[Ö\^Æ¿²RØ¶ÙÂ,Ç^9o9V/\¿à×Ê›ËNœ8h4Š\?::Ú!Êåª†
++ˆD¢ ”bvrƒƒCÈf³˜˜˜@a®p7€×õ¡v8¶„ LÓüÅd2	AÀ[²ñéz«9Ù¬áá56‘¬`õ,î¿´œ5x”	YÒºh,¯7î†Z-c]´’ÂNğ]ŒŒŒ`vv—^z)4MclÍ¹øÀüŸ„eY „®Àœ_DÈ×aÎ/&äK‘Œeš8î<®ºê Ò}iD"^Èo¥Rs]Ä¢1(AÈïğE†ª©eÅâ|ÿÑ£G=óÌ3ß_óÇÚáØtxê©§"?$g´íºÆhçã€ÒFAY\˜ãz#à/Œ,º½X—£QÃ­Ôº¸0Y`‰wÜ8ëâäÉ“hooG{{{Íy·V‹qÌÌLÃ¶¬š?e«Ìù&¯qG+	ÔÿÿàßG{{
++Ùl©¶(¥(—½	?‚àkÌÌLctd®º
++ëBVdLNN‚qçn !¬ÓÓÓoEQ•$	Œ±%§‰z™c8êkE4M3)4b©ò•kØVái\ µ[A–9Ö°¤ç
++¬‹ÅIa¹c«µ.¼pñÅCU½´VëÑş‚à­áW,`;ß¥[JÈ+[™9_çÚ¥¿Yã{ÛõÅ9Çü|ccc¸öĞ!ôööA‹h~ĞOŒ»ˆk^ÊùJ¥ŠÁA$’IJ —C–%”¢P,¼Àkş`;›N º^}k{»—_1ŞjÛaÛVCHj]˜šv  Í½ñ”fYnìÅ5¯&¼pñ‘ú¨oyV£æYÊºhî¦4¾Çz}+!‹™™èº¶¶$(¥pİõÍÓ'(ÌÏûÎZâñ……¼‘$hõ5j÷†·çmÅÛÿîßAww7²™,ÚüßJµC×!Š"ZœsLMNbbr¯9×õ(õ–“QœŸ¿ò¾ûî{ÍüÁ,H#şjÀ¦ÀSO=%9sægdY!¶í,jª2Æ@÷ÿ×…©Qø9oløÍ¤À9Gëmëæu³`´šÑ½UøƒÑ`Ô ¹»PÀ…D½^­X¼ë–:¶6ëâôé—F¡ipÎaÛk' ÏüP,ÎÃ²-PB7Ìœo&ààxÎùa¶ƒï0=9…b©ˆë/»ŞËòë{ù«şte-óC~Ë@Wwsáº‚EŠªbfzé´s7€Ï®ùÃí`l*œ?şNA’,qæ­ ÛïÇdPd©öÃ.åô†ı‚ëšÎİ„…f5Z-4ûÆ!Á€Dê°Ùœ×¬}ëÇVkª¯Åwqa²8{î,ÉQ€ã: l!¯’(Áöh¶m×ãjB¾yæü…¾Õ*üŞ÷¿‹t:l6‹d2	Î9*å2LË‚,)ˆh˜Ë0>>¹Â^}5lÇöŸÃıY288Ê¥âÛÀêaXÆ[ñø’æ£À‘Ú<ğê/ì6ğ†kêç^Xó.µ]ïÛ7®WIˆ×À=ÇdóùÁöâÚ78·õ^«qö-ï\ÎºY–…ñ±q\wİu ”¬ÛüEºnx\€.ïåßHs~!Ù-.üœsÂu]ìÛ·İ]İeº^EE¯€‚h4I’Q˜›ÃÀÀyd2Øãkÿú½Á[ux¾XºáÈ‘#±gŸ}vgg;Y6• ,Ë:$Š^²‰VïcıáÁÆµUø$üàüÖ{/§í=¡§-e¤öÇ¹ëß¯±¡ÖÉ¢Õ°¼©î.è¦,Eë»ô±å‚˜Îœy¢$" Àº“uÈ²Ó0à0w¡ö_`Î7kõÒîÍdĞêòöOüøúûû‘IgO$À\×³Z,š¦AÓ"pcccĞıÉ\-% c‚@!Ë*•
++!i÷ ÿ¶–ï¶“±iÏçÉÿñ.(g®Ó<›²Q€EÍ³q“wcA÷ vVÓ=ê± ­Ó\Öhª{“Õöa"„¢Y;5{ÿ[-Z5uã¹«qÖÏ_É±…ALõ'œ>ı2bÑ8$Qs8k®ãj@)slÇs¥0ç·¸V#ğ‹i÷:Z»EŞşéÓ§¡(
++úûûÑÕÕY’Q®T ëU?è'æ…üúY~³ÙÌ‚¥ÊƒçPJ!‰f«³à¹!¬_úÒ—® yfõâÂlkš\šªkòf@]Èëåõ`«fXÊ„ºÙ”g¬N
++uK 8¾0ƒn£Q¿oãóïo/=f¿t“÷üÕ9Ï;ıû÷øA;–+…(Jp]ã‚1”ĞUšóK	xëşJ~áõœ{‘¤¯œy—_~92™,âñ8g0Œ*ãˆD¢Ş„ËÂèÈ0884Umèû·ZT `ŒC7×®å»ítl˜fõFJ)8gp{†oñ}Íf| ê©•ï×\¶œ0yÚ¾ÑÜ÷Ê½1mJ›»^9k±g_ı½ˆ‹™ññ¬Î|…ù(‹_]©”aš:¢ÑÈ’ıÿÕ(
++µÎy­°ÙæüÊïÅqòÄ	$“mØ·ï"tuuA’$Tu®ã@QDcöŸššÆĞĞú÷ç<‹¦!.¢ñ¹Œ1PJ!ˆªåêu+ıV»	›F –e¿VQUpÎa7Ä‹/hü µ±×æ>|³¦o|¶Dy iw’ğÓ&á49¥¬&ØV!¬FŒ¡š­æ¸w¼Ñ_°Tß~¡ .oA V·ÅŞ ¦§§ $Y‚Ë\pgió%D @mÂâuÏwÖ-ÜÖfÎ¯ôzÎ9İÀèÈ(^{2™â±8@¼ø*Ğ"ŞP¨¡ë¢zCÓ®ë¢U‘4nSJ!
++,Ë¼òğáÃ4XLôÕ‚'€¯ıë ~ögo;¨ªŞúê¦aÕÚrkš(
++°,Ï9Õ(ø¦A­<pzÎ;V?g1R¨ÿˆ(J©ÿ'€RAğ¶	apİºÉœA]ğÒ`¨[DsLB«ào„#p©…Fs|vv¢$sÇvÂ–´ˆßa)pNà¸o.³%´uµæü…-…Ö{Õ'N «»û÷íCgg'$ßa	âe—ŠDb ”bvvcc#èß×ß¹Ø=KG”$èÕjäÒK/½äùçŸyÙµË°Y 5MãrË²À9ó' ÔµE I’ G´¦¢µ˜À×·›?¸¾•d8¯›ı”
++$‚ B½ÿ”Ö5¼÷ßë÷â6Y‰¿¸ğ{&1k*«ƒ´pİT_ªÿŞêìk&·éXıšú½gg§!8wá¸‹Ï¿XK[Ìepl»ÅÿÔo)a_›9¿Ôõ‹Yv¥R	år¯}íuÈf²ˆFcµÆDA„¬Êe¥rCÃÃˆÅb-mhéûB Š"ŠóóàÔ¹@H KÁ×şôØ±cºaöØ¶]¯¢Zõ2üxıü†¸s-‰b“àÖXı
++f°Õ}Ì¿g}v¡ë2ß4­7,OøëZ]DÈ²E‘!Ë
++$‰R‚@|K ŞEğBg™OŒ5
++`-À'¶@xÖ–x¤yÄ¡±Ü»n±{Ô‰$ø¾3³³¯ß¾Z`ëy’ï ç~7 îÔVç¬«ï¯<êßÅã’¤ 8_Æ-·ü4.¿üJ¤ÚRÃÒq@	…ªª%.c˜™ÆäÄrû2°,{ğ/ö<BDA€aš`®{À_-÷ív6Ã ‘Häf—9Ä2-”P‚ã¸p]·ÖˆxCChÎTïWÌu¼ñYÆPsçæhİh´xM˜‚0VQ¡i
++4-ŠHÄc2¼‰J·@0ÄG›„¿Ñô‡k/ß ¼¬%ê®Ñ¸à£­`Ô`1nÍêS³ ff¡E´4·"h<GE¸"Z 7ç—:Æ9ÇØè(æçç¡ª*:;ºÉ&qëÏÜŠT*…X,J¸®×u JŞ„J”
++s8~ Éd¶í.a).^— =”ËÕë/ôİv6Œ |íO PË1n$ 0M¦eÁ¶m8íEZùª¦)(méÏ×	 øá]·®õ=aoøÀÂ¨k¦Æ~j x^d—ÇÑĞ:lC½ïüğŞğ[c7Á# î$\,N`¥C‚µ­E536"èzê´ú³	!˜+ÌÕLİùby2Yø|ÿ\¸Ì…ĞL´zg]#VŞmğŞóÜ¹³0t™tW_srÙ$QcÜŸæì@Qhmü^PJa™&&&033L.Ó4W,ü @((ˆ0ãª¥¾ÕnÅº	àÈ‘_îr]ûÉÿø«¿x•/İ¨æ•Üå^ÎÀ\Œ»5¡G ¸¨ IdğŠ9à 1î³æ<88«Gßq0p††ëü{Ööî!¹•ª‰jµË²üÏÆˆ?Q”ğ†n€çZ³\·QûÓ–¹ğÍÎÀVùj$…•:=á_|øo¡à×Ÿáº.J¥2ènéáÂ×—öúÿézØØ¾üRÇ‚íááa˜†…Ë/»¯{İO@‹D`Û*Õ
++¡PdÅ³&)…÷í<Åà¢T.áÜ¹óhïlóÿåãRÁõÛišË~¬]ˆu€ëÚ¤¨êİ“Lò›ÍXØ?\ä²æ­¦[´6¢zYã}mÛa(•ª›®W!Š´æôâ ÎPÊ –÷Ê+€ùs<G ¥Œµï¿Ğà³²¾}½Ü­Yå…¾ñ>ÓÓ35KXh%´ö¥/LŞoÇ|+¬öe7@ÀWrlfz
++Åùy\yÅÜ|óë¼9üå²÷^ø“Í$™€‚ ¸®Ó406:ŠRy]]0MsÕİøßÙqíî»ï–şú¯ÿzg-€¸¬‹ î¹ç(ã•·´··AÓÔšÉL	¡–¤Íÿ	õÂHúĞ°ˆ§w­`œÃ²ÌÏÏ¢\®@ÓŒL¡Zõ–E¹!O!ƒ(r0FüaBV«;¥ğMÿVá'–ÀB3{%}û…Ç[GĞt^cÀQó¤w¬T*ÖÒ®7:I3ÿWÚ%àœ{ñ5ëÖ?sLNN!Îâúë¯”ÊEpÆA ?Ìql¸AA¨7±«X,âì¹³hO¥`[Kı,U¯ÆoçzÉl’ ¦—ùT»
++ë" Iª¾
++’(ËRC2Æİ-¤TS'ıíúø{,êÄA	Y¤Ì'”Úvdt´÷`høepÎ07;¹¹
++dÙ„,ÅÀœ—jş ¯ÏXÄx¡Iøƒ¿VK ñ«†¿PŸ¿u8¯ù[ÎÅ…çALŒ¶íeêáğúÿÄï¶ ˆä÷¶ùÒ$t«Ø‚fÛ_/1LNNBÓ"8xğjp …Â,DIjø–^WÏqX–—XF$LËÂğÈ0]‡ª*pjg««s`%ÙApÚ€ÇaQU¢µ	 «…÷q=¦p7aå5J)dYC<Ö†X<…Tªºn@Qe˜¦	Iò†EQhÊV,Üú2òƒ…ZGêfc˜0jeæzG¼²;ıÇs¸Ìüq{Ïy×µ<£¥;rÁaB¾²qó<ÆÃ|¡ˆË¯¸‰x3ÓS`œAÕ4¢èwÛ<ã®ãÀ¦V¸KÅ"ÎœG2•„iÕ«©WÍb ^>KÎÉ«jÁÊu çÄo;Œ1F†QªÅjëÆôôTU X–Ã0 IRÓJEã×£i­,ˆ÷"›@‰ö    IDATƒ‚‚hÁ¥´¸‡ú¨Akym«ÉZğ|Áıš­„`šHÉupæ½00°j‚ÎQÛß´ßR3—s¸-Ù„7»P)—!É2úzû0=;…J¥Y’½*ÖÈ˜sâSÓ_”$”ËePBšæ0¬§®ãÀ%¬mÁÚÅX¸Ä19ÑêŒÛ‰°mšC2‘‚¢(ˆDd”JlÛ‚eYE±Öñ¬ /Ü¶>ÌÈj¤àY-uáoôÀı÷¥<ï‹+ÙÅœzõòÅGêNÂÀtE×ã.\æıySy›c"‡ø¼—^¤{àÃó­ò†9[ã(•KH$à`(ÌÍÁq0•A|¿aN÷"ÿ8`{~EQÑÖ–ÄìÜì²!¿ªàı6ã¡Ğ ‡LZ8ƒm'"˜'ûÃEš¦`v¶Ó´!Ë4ßq|9ğ|{ó¼X/6 Q#7šã­Â¾¼#p©å¹ê]ŠÆ{Õ-ˆ:x‚X$Æ«ÿÖ	æì·’€ŒûÕl$ J)8c`œùAYËkÑ~ÆlÛÁş}½(çı<©µÌå 5ÿ!”S€3¸œÃ±m¨š
++—Õãı×c½/iˆã†@‚Ñ˜Ég'#  IV ª*TÍ›İX ²,Áq}(åğ¬€@X8<ÁlÖ¦@½;àm7kñ…Ö@ıXë4ßÆğa×m¶Ï^ÔèLõºíøN»z ˆ[ „øæ>j$¶\×€PRK$âºÎ²4­ûkuzaß."Q¥â<\×¥€ëØ0M
++J«>øN_ïKƒ
++
++Ç±A‰—# KvV\gÏ‰HxH Á2E¶öõå·5¼y ‘ˆ×e5°mÙü~% –a`ú{ó(êiÊ‡2]_FÓ=ÀbãùM{şnkøpp­G$‹ÿ4
++¿×p<ÍÇY­@ÀÁ]âå½‡åˆºS°q;Ø÷¿ ¸çtÙ¦hûÆı€`ôªÎºÓ2}+Æ›¾K–aB0ğ'×K€êc¼Ùy¹Zë%p4€eÙ)¼Š°>Àt¦È»¢$$	¢(@SUÄâLÃ‚ã8p#AE&]ãL@„xZ¹9FİùÖŒ@Ğwzzaùr£õ!?Òr~İ±H)…mYpÿÿö¾4Ö‘ä¾ïW}ñ>Ş=ófŞšÙÙİÑêX­¤D‘eq¢lAB€$ş`Ä
++O‚ p$€ã/‰¾‰ûƒ/±’ÀŠ'qìŒµÉ®´:GÒZÒÎJÚkÍì¾™wğ&›ì³ªò¡ºÉ&Ù$›|ÍwDÍfuu5Yÿ³şõ/—ÂqØ¶ÈŞ+ûê2óı=©ß¯Q;0ı0íY¦Ñ¦ıÎ/†i ŸÏ¡ct¼£<ó‹K‚¸%bûMO³ñ»DŸĞš‚³³š.B÷#plg§b Œ)'ÎP’$!•N"—ËÀè˜p¶í@Q(Šì9ıx¿“‰ô¢ò§ÌÂæş'9û\ğ»ğó½Õ‡Òáúu,Û‚ãÍ‰+²)`3ûY‚,ÉdÁÂ¶	÷D×	Ê…¯Çw†Æí zÒßq]±ì"—$çbŸKş:"Ëœ¥€v¥iŠ¬z}dÂ,8rgégpŒ[Ö©	p@ĞnsKQÃvó=~è¦Ä"š–@*•B:•€ëR¸®ëIK±lVQh×Ù$.éüñT÷}AØ4Úøß‡wÛ>7ìı~'4` BdP—Â2Mt: DxÌe²WÅ[øÄ‚Sœ=Çfïù<Ç—o““è=[|> ŸÑø>qÎsàqÒu¾rÂzL ’÷gñc'Hw“¿áLXÒÏ¨}ö=fuœ"Ğ	øÁØïØw’O€¦%N§/d‘Í¦aš6,«:+Ì€Ş²` (õ{¦‡¥|øô’8?ùúÍƒ~Í€ó)âºNm½Î8dI‘%(ŠEQ ª*4E…¢©Pd\æHÿòâàŒ‚p–üƒŸg!2@80×…¢*İ¥ß½ßSHÎ˜÷PJáÀÏ8å-5÷›.e ŒÃui×—3®/ã| )ÕZèŸsBq ğ¿ñïÍßÿƒß¦œsÙ”aƒş8 ˜³X\ƒ®·pîÜY(²‚R¹†½İ
++Ã„ëR/ø‡Øú{ÜC¸tš[ù;3ˆ^Õ~¢íô‚?ƒÀ9ƒat ·Û`œA–H2¬¨ĞTZBU5$ÀÀT*TpYLuoO ŠŒ‹i@ Ü‘6øy–ï|R*™øğB%¿!Â—Á‚ßÙÂQÉ9 xm90MS0 d‚	21øAUª–¨àá@àÆœRVr]÷Œ¯FW-€s†V«†\n	ét««g  ™LùBËKy˜–ËòòŞpêŸ¯Gœ£¦ùÆúA1ìg`œÁu(‡B–$£»vB–$È²WUà:.Ü„®Ó ¨vs_ Aw£ıötqyÿ’6¸ƒto–%XW˜ ˜1±¹İõiPJaYÚF»›Õ‰õiÑ‰ŸÒ`¤´0‚ ydÛÎñÃ÷ï–sÜP©<†¦%‘H¤°¼|©Tõz©Tëëk0!b¾Çl¢1kğs¬Ì€~jºïüûÜç>Z£‰jµ‰R©×$Ù…Ke¡Îr&£çR‘¤7è¿Sê‚Ê²P­ EÇÕE0‡RÈC¦Wo}?à;ô†µ*ÎU…ã8h·;èèm/ŠLMüİ6óÒÍŒ/| ƒxäØÎŒq(J¨ëûØ€sûÈçWP,®!•Ê"•ÊbccË[JêzS>õ39Î,ÛB«ÕÀŞŞm?BµÖÀ;Q­5ÁX\|ŸsÓ{®A‡§ëR¨*A¿0NMÀÏùH]*1úŒù÷ŸÑŸ‘»!b‡®7Ñî"éŒ*÷Õ™¦ÏŒ3‘cP’@¨ÛÀ)ÂÁ5 ‚‡–m{cTXëQağj½^B£QyS9oi©Ô7èçqÿù^% K*’É4–—Öpaë*.]ÚÁoÜFBÓğèñ.îİß8`ƒ€@&²#Ğ[V-IRW+ Ğ[Lƒ~›½¯ÏõÀ38gvÀğ—} !”ö¦æzLÀv”‘L$áºÍÛIpÈà3Ì`t}Ll‡FÕ…	ĞÆX–	æ-AEˆ¯Y0«:ÎĞn7Ğn7¼Ï‡{ÿ™ïz»á“Š¢¢_ÁÊò>ö±O"•úUÌtÜ½÷ À–$HŠÙ¹ï%Wqğn¤ à™ ŒA"óõˆÏÂ‘G]®ëzf		$8ıráMrñ_2J@$IR¡iÓ@½^e.8W¼ºÓ÷ÓwL2*œÃÜà ÆØ}Ó´¼=ã˜0mó”¨ƒùğq˜,*&w"ØOÛ¶P*?F¹²ƒ•å³¸ví9¸®HV©ÔQoèp]-ÁVT¨¶Y–@épö`×uÁ¨X…'î3=!M¬ç3– ¨Õ8³±Şí‹ìe ’$	Ä%İé=a¶#PMä€l·°·WZD2“YM—® L‹‚1~Ç4Í¾]Vm³aL7˜ãG|ÏÎÃ‡«p”ÊÛH$ÒX[_GK×a˜&^¿ı(Î-!m©°¿eÖ]9ôL eê”ZQëŠsİáMsVª¬¯­vëKDQ\ö¦j…–ĞİW’ ŠªÂv,Tª5Ô›M$µdŸ:?K¿„oÂŒ[·no²x‚q`P.›wry0×u$ÿn:„İ±Ó}u&j7{73Œ8çXY)¢Z­áÂ…³xğp”ºİµ”©`ŒB’ÅJĞq]!AAúˆ©ïNõxš#@ˆPí-ËF«ÕF±¨tM"(ßB""EœK‰·^@ÌË¶ZM<züHÌä^¦è°¸‚IıÓ€.¥eùÔ¤óq`pëÖ-ûÿöÇ+–e¯Qñ#EĞ fó)òe±İ?Ö«éa4UE!Ÿó¶d§ Tîæ TD»ÚìdY&\–‡˜*ìß ^€DĞ[á'¥rù|Nø!¼õŠ,È2üT4‚ÀI’½ö÷«B“ğ<ŒsMÂÀ&õ‹R&ŒLŞŠğŸ(Ä²1›–¹æº.EíJÉ˜Ÿ8ŒNOG«9„ßG©4dYF:„"Ëİ¤!ŒQPo
++zÎ.h$bï-ËI7©YV`Ûv¯kqù ‚I¼eËœ ^o¢İn#›Í‚§|%IR×_„Ñé`o¯Çµ‘Jˆ]§8àçk›ªÏşgJÅZ‘T*óÚ¨ßõ¤"¶MÃüãÚH 	€ˆÌÀ BGï©ÁSİ>Ö>µæĞ«$Ë©TD2™$,Ë‘n”vsş1&$±oÄø¼RÇõ²"ÍÇ@x;ñˆèEJ)îÜ}€gŸ¹êÑ/‡ìåe|	ízCµ^Ãöã¨ª
++I–=FÒ3Æfq úÙ†Ó™Ä«c~ä‰X ãü5]×Ù¶L “‰ü ÇI>pËÇ`ö"[í…ªjH%ÈeÓ0:µ^¾W…q*RlyñA–·´X‘•¹N› (U„:po½sïö)!‘]Únkîİ}Y"PüŞ=ü…^£î=ªŸboE±ì8‘IÿUØ/z’ ¾Újé¿é8(u»	¢â°Õàh8šg€–H"•N"•Ò„êß%~·{LˆH¯åÇX¦‰„ª"™J%¤ƒ2Î9 	¿ª(`Š“r†‰·Ş¹§®\„¦i^¢d±F€sv»ƒ;÷„C–ÈŠ<4í7­yâ; Û†¦jí/ş›/>¸ñ™c~İ“‡X€ÕV¾Ò2MÓJ:UM„0€£Vƒc½0Æ.²æàH.—…ªÊ]5×_íæKSP³‘dÄ¥Èİ}¦s¦Mã+àœC–	®€ª
++T*ÎµZ:~ôÚX[[F.›¦©0-Fõz²L ©*TMÒŸ„KÿiúâgU’eéŸ¹q´£9 pëÖ-÷ãı?Õuı…b± Í›{4+f”ÑsÖ&fîU”¦biHG±˜‡,¨ªìm«EÚ ƒ$õç´,”QowcÇFğCõ<¢•%M«A8àpP—ao¿„İİüÆ’$A‘ehª
++MSEşIî¶yL@Ô¥°ÉTêÇ8…ˆm{p‰ğïµZú¦e"›û¶9N fbNƒù`µf½0‡9*­2*ÖA¤“X*fQ*7»^¨ë‚*r`—#ñnš&8cp]‘6Í²ægt‰HÅ®jj7Y‰«P0—Á[™ vîõ€¢ªeoGgo™cTse¤
++`¡X8uö?'ÈW›MıŸ˜¦!²ĞÈ
++,Ëˆvña«ÁÎÌR%NÌ¼ßR„ËÇö6ÍÈ£Tj€³˜K½È@±I"Ğ7\&¢×…,Éšî‹ü§	HD†ª(²"–2S*f Áºûôg6>ñû×;ğ‹ä
++…ïÿ’'±1 EQ_j4ZÔ±Ùq,¨Š
++T½æ8 ãjhşªúı ‘-9¶	MKauu?ûÙ» ñqøQÔ…$û3 <`˜Ş~ŠêÜ| aß±¿¡,²É’È[à¯îñ
++Ã3
++é‹ï ´mªª2§ã,L€qøÚ×^k|øùK÷t]¿fš&ò9±ƒÒ`XpÜƒy^˜½õÃ›½ˆ4{Û±%@¾G"¡!ŸO¡Ù4Åš Ú[…7˜í¸İé@Ó4¤S©n>¾¾;Çå9&bƒø¾Iî/Ôõ£ÄÑ/Çq`[pû7Şˆ¨Î,ÄÆ  @"äÕVS¿fšmärÂØé´"_›û,V¢‹Ñ©7SCñk~ğL*•A¡CµÖB­¦Ãue‘.Lñ ˆHêš®·PÈça964Mó²{÷›À§©;ÖYÇ£9ù¦iÓŸÿ7MZBû3œRÄÊ dYúz³¥ÿj»­ce…!‘HA×WOµ<¿ÖcÓâ¿ÁP3¶cAÓÒX][Ãöö.6®KA
++*Ón‚æeÔul–%‚‰Úí¶hïÌ€ƒ~7Mş9×qàº.Îll~©R:UÉ€»ˆ•(Šü—M½Ë2Ñ1ZÈfò 6 Ä:˜çÖøšâc>ÅŒ˜šm™H&ÒXY^‚¢HÈæètl¸T†ã:]±ğ†P"Ş=çšŞnAQ¤Ry Ûpó¸|–±™RË² ªêÛwîÜùN)be ·n½³ıÌ³gî7›úû
++z™LÉDz{Ê
++Cc÷ˆµ†‘78šÃˆ*¦ÙF>·„B~	ËË´tÍ¦!ÖØË2W8	éß<T×ÛÈåò°ªªÁ4{¦ñ¼%sßáéÜ—	»®Ë²J&ş¼ÙĞ‡êŸÄÊ  @Qå?.—kÿºPÌcuÅE2•E³E}:|5øŸéÂy11Ë6aÛT-­­-<~´UKƒ]Ç…"‹LÀ‘@dˆ‚°-mÃ2…`ÂpœÕùA‚ŸÌ  Çv`;6Ö7ÿpoïTmĞ‡Ø€L¤ß«ÕÿÒètd]o PXñ²ÉÒCÈñTš¯º_ëÕôvK‰¬¯¯#_HcÙ°±·×„+Ib¾ßém—.q)àÔ¡È2
++…"8½áæàç£Pç§='€¨¯ş¿ûöÛoÿd¨â)Bìàöí÷¶Ÿzjõ»µZã“Åb…Â
++R©,Z´€£Pƒã»ÛQkaMMnL×(.­#›-àìÙu”+pî%¿pQXÀ½À}¾ã:PU–eu¿ïëÃ1PçGÇ DîD©dâfÑg±N"bg   (ò*—ªŸ\^.Àq,¤Ó94³«Q3Ek<¶Š'Ms`Œ¡Ón!›-`só<îßKKÔj†—'P,‹ İtáaÁ®ãÂ4L$´LÓôº8_;˜^Ÿöç¶íÀvl¬l¬}	;§.XæÂ }6ù‡õƒêoëíN¾Ñ¨beõ$Y†ëz©¤‘|¼.;ÜÙ Ùª!“Éceu++E4›m/O ì8ŞªºŞ
++@ßØÒ[$	Å¥"€ùÌÄMÜ“˜‡ıgš&UÙ¾ûæİ[Cœ2ÈW¯^½Ñ7ßl°¥•ä‡<—JkX]Ù @ ëua3Nûâ£¼ş={íLeª~öî?¾Ÿs(İÙGpÇ±PÈ¯@S5Pjcgg¶Í`Y.ˆ$Rsù¡¶Aˆ9oÏA©›&lG^ÁîJåÜ¬e°-Æ:õzŠ¬ü;£c~'z8Î˜‹  š"ÿ^¥Rÿ•ÚmÅÂ*J¥G}»ôN±v¸.€Ù[Ÿk?ğ„¨ÖKX_ÛÄ¹s±¼üÃA³e@r$B¼€ ¯:ï­¯oµš !X. ëúTñ÷ó–îaçÆÕá\B¨Kw¹¥ß©àtÿ1  *óİtZúµT:±¤*ÀòògĞõÆé5¥Ô ‘1¦¹æ0 ‘EaûO1Í6
++…$“iPæ`woŒ¦a{Ùy}- _zÚ¶L&íåè—Æ&UºG=7‹Äó¥­Zƒ,Ë/vRK%>L©ïO&Ïj©ÄÓZJËØ¦ıx.sD˜›  ²Bş¤R®ı«b!½UÇÊÒJûÛCù|²Ô<rÍaî¡âJÆ(ö÷·±yî}¸xñ}xğà>,sÍ&‡ã¸  \h X*ĞÖÛ]‡méµŞ¼µ Î9\—¢ÓnƒRÊ—WŸ¦Tş; <àœq˜&•—–s¯~ùşûßºqãtdš›  +Ë©7MıŸ—rˆ‹ÕÕM¸®ƒv»9¥DRbÒB%r”~¿at£÷É4;ÈçWNeÁ™ƒJ¥Î9tİìîÔC0¼yªmÛH§ÓP’,R7²ôVJÏÃî÷™atP­Öpælš¬¯'ÕBAÕ
++M+´D± %ŠE-±²’Ôš-{åékÏ<°,ûTÄÌ•ÔëV+—“şãìZ2© “Ía©¸†ıÒ#18§&º9ÙTD7ìÔ‹—‰E)ş^x“™Ã´}tÅâ²Ùªµ=4›-˜…KY—ø‰‰sŞ]:œÏçašæ‘«óÓœ ÇqĞh4aYÎŸOÓ’Dí›6û¿ÆI+G…¹š   Èò¿(í×n,/”ííûxÿõciiåòc'5x.àc?ÎÿşQáu¡Q/£­7ÍpñÂEÔªØ–‹Ç;m±kéíÈ¹·ƒ0!h4H&’°mÉD–-ƒBŸöc–)vZ_ËzÏ6T½‹å¥vvÍçG×8Y˜;xôÈz{müÏı½òßO&T*;ØX?Ri[H©¸1DtÇ€À"Ì^Ì¿—Ñî°ıè.~úy\ºô4öövP¯·P(jh4l Ë HWòûÎ?½­C’dlœY‡Swºÿíaò,çÀ…ô3…¢<vL¤ÓkŒ³İWFV:a˜«	àcy)óıF£ùëÙ\Z¡ÌÂÙÍK°mívó`jpÁ›ªƒ){?ã1lÛP(¬"›Í£RİE§İA«å ^FBzE¼ClK$	!„ ›ÉÀqœCQçâp©‹f³…J¥Š3gSH$ü{„ã³g¶°³Û1ÊÕÚ?µMû½¹Ë!cî  lo·®¬Iÿm¯úkÉ¤†ı½GØ:õzyLâĞC–Ü'@s˜‡Â†Gî#“)`iiW¯>…z­	ÛeØÛí€ôÌ ï%Ig¨Öª Ré4Mën"zµ J:êõ:²9ù¼ÿ÷ûeYÆææ5Üúîÿ©´j­S t(  
++9åŸ—+_ÎåS+¾‰âÒ
++._zo¼y˜Û­MOAó'ºxn0{?Ã/¼{÷6>ğÜ'ğÔÕç°¿¿ÃüÜ•$*e£{•ïpô€NŠ¢BÂ.¶.÷²÷òX	9T•X¯Ïî·,Ôë¸‰­­ìÄßïâ…§ñÖ[wÍNÇüñ5OÅ €/ù/­ç_xª¬7;ŸO¥5XVçÎ]£.ZzPƒL5(ƒıšÜÇC˜©˜²Ÿa"Œ1´õÖ7Îc©¸‚Fs¦a€ Óv@¸OP¤{)ešPUŒ2—Š}ZÀ¼¼ÿÓ˜€˜ºlÔë¨ÕjØº†ÜÛC$KKk¸xáü¿—¾áÊDı‚á'A8˜;xñÅÉ½{÷ üøö½×®?{ñç]J/+
++ NqáÂ5T*»İf&èa„Ê„v\œ¶ğ`70¥Hƒw°HR<voô"úi;c8³±Y‘`Û˜¦	Æ8Ã©»Ø–"$“Ih	ÍÛôs¾¾€°sau(¥h6[(—+XYI ?P‰$>úÂ/à›ßú¾Y©Ô·^kœª¡s3^|ñÅĞ_6½’ûB­Ò|£ÏdwvßE>¿Œ«W>ˆ7Şü¾Gøqc~œ`¾Œç8Ø¤»`ÿ]äsE¼ïò3°Ìcà|Ka„!ÀÀ¡€CÌ
++0‡¡Ñl€HÀ•+Wº{¥İÏ9÷´š6jÕÔ/Œÿ	!øĞ?{÷îáŞ½¥ıİÊo½òÊ+ ‘€c0Šø×^}»õüGí´ôÎg2™³‰3 È*t½›“ÏE’¢³Ièy—¡g	+ÒüúŞh”‘Nç±¹ykÀ¥6¨ëÀ0ØNøŞ b@‚eYX[[ïî8|˜?X—RŠv»J¹Š¡ck+I¥Å‰òÌ3ÏøÊÿıv‡ÚøüÍ›7øÏyïŞ=rXæó<+ªûø¿~÷ûüÀÕ§LÃú@&“€i¶péÒ3h6« ®3×Á/aFèç¡«ïaeFÓ#@@õz	©TçÏ_c·áº6s¡·L¸.8ú|à€eZ .EÇ0°¶¶ÖeQv–ş†]Ç¹XÏ ë:J¥2Ú&¶¶2P–ı…	Ï<ó<ŠÅU|åÅ—Ãp¿ô'ü§08¨ïİ»GN:#ˆŒ“úÇ ƒüùÚFö—(ågµ„Æ\lm]E­¾ßõÏc0-±ÆÃØæû,á}!¨7ÊĞIl¿ÛiÃ±-‰Cošp)ë¸ğã  ‡eY"Ø¦­cuu’—\dZb«7êœÎ9ÛA³ÕDi¿ËîàâÅ4Tu´êOÁõëE6›ÇK/}Õ©VÍw÷w+ïÁƒÎÀXîâ$3yO÷ıîİ»ìƒıÊgkÕÖ’	í¬"ÉÈdòxßåçpÿşO1´µøÌ&ñáÙÒñvñp} Q{ğhû.ØYŠ÷_ÿ8£İİyww[èt„#—qYæ¹"‰ìAëÀq\<óôÓP¹o7`ö¸€Q`ŒÁ¶m4›M”Je¸¸|9BF›î’$ã¹ç> xùå—Üı}c·Õ0~ş•W^	«‹øíx‹0Bú"şnyóõ{æ‡?üÌ·š­ö?d)á¸är,¯œA³Ub”¾‘¤f˜ô;*|”g™A»˜ñÙôv²$ckë
++7…--1€º.ÖÀÓ ˆg¸®Û²Ğl6±´¼UÕÄ€˜RâO‚ïì3Mõz¥ı2´Ã¹ó©±ÄŸÉäğÂG>…V³[ßıİß³Ê­¦ñÉ›7oîÏ]œT-àÀ`ñ“	Çäõ×ïì~àù§¾¦7;— )×í —Ë£PX…®×e@Ï^&]4Æ3Ïg‰ÏŸ|±ç#Ç…× ª’ÄÁ˜M•Qoı`õ  ­IDATt¼xˆ~s€R
++Ë²Q¯×QÈç‘N§û…f!xşô±Û_©TQ.•Q(jØ<›ğ­ûĞ×ùÍË¸şì¸s÷'øñOŞb{{fCo?wóæÍ÷0Lø}šl'‘	ˆD”üËOnßİ»~ıÒWLÃù<ÏPj"—Ëc©¸†v§ôÍ¯¢+±ÎÏ±ï³Dï§ih·8sæ
++Å$‰‚q†tZ…e90M§Kü¾€1
++Ã0P*•aÛ6–——!+"qFÀ'z_İo·Eho¹TF§£ãÜ¹$––”‘#1“Íáúõ"ÎâµÛßÁ»»FµjïéÍÆ§oŞ|ñşˆñ<j¬8yLà@ Äã?Ií~–‚å§?ıYõüùóÁ˜û9ÇvsÔµ iÖV7atÄÖLóÌÇ8ÿƒD$0ÆĞlV‘Jf°¹¹U¡ÁŠBĞ4šn®À “Ğ¶m4<ŞÙ*«Èæ²İï&±»1…ã80MºŞF½Ö@¥RA½^E¡¨âüVZ"œ±¤R<}íC¸|ù:Ş{ïŞzëÇ¸¿Õî´İ—ßzãîg¿õ­[{—Dç]œ$@nÜ¸1Ó…Tÿ=ŒH!Ç éãÿĞÊÓ×·~_S”¿yîÜ:6Î¬ãÌ™s¨Vw{iÅç—ãíĞıw!³Ã½ @UX*®¡\ÙG©TÂãG%”+ìï5P*5!KRw¿A¿ €$IH$’Ø<·‰³gÏ ‘H>ŞÕ8Àñ|
++†aÂ0H`X^I`iI…$…wPÓ¸|ù:Ö×7ñğá;ØŞ¾‡zÃÆÎcÃ°lç·ş×ÿøßÿQÜ¸v<öƒÇÁ÷.NJ Pœ Œøı÷ÁÒGôÑ~õşÒ?’%é7W×–2›g×°¹¹×µ`1oÔxÈ³‡O˜ó»ã¨–s¹%0ÆP.ï£\®co·Œz]Çîn—ûˆß÷	!H¥’ÈåòÈdÒH¥’b±‘$v(fŒ2àé´†LFE6« =¡¥*.^¼†óxüøŞ}ï.Úm»;fÛ´Üj¥TùÂË/ı5ôˆ!œŒ#ş>‚?Õ`Jé?Š„> Ù?şä/|äâ•Kç~WUå®­-áüÖyäóyXV{xš0ÌWp“±ç|·ù^r‰¢¨H&3°,µZÕjû{†	€rŸŞSU	¹|JÄY– (”~ƒ|~	ç6/C–ìí½‡reÃ°·k˜Í–ãmã‹_ıê×ÿK§ÓqĞ#ü ñb §Fˆ+`”ô¬3Š„ùÛ_ÿáÎ·¿şÃ_ùìçşÛıõı½Úõõe²uş<TM‚ëÚP”Ş–£»5ãÓY±ùÑ=g”¢ÓnB’d¬­®£X(bu¥ˆZ­‰ı½*:†l6‰l6M•cë“"+XY9ƒt&×upÿşOaÛƒ¢ZµÍfË…i_zõ{?ü;;;b*CŒ· úÍW`˜À‰wnğıDa@ƒÄvnCıòöï øÁ§>õüÇ,ÛùÇ;;åäóYiuuéLš&C‘å§Gô‘¨Ç‡ÎÌ„FM÷†Ó£É=í«Û0nhğ¥nWÚ‹E¤3,¯Ñn¨U›(W`”"—O!“Ñ *ÒÌÉXdI†šHˆ¤³%J9êu›W«–á:¬Õl¶ÿó[o¾ó§<( ãÌ—æ£Æ$ßøˆCK‚pí`œcpH#øæ7ô¾ù£»±±rîúõ+?·²’.™L^ÈdRÙd*U•¡(
++TU¢ÈİDd°c»±Úµuø’Ñu£63T-òıƒ6ö¸*ÑÚ##?İmäuD’ È2ŠÅ2™$Z­jÕ?ª@"¹|™lé”U•1<AØE½Ñ@[wÜ–îØÕ4Œ[Ûï=ú£ıèö« l .†	_B?vûÄJ÷(˜ˆ2’Â~èàùQNC€ïíU{{•o¸ ³¹¹¶yñâæ¥d*™K¥MS’‰d2«©j–HŞD@H˜ÁéıÅ‘ñN8	g[A÷C„ÁÉyàâ‘J%TéUê»ÕP§Cî5êC°Ÿ^Ä¨æ½ºd¸s| ?Áóı7õ·÷÷³+R§)£ ”A‘0p´t-İŒ–P¹"Ëe…"şÎÀ‡1Ë¦œRÆ qÎaZæ£j¹v»´_¹ığáÃ×mÛnè ÒNƒİŒBô'1¦0
++£üÁÖwÈ¸ Nn@˜xü¸ôŞãÇ¥=ˆç‘H.?wéÒ¥kşhgÁæ‚‡
++#¤7,Y Áäóœ‡ß`à<>òf»Âú6:AB QÎP2¢N8Çû4tuu&'lğë°@UIpU>P%ôò^;AØ½€Ş2f¶m¦i¶ÓhuÚF[oWcm ºWLˆ1ãŸQç»:Õ8`¤5pAØl. =§õ>'¨Ï#ß}¸]{÷áöşsµ|¿ÀÑ ìÿåm÷½óı‚ÁôŠ!õ-ï;¸fÜ½O´4Ÿó` Q<oÁ?èÿ‚…zmùrĞ)C!4‚øUô;ƒæƒAµXşqÃà¸+Á©9Šq;^±ÅFÏî÷µ Šáq6ê¾ÓôõDâ05€Á)ÿœ_Xàûà4E?Ñúß»è1€®êñc0ĞÆ(»o£Ã(à¿j ƒZ€¯!úŒÀ¼Ó@¼cx¾T?NæÉ ´ Ãd2 Ÿ éÀu>ğM_ê‰>è<&Kÿ8Z„Æ ‚cÁg A“€†xüWûqjB\`Pº‡™aj˜c&Œÿìà6mÅÛ» şã‡(Z@˜Ğ$æ ±‡~˜ÄFõõDk	31€7nğ1)À‚˜äØ“Î‚?¼8–ĞûƒCƒS…AÛ?
++û¼Àábp¬Œc À0¡ÿ¨2îûQ&ÁÔÒÿ$„ñš ã´€Q®Oøã¤¾OøaR^B/°cğ BŞGİ{£CT_ ¼î`<ÿ(bunáŸ
++é€LĞ‚L f¾ô³@àõAm!HøƒRP@Èqğ}ğ8æ0L"˜¨L LÇÂÃŞƒ}™Hô'Eúñ;¥ş á™Âà‚ÿ»`Xføı÷QP›AìG‹qvvğx’O *CWoPêÒ FõûÄà@`„$|ÿó$™Ï‚fD	L"úQ„¿üÇÕü÷(%Œ¸§˜Øÿ“$ıÌ$ˆ²:>H	ks\_ÆõwÃÇ(Â™$yG™³–Qmë€“Gü@L ˜š	¾caç¢ØøoÿéÀ QÓü÷q!ìüà¹qí‡õéD?0ÿHÀ0ŸÀ(U*hLÒÂ1p<-á/ÃÑbs ø9ªV0Íñ¨v£ôóD!6 ˆ¼=Øàç¨|‚?ˆÔ_0‚ÃÅ45Š	£0„(ï“î×ÅI•ş@ÌÀÇAğ8ª=?Á/üdaqM£„}UÊŸ:Â÷1 ŒeÀäi¸¨¼á?9˜…„}FµyÏÓ@üÀ€!Ã“˜AÔ:£ÎMÂ‚1/ÌBXQ‰7Šd{ÿÓBø>æÎ |D\;0‹Ÿ•€„¼1+¡E™Nœú^§ğ}""3ğµî‚ ŸlD%ĞÈ„|Z‰>ˆ#a ƒ˜’!ŒÂ‚<Ù80±>	?ˆcÁ Æ!&æ°À L"‡cÏ X`ùaÔZ,°À€X`'°ÀO0``,À<ÁX0€x‚±` ,ğcÁ Xà	Æ‚,°ÀŒX`'°ÀO0``,À<ÁX0€x‚ñÿoÏ^lª“Â    IEND®B`‚
+\ No newline at end of file
+diff '--exclude=.git' -urNa a/data/icons/32x32/Makefile.am b/data/icons/32x32/Makefile.am
+--- a/data/icons/32x32/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/32x32/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps	
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/32x32/apps/Makefile.am b/data/icons/32x32/apps/Makefile.am
+--- a/data/icons/32x32/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/32x32/apps/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,26 @@
++themedir = $(datadir)/icons/hicolor
++size = 32x32
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller.png
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/32x32/apps/file-roller.png b/data/icons/32x32/apps/file-roller.png
+--- a/data/icons/32x32/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/32x32/apps/file-roller.png	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,16 @@
++‰PNG
++
++   IHDR           szzô   sBIT|dˆ   	pHYs  ×  ×B(›x   tEXtSoftware www.inkscape.org›î<   tEXtTitle Aisleriot$eÏç   tEXtAuthor Lapo Calamandreiß‘*   5tEXtDescription Distribuited under the terms of the GPL3+×][#   tEXtCreation Time 2011-03-16ƒ­ô>  ûIDATX…ÅWëo×ÿİ{çµ³;Ã¾lc0ÂÆ' @ŠQé‡TÙªjI‚T+Š/UÔªM#EIúªDí§~ëKıª ”&(¡N‚ºmÔ6U¤(4%?0°€mØÖÏï¼ïí‡µ76&®K+q¤£;sçœùıæwÎÜ«K
++…î¥Ñ{Š@º›¤jÍş1‘s‘\3,ı+
++üï¬ÏåNß5lKú[œ‹ŸÕ\?ıâóÏâæÍ
++nİºµjÎ®»‘ËåpãFußo½ùQÖL
++ßóN~ü‚eYW×L “Ñ6Aà:¨½öú[¸~í:Æ®^ÆäÔäªyšª!N£££Ÿß·É„Âggk^.•Z`áĞÚ ê7{¶v“Ó§O×‰½ûÛcÇ¿J«¥–®A‘e„QH%JÏtnjïØµ{çF.Ä6`%(‹ä©o<ñí\6¯^¹26ªPÖß³y+•ÊBådÕd¸AŒk{û…2zEVäÅ5èï?rHÓÔ¤ã8õÈ~ –eÅ­­ÆøZòMRèËÛ·ßOGG.x~ş
++Xão(©ê³{öîI–J%Ê˜ò»ÿtÑŠÅ"¡”~7ŸÏ«®ïİtf5(`šfŠÇñ×Ls¢0üËôôÌìİøú“É4mzj¦…ÁÏçÿ£„ğş®®®¨R®Ì~ğ›» MN¼ğà¾Í¡á!*bzlÍTM{®¯ï@jhh(‚ï\oÕ[cÎbŒqJÙ,Ëª->[Q‚dK²]Ùóä).xŞó=õÄ‰7G±A˜˜_—1–†“ÛÆÆWQJ9ç€AŞ%!¦÷îßK†GÎ{şriì2¹\.Ãyüá®İ»6Ü×Û+›¦	ß÷J¨*c’ÄV İf®ë¢fÙˆãëj••#£££èéî!Ÿ|rvÜ²¬?“ e(~¹ğ•ö\6/OMNÁ¶æWúÔ‰ZÛò˜›Ãè…ó¸yã8çĞuF*E²™,¦§§Eş±Ûs›ÒéäÍ›7o?ø…ƒÊ…qôèÑ5{‡b±ˆm[{ñ·÷ÿ
++k®†(Š  ã`²:‰Ç?‚“  íŸI@K¦¾øğcúÅ‹—Ğ×·çÂ÷}Bîà„È²ŒJ¥‚ÎÎNH’gŞ¥Şğƒ šªÁ0×¡^¯?ÑÚÚú\µZmJKÆ"A1ƒ8Ã019Y…m[°mcßÑ)¥E‡(—¯Ã¶-PJA)c„Pè;€ÁÁsÈ¦Óh_¿!òıù}+xúè“ÿğ¼ùäO~ú
++„xıÄq! (
++=|»vîc”Ò¦’$s(Š01>––aĞŒÑõ$òÙ@\½:† §’ ] ş¾Œ ùW^ş!š†¥[Û¹Á!|ğÁG0†‘‚$I$	Œ1hšÏsAAİ­Ã0LøÆ  Ô„
++=‘„aÃ	MK‚-+µ=×ÓÂĞE  YV°¥«oü¯_¹üÒˆÉf²èÙº‚ „0ÆÀ9GÅPd¦iBpJ	 ÀV 3–cµ)¾ï.t·ÓÈà¥—¾‡ š	B|ªQxï½÷qéÒEtnî„Ğ›=03cal|ã×„d9Ú\Í —WàüÌÄøDow÷F8N­YÛmÖ¼AT`idYÁş¾İxõÕ715=E‘›%d†òõ
++ch[Ÿ‡ªª°;ÁÕü0úıÙ³ƒıyfÙsh¢,– 7ç2™V(Š‚±±1léêj6a>—È¤AYCEQ055%«L=cÃ¾@İÿs¹Rçj3¬^·Çqhx£Í™(
++Ñİ½¥Òä2Y$:‚ ±~€„†‰r¹,8x9àŞ& Ã‹¯b===ˆã8Ôte‡ã8;rÙ±í9‡À÷ànãºéîÂ|ãŞuça	ŒO‚YQ@HX’$¤R)ÄQ„‘óç‰®±LrÉsƒw–hôùÓ|İ{F×¥¤¦Iˆ£ 1À9_áBp!Ö‚ Ùl¥RÉd
++ŠÒøız³³sFGGss¾Ï£ğÏ«ËJ  ÑÃñé¡!òvOO›ÒÖfU‘  v?!öA²¤3DãVO {>·	ÿ³€€s±°!ÉPÔ8ªTjáÌLíG§Ş95¶ô8H
++…ŠÅ¢À `<ğÀı;{ïÛöI–ws.Lü¯FDÕ¶ìS×Ê'GGÎ°Ø…BÁo €b±¨HH ĞT*¥,¼F,ƒ ¸ÓYàögKcâwÔ8…BA,#°@‚ Q¶@âÿe1€@¸¼hä^ÏÿJ/qvõ    IEND®B`‚
+\ No newline at end of file
+diff '--exclude=.git' -urNa a/data/icons/48x48/Makefile.am b/data/icons/48x48/Makefile.am
+--- a/data/icons/48x48/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/48x48/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps	
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/48x48/apps/Makefile.am b/data/icons/48x48/apps/Makefile.am
+--- a/data/icons/48x48/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/48x48/apps/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,26 @@
++themedir = $(datadir)/icons/hicolor
++size = 48x48
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller.png
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/48x48/apps/file-roller.png b/data/icons/48x48/apps/file-roller.png
+--- a/data/icons/48x48/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/48x48/apps/file-roller.png	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,8 @@
++‰PNG
++
++   IHDR   0   0   Wù‡   sBIT|dˆ   	pHYs  ×  ×B(›x   tEXtSoftware www.inkscape.org›î<   tEXtTitle Aisleriot$eÏç   tEXtAuthor Lapo Calamandreiß‘*   5tEXtDescription Distribuited under the terms of the GPL3+×][#   tEXtCreation Time 2011-03-16ƒ­ô>  ˆIDAThíYiŒÇuşªª9ºçæŞË%eî’”È•l‹‡"Ñ<$y!Ó0ÊñÅˆp ÀvÛğÿ‚ø	#Yñ#€OA²dK²dk½¢èÖA)"¹´IŠ\JäîÎr¯9{¦§ï®ü˜İÙÙİYrÈelğÃÔtuÕÃëï«÷º^U5À,ôO`µògj¹á	ÿF5Mêÿ+Y`B‚×j‡ssûÑ¾uëÕ4Ík¤s]	¨1õƒ²,>dûş½º»÷ìİMÇÇÇ03;Ó´D<7Q’ğÔÓÏìÎç3—Ö´¦²¾ï^pmçß‹EıÈu'KÆ¨Ê·úû·†~ôøÓ8°ÿ>D£œ<yŒ’¦í¬íîF0€,ËèëíC8,Ó|¡Ø¨]###·¥.İSÊ—^½n"‘Hÿ×ûîŒy’ à¥—_fm­˜™™…išMÛr]àœCÓ4>‰Ìì¬›HÆŒM›zÕuë{“—.=\®Qf_}Ï†÷ĞL6‹7ßxsLÈcGß<ñÊˆÄ(õ¯ÆÖhz‚p
++„ØÎ¯ÏórÉDäKåRñ‘µk»”\6ëz¾?6¯¿jJR¹É÷ıïØ¾Mzúé_ègÿ½ÌÄ7ô$¿ıöèèvæPùjmÚ– àp‹mÉäqUU„•p¤»«‹¼ò»W]øÖ÷® ¿µù–Ílvv–[¶uFËU^ MÓ¼xüµÕÚ·,KHŠñGw}àNå­ãÇBø÷rys|¾Uy@I(ı¸oçÎÂ‘#¿5<Ûşôj/•ÖÖÔ'‰D,cäì9×±ø?×÷¯ÊAú·÷ßş>i|lÜw]ÿ•BA}up‹,Ë*Ø×÷îÛ­¼öêkÎñOš¦ëu®ÙÑhøNBÈÎÛwĞ¡¡—,Ë³ÿqõKX|¹§g­H@06.yÿîRk& ÉòÜ}÷¾Àù‘—€ü²œ+ŸZÜÅËø‡½{÷„>Röç3š¦ÙKõ®‰@4ª|H”¤¾Ûn{/yqğ7á[_X=ä%À„ğ¡-·lJ¥2
++ùÂX±X~²¡ŞÕ$¢,çşû„?aJ~ gõÑÕC^X,´à÷íÛ'½ğÂ¯*m=¼’.YiG‰Dg|@É'e}óí¾Ï¾çööôôxÃ ¤¶Ğ"ëÂkuR«S€z¾§úap>Ä‰÷ÃÙÉüY–] Hµ&ÿ{×®;ïŠEãøåóÏÉLgïY‰@ÃY(mÅïE•nŞ¼9ÔŞŞN	©:K×+°, Xoo"õ½‹F—_÷x¾‡bQƒçzğ}³™Ìƒcã£÷·´1›pïŸ¢K„÷ïÜq=tèayÎ§.goPK¨…øâË{vï‰÷o½•”õ2Êå|¿º"ˆ‰Q Ñe†xƒÚRqGÇ`:<Ï‡(hmm¡›7mRN>ÅÏŸ?ÿ?õîŸ81l'Ë¹òÛM°,KHñÄKwíº+uóæ-d"=ÎWt9!„"B–% €ïû>‰B>‡JE¯ée²ƒ!ôoí'ÙL&ÅaÍÆ¾>|õkÿârÏøâ•³ˆ@ª5õ‘îîî›öí½[>‰ıû÷ƒ1vMÒé4Ş}÷ttt &''‚EàçÅ0*8}ú,ÛfŸ|èo0ôÒÍ9¾ËYÓWE }şàÁÂgÎ¼{ï½²,Ãó<Òüz AÀôô4Ö¯_–– ÀéÓ§QÈçéÍÛ%„`63‹ÎÎ.Äcq¼şúQ*PéM=k¾×qß¿­««™Ù,"‘æ³6!dîa„ ®>_P»§”ÂqÌÌÌ ÿÖ~B ëÕQ×JZ­¾ïÃ4-<ô×ŸÀOúø¾ÇMÛkp¡i>„÷|`»xá"z{7À0*0ŒÊ².¿œŒ,Ë˜œœB*•ÄÌt5òù<2³3u„ëfZB ëlÛ¶¦ea,=ööv¤ÓãğÍ¦	È’Ü‹Ç%­¤¡³³•Š>G`ñèÖ{¡‘'cH§Óàğ15=UÏGÅ4¾(Jpİ"şòá›‡A[k+DQ''§n¾øÖöä#¾ïüõ‹/  $„pßG5¦·nÙŠíÛ¶C‚°ÌóuI’aš&ôJ©ö¶övX–Jé¢ÑO&Ö@	«èê\‹ÃÃ(é%´µ·‚R¾¡i–å|îóŸı”@Àç~¼6¥[¶…Çşó¿‹FÑÖÖŠ`0ÆAWª
++ğ}¦µ°ªQ†1§‹9]Q”K¨plo=ŠˆªÂu]D#ap »i”RS¨ŠeéµyŸÔş€D¢m¸pñ8çd‚ Æ((e`¬ZgŒsÀ²l˜¦J«Äâñ8£²ˆ€ãx°m‰D@—áº.ä@ œóTÓ£šaX
++àÁóÜeJë`×]wà©Ÿ?‡s#ç ¾ò´J$ËHÄãè^»”R˜–	I’à8N-„lÛï{ª¢À4LPFÁ˜ ·ª×ÔQ†  „ÒBÅĞ;BAß÷°8ùr”J9ôö®Ç—¿ôY”Ëå¹Ğjœ¡984­ŒŸ=õ@€Nd3Y¨j…B¾FÀ0‹4MÃôôlÇF@!I"LÓ!¸Ô4p&—ÍİÌÖ¨0ÍJP@©\ %¬AfæTæ*ªÂG~?~üçX³¦ùB¡PpQ^‘$½‚Ç‡¡—+DJ)DQ„Q1B.6MÀ2œçÏ;·+‘¸†¾T°ú›Æısï) ‘l÷|èºb± I”jï  $âQäòELMM#¬„¡¨*!†‘÷½³Màœ<û‡?œıÆí·ßÂ*F¹!¨e³$Œø’N&X·®™l±Xª¢.ÊŒ1´¶¤æWÛ(¥ƒ˜š™Ò<Ÿ¼Ò4MÓÎ‹2œœê Ä†ãØA-mlHmîÖs=¬¿©‡¿X,ŠˆªB’$xŞÂ!óÒ¤¡—ËĞË:ÏLg“å+Ÿ‰±ªù"»ìŒÅÂD¯”à¸6Üúâ8pk×JµÏ©Çë,ô™–Ucb"ß$I%ëÔÚüu¾‰D1::ŠR©ä©ÑĞV³b?Õ” Àôí3£·&ù¼Î—İÌ'½í 8÷Ğ»aC*•‚ÀD0ÊÀÁ—¾¢(0—.M §'¾x±ø@$Q4M+7åÛ°ó‚,ÏÌä÷·µF˜iUàº6<Ï]¡xğ¼ê¶°qñaÛŞ€¢(p\‚ ÔFŸ1EQ NğÖ[o!™ Ëª[(–/JO\É5 ğÜ³ÏíÛØÛï¹èëhORÊ0Æ "A„8wD±ÖÖ¨Ôë$“0FğÎ;i¤R-à>G@–¡** òùNŸ9E¥H¦’Şùw&ËÙ™âƒCCC…z|„`pp vuu%şâÎƒ±x¸kãÆ6QU hIó[x^ß´ |¡— ˜Õpò÷iH¢Ê\×ƒë:C†áêå²S8;2òÑ“ÇN` 0V<¢ê® !N»ÏübæÀî½»Ò´ÊÇ}Ÿ'dY ¼nİ¹+Gãƒ²Œ2À%†iÕÚ(%¾^±½²îçrÙÂÿ÷ÍcO‹Å €;W¬¥¶–ğêŠcÛvehğğ÷|?
++oßş¾] T€•>WøuGdW£ãÁ3‡ışèÜËJ 8 ì9àó˜V”ÚÁÖ\ ÈXğÁïS¬j´yX a^.|€Næ)ªÀşxæÁ{W]/+-Ş(rÃ©¿á	üb941ËÓ1    IEND®B`‚
+\ No newline at end of file
+diff '--exclude=.git' -urNa a/data/icons/Makefile.am b/data/icons/Makefile.am
+--- a/data/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/Makefile.am	2018-04-25 00:48:55.284557885 -0400
+@@ -0,0 +1,5 @@
++SUBDIRS = 16x16 22x22 24x24 32x32 48x48 256x256 scalable
++
++EXTRA_DIST = source.svg
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg b/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg
+--- a/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg	2018-03-12 14:52:57.000000000 -0400
++++ b/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg	1969-12-31 19:00:00.000000000 -0500
+@@ -1,27 +0,0 @@
+-<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+-
+-<svg xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/' sodipodi:docname='file-roller-symbolic.svg' height='16' id='svg7384' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:svg='http://www.w3.org/2000/svg' inkscape:version='0.48.2 r9819' version='1.1' width='16.05913' xmlns='http://www.w3.org/2000/svg'>
+-  <metadata id='metadata90'>
+-    <rdf:RDF>
+-      <cc:Work rdf:about=''>
+-        <dc:format>image/svg+xml</dc:format>
+-        <dc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/>
+-        <dc:title>Gnome Symbolic Icon Theme</dc:title>
+-      </cc:Work>
+-    </rdf:RDF>
+-  </metadata>
+-  <sodipodi:namedview inkscape:bbox-paths='true' bordercolor='#666666' borderopacity='1' inkscape:current-layer='layer9' inkscape:cx='-10.232934' inkscape:cy='4.5711963' gridtolerance='10' inkscape:guide-bbox='true' guidetolerance='10' id='namedview88' inkscape:object-nodes='false' inkscape:object-paths='false' objecttolerance='10' pagecolor='#555753' inkscape:pageopacity='1' inkscape:pageshadow='2' showborder='false' showgrid='true' showguides='true' inkscape:snap-bbox='false' inkscape:snap-bbox-midpoints='false' inkscape:snap-global='true' inkscape:snap-grids='true' inkscape:snap-nodes='true' inkscape:snap-others='false' inkscape:snap-to-guides='true' inkscape:window-height='1381' inkscape:window-maximized='1' inkscape:window-width='2560' inkscape:window-x='1600' inkscape:window-y='27' inkscape:zoom='16'>
+-    <inkscape:grid empspacing='2' enabled='true' id='grid4866' snapvisiblegridlinesonly='true' spacingx='1px' spacingy='1px' type='xygrid' visible='true'/>
+-  </sodipodi:namedview>
+-  <title id='title9167'>Gnome Symbolic Icon Theme</title>
+-  <defs id='defs7386'/>
+-  <g inkscape:groupmode='layer' id='layer9' inkscape:label='apps' style='display:inline' transform='translate(-143.00019,-215)'>
+-    <path inkscape:connector-curvature='0' d='m 146.09395,221 c -1.27743,0 -2.3125,2.02507 -2.3125,4.5 0,2.47494 1.03507,4.375 2.3125,4.375 0.0306,0 0.0635,-0.0292 0.0937,-0.0312 l 0,0.0312 8.8125,-0.875 c -1.8125,0 -3.0625,-1.09865 -3.0625,-3.5 0,-2.38942 1.03608,-3.5 3.0625,-3.5 l -1.58594,-0.9961 c -3.22964,-0.01 -7.32031,-0.004 -7.32031,-0.004 z m 0.0234,0.99219 4.97656,0.008 c 0.16968,2.6e-4 0.32247,0.18898 0.1875,0.375 -0.84239,1.51563 -0.89761,3.78176 -0.35669,5.56943 0,0.17445 -0.14283,0.3125 -0.3125,0.3125 l -5.04891,0.0139 c -0.16969,0 -0.25,-0.20055 -0.25,-0.375 -0.0858,-1.75606 -0.92131,-4.15772 0.58529,-5.84111 0,0 0.049,-0.0628 0.21875,-0.0625 z' id='path5472' sodipodi:nodetypes='csscccsccccsccccccsc' style='color:#000000;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.34051171;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate'/>
+-    
+-    <path inkscape:connector-curvature='0' d='m 150.00832,217 c -0.39473,0 -0.70961,0.17025 -0.88958,0.46259 l -2.28241,3.68924 -0.14046,0.27756 0.30433,0 1.10135,0 0.11704,0 0.0469,-0.10414 1.4538,-2.17057 c 0.0363,-0.0581 0.15888,-0.15034 0.28091,-0.15034 l 7.3961,0.003 c 0.0786,-0.005 0.079,0.10987 0.079,0.10987 l -2.87252,5.72088 -0.0937,0.16191 0.16385,0.0926 0.0698,0.70127 0.6942,0.36803 0.0936,-0.1619 3.46967,-7 c 0.13852,-0.23162 0.005,-1.3902 -0.10814,-1.59514 -0.12605,-0.22734 -0.3837,-0.41187 -0.71398,-0.40478 l -8.16989,0 z' id='path5477' sodipodi:nodetypes='cccccccccccccccccccsccc' style='fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none'/>
+-    <path sodipodi:cx='33.78125' sodipodi:cy='31.953125' d='m 35.5625,31.953125 a 1.78125,3.046875 0 1 1 -3.5625,0 1.78125,3.046875 0 1 1 3.5625,0 z' id='path6840' sodipodi:rx='1.78125' sodipodi:ry='3.046875' style='color:#000000;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate' transform='matrix(0.49627604,0,0,0.49230822,138.11937,209.76921)' sodipodi:type='arc'/>
+-    <path inkscape:connector-curvature='0' d='m 150.07659,227.00703 c 0,0 -2.91924,-0.0221 -3.10498,-0.0221 -0.18574,0 -0.26784,0.0324 -0.37159,-0.14741 -0.30689,-0.42982 -0.52143,-1.10364 -0.57752,-1.71708 -0.0109,-0.11882 -0.20696,-0.12631 -0.30151,-0.12683 L 143.15958,225 c -0.13341,0 -0.15695,0.24121 -0.15695,0.24121 -0.0519,1.89982 0.71945,4.7556 2.88858,4.74728 L 153.7812,230 c -2.67921,-0.16112 -2.63112,-1.34814 -2.84212,-2.47213 -0.18112,-0.35221 -0.25941,-0.52078 -0.5697,-0.52078 z' id='rect337' sodipodi:nodetypes='czcszccccccc' inkscape:r_cx='true' inkscape:r_cy='true' style='color:#000000;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.62873191;marker:none;visibility:visible;display:inline;overflow:visible'/>
+-    <path inkscape:connector-curvature='0' d='M 151.90625,221 A 0.50219246,0.50219246 0 1 0 152,222 l 2.5,0 c 3.10676,0 3.5869,7 0,7 l -2.9375,0 a 0.50005,0.50005 0 1 0 0,1 l 2.9375,0 c 4.85104,0 4.50762,-9 0,-9 l -2.5,0 a 0.50005,0.50005 0 0 0 -0.0937,0 z' id='path4320' style='font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:new;font-family:Sans;-inkscape-font-specification:Sans'/>
+-  </g>
+-</svg>
+diff '--exclude=.git' -urNa a/data/icons/meson.build b/data/icons/meson.build
+--- a/data/icons/meson.build	2018-03-12 14:52:57.000000000 -0400
++++ b/data/icons/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1 +0,0 @@
+-install_subdir('hicolor', install_dir : join_paths(datadir, 'icons'))
+diff '--exclude=.git' -urNa a/data/icons/scalable/Makefile.am b/data/icons/scalable/Makefile.am
+--- a/data/icons/scalable/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/scalable/Makefile.am	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,3 @@
++SUBDIRS = apps	
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/scalable/apps/Makefile.am b/data/icons/scalable/apps/Makefile.am
+--- a/data/icons/scalable/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/scalable/apps/Makefile.am	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,26 @@
++themedir = $(datadir)/icons/hicolor
++size = scalable
++context = apps
++
++iconsdir = $(themedir)/$(size)/$(context)
++
++icons_DATA = \
++	file-roller-symbolic.svg
++
++noinst_DATA =
++
++EXTRA_DIST =		\
++	$(icons_DATA)	\
++	$(noinst_DATA)
++
++gtk_update_icon_cache = gtk-update-icon-cache -f -t $(datadir)/icons/hicolor
++
++install-data-hook:
++	@-if test -z "$(DESTDIR)"; then \
++		echo "Updating Gtk icon cache."; \
++		$(gtk_update_icon_cache); \
++	else \
++		echo "*** Icon cache not updated.  After install, run this:"; \
++		echo "***   $(gtk_update_icon_cache)"; \
++	fi
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/data/icons/scalable/apps/file-roller-symbolic.svg b/data/icons/scalable/apps/file-roller-symbolic.svg
+--- a/data/icons/scalable/apps/file-roller-symbolic.svg	1969-12-31 19:00:00.000000000 -0500
++++ b/data/icons/scalable/apps/file-roller-symbolic.svg	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,27 @@
++<?xml version='1.0' encoding='UTF-8' standalone='no'?>
++<!-- Created with Inkscape (http://www.inkscape.org/) -->
++
++<svg xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/' sodipodi:docname='file-roller-symbolic.svg' height='16' id='svg7384' xmlns:inkscape='http://www.inkscape.org/namespaces/inkscape' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns:sodipodi='http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd' xmlns:svg='http://www.w3.org/2000/svg' inkscape:version='0.48.2 r9819' version='1.1' width='16.05913' xmlns='http://www.w3.org/2000/svg'>
++  <metadata id='metadata90'>
++    <rdf:RDF>
++      <cc:Work rdf:about=''>
++        <dc:format>image/svg+xml</dc:format>
++        <dc:type rdf:resource='http://purl.org/dc/dcmitype/StillImage'/>
++        <dc:title>Gnome Symbolic Icon Theme</dc:title>
++      </cc:Work>
++    </rdf:RDF>
++  </metadata>
++  <sodipodi:namedview inkscape:bbox-paths='true' bordercolor='#666666' borderopacity='1' inkscape:current-layer='layer9' inkscape:cx='-10.232934' inkscape:cy='4.5711963' gridtolerance='10' inkscape:guide-bbox='true' guidetolerance='10' id='namedview88' inkscape:object-nodes='false' inkscape:object-paths='false' objecttolerance='10' pagecolor='#555753' inkscape:pageopacity='1' inkscape:pageshadow='2' showborder='false' showgrid='true' showguides='true' inkscape:snap-bbox='false' inkscape:snap-bbox-midpoints='false' inkscape:snap-global='true' inkscape:snap-grids='true' inkscape:snap-nodes='true' inkscape:snap-others='false' inkscape:snap-to-guides='true' inkscape:window-height='1381' inkscape:window-maximized='1' inkscape:window-width='2560' inkscape:window-x='1600' inkscape:window-y='27' inkscape:zoom='16'>
++    <inkscape:grid empspacing='2' enabled='true' id='grid4866' snapvisiblegridlinesonly='true' spacingx='1px' spacingy='1px' type='xygrid' visible='true'/>
++  </sodipodi:namedview>
++  <title id='title9167'>Gnome Symbolic Icon Theme</title>
++  <defs id='defs7386'/>
++  <g inkscape:groupmode='layer' id='layer9' inkscape:label='apps' style='display:inline' transform='translate(-143.00019,-215)'>
++    <path inkscape:connector-curvature='0' d='m 146.09395,221 c -1.27743,0 -2.3125,2.02507 -2.3125,4.5 0,2.47494 1.03507,4.375 2.3125,4.375 0.0306,0 0.0635,-0.0292 0.0937,-0.0312 l 0,0.0312 8.8125,-0.875 c -1.8125,0 -3.0625,-1.09865 -3.0625,-3.5 0,-2.38942 1.03608,-3.5 3.0625,-3.5 l -1.58594,-0.9961 c -3.22964,-0.01 -7.32031,-0.004 -7.32031,-0.004 z m 0.0234,0.99219 4.97656,0.008 c 0.16968,2.6e-4 0.32247,0.18898 0.1875,0.375 -0.84239,1.51563 -0.89761,3.78176 -0.35669,5.56943 0,0.17445 -0.14283,0.3125 -0.3125,0.3125 l -5.04891,0.0139 c -0.16969,0 -0.25,-0.20055 -0.25,-0.375 -0.0858,-1.75606 -0.92131,-4.15772 0.58529,-5.84111 0,0 0.049,-0.0628 0.21875,-0.0625 z' id='path5472' sodipodi:nodetypes='csscccsccccsccccccsc' style='color:#000000;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.34051171;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate'/>
++    
++    <path inkscape:connector-curvature='0' d='m 150.00832,217 c -0.39473,0 -0.70961,0.17025 -0.88958,0.46259 l -2.28241,3.68924 -0.14046,0.27756 0.30433,0 1.10135,0 0.11704,0 0.0469,-0.10414 1.4538,-2.17057 c 0.0363,-0.0581 0.15888,-0.15034 0.28091,-0.15034 l 7.3961,0.003 c 0.0786,-0.005 0.079,0.10987 0.079,0.10987 l -2.87252,5.72088 -0.0937,0.16191 0.16385,0.0926 0.0698,0.70127 0.6942,0.36803 0.0936,-0.1619 3.46967,-7 c 0.13852,-0.23162 0.005,-1.3902 -0.10814,-1.59514 -0.12605,-0.22734 -0.3837,-0.41187 -0.71398,-0.40478 l -8.16989,0 z' id='path5477' sodipodi:nodetypes='cccccccccccccccccccsccc' style='fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none'/>
++    <path sodipodi:cx='33.78125' sodipodi:cy='31.953125' d='m 35.5625,31.953125 a 1.78125,3.046875 0 1 1 -3.5625,0 1.78125,3.046875 0 1 1 3.5625,0 z' id='path6840' sodipodi:rx='1.78125' sodipodi:ry='3.046875' style='color:#000000;fill:#bebebe;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate' transform='matrix(0.49627604,0,0,0.49230822,138.11937,209.76921)' sodipodi:type='arc'/>
++    <path inkscape:connector-curvature='0' d='m 150.07659,227.00703 c 0,0 -2.91924,-0.0221 -3.10498,-0.0221 -0.18574,0 -0.26784,0.0324 -0.37159,-0.14741 -0.30689,-0.42982 -0.52143,-1.10364 -0.57752,-1.71708 -0.0109,-0.11882 -0.20696,-0.12631 -0.30151,-0.12683 L 143.15958,225 c -0.13341,0 -0.15695,0.24121 -0.15695,0.24121 -0.0519,1.89982 0.71945,4.7556 2.88858,4.74728 L 153.7812,230 c -2.67921,-0.16112 -2.63112,-1.34814 -2.84212,-2.47213 -0.18112,-0.35221 -0.25941,-0.52078 -0.5697,-0.52078 z' id='rect337' sodipodi:nodetypes='czcszccccccc' inkscape:r_cx='true' inkscape:r_cy='true' style='color:#000000;fill:#bebebe;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.62873191;marker:none;visibility:visible;display:inline;overflow:visible'/>
++    <path inkscape:connector-curvature='0' d='M 151.90625,221 A 0.50219246,0.50219246 0 1 0 152,222 l 2.5,0 c 3.10676,0 3.5869,7 0,7 l -2.9375,0 a 0.50005,0.50005 0 1 0 0,1 l 2.9375,0 c 4.85104,0 4.50762,-9 0,-9 l -2.5,0 a 0.50005,0.50005 0 0 0 -0.0937,0 z' id='path4320' style='font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:new;font-family:Sans;-inkscape-font-specification:Sans'/>
++  </g>
++</svg>
+diff '--exclude=.git' -urNa a/data/meson.build b/data/meson.build
+--- a/data/meson.build	2018-03-12 14:52:57.000000000 -0400
++++ b/data/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1,64 +0,0 @@
+-po_dir = join_paths(meson.source_root(), 'po')
+-
+-install_data('org.gnome.FileRoller.gschema.xml',
+-  install_dir : join_paths(datadir, 'glib-2.0', 'schemas')
+-)
+-
+-install_data('packages.match',
+-  install_dir : join_paths(datadir, meson.project_name())
+-)
+-
+-# .desktop file
+-
+-desktop_data = configuration_data()
+-desktop_data.set('VERSION', meson.project_version())            
+-desktop_in_file = configure_file(
+-  input : 'org.gnome.FileRoller.desktop.in.in',
+-  output : 'org.gnome.FileRoller.desktop.in',
+-  configuration : desktop_data
+-)
+-
+-i18n.merge_file(
+-  input : desktop_in_file,
+-  output : 'org.gnome.FileRoller.desktop',
+-  type : 'desktop',
+-  po_dir : po_dir,
+-  install : true,
+-  install_dir : join_paths(datadir, 'applications')
+-)
+-
+-# .service files
+-
+-service_data = configuration_data()
+-service_data.set('bindir', join_paths(prefix, get_option('bindir'))) 
+-
+-configure_file(
+-  input : 'org.gnome.FileRoller.service.in',
+-  output : 'org.gnome.FileRoller.service',
+-  configuration : service_data,
+-  install : true,
+-  install_dir : join_paths(datadir, 'dbus-1/services')
+-)
+-
+-configure_file(
+-  input : 'org.gnome.FileRoller.ArchiveManager1.service.in',
+-  output : 'org.gnome.FileRoller.ArchiveManager1.service',
+-  configuration : service_data,
+-  install : true,
+-  install_dir : join_paths(datadir, 'dbus-1/services')
+-)
+-
+-# .appdata file
+-
+-i18n.merge_file(
+-  input : 'org.gnome.FileRoller.appdata.xml.in',
+-  output : 'org.gnome.FileRoller.appdata.xml',
+-  type : 'xml',
+-  po_dir : po_dir,
+-  install : true,
+-  install_dir : join_paths(datadir, 'metainfo')
+-)
+-
+-# Subdirectories
+-
+-subdir('icons')
+diff '--exclude=.git' -urNa a/data/org.gnome.FileRoller.appdata.xml.in b/data/org.gnome.FileRoller.appdata.xml.in
+--- a/data/org.gnome.FileRoller.appdata.xml.in	2018-03-12 14:52:57.000000000 -0400
++++ b/data/org.gnome.FileRoller.appdata.xml.in	2018-04-25 00:48:55.285557881 -0400
+@@ -6,21 +6,21 @@
+   <metadata_license>CC0-1.0</metadata_license>
+   <project_license>GPL-2.0+</project_license>
+ 
+-  <name>File Roller</name>
+-  <summary>Open, modify and create compressed archive files</summary>
++  <_name>File Roller</_name>
++  <_summary>Open, modify and create compressed archive files</_summary>
+   <description>
+-    <p>
++    <_p>
+       Archive Manager (also known as File Roller) is the default GNOME application for opening, creating, and
+       modifying archive and compressed archive files.
+-    </p>
+-    <p>
++    </_p>
++    <_p>
+       Archive Manager supports a wide range of different archive files, including:
+-    </p>
++    </_p>
+     <ul>
+-      <li>gzip archives (.tar.gz, .tgz)</li>
+-      <li>bzip archives (.tar.bz, .tbz)</li>
+-      <li>zip archives (.zip)</li>
+-      <li>xz archives (.tar.xz)</li>
++      <_li>gzip archives (.tar.gz, .tgz)</_li>
++      <_li>bzip archives (.tar.bz, .tbz)</_li>
++      <_li>zip archives (.zip)</_li>
++      <_li>xz archives (.tar.xz)</_li>
+     </ul>
+   </description>
+ 
+diff '--exclude=.git' -urNa a/data/org.gnome.FileRoller.desktop.in.in b/data/org.gnome.FileRoller.desktop.in.in
+--- a/data/org.gnome.FileRoller.desktop.in.in	2018-03-12 14:52:57.000000000 -0400
++++ b/data/org.gnome.FileRoller.desktop.in.in	2018-04-25 00:48:55.285557881 -0400
+@@ -1,14 +1,12 @@
+ [Desktop Entry]
+-Name=Archive Manager
+-Comment=Create and modify an archive
+-# Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
+-Keywords=zip;tar;extract;unpack;
++_Name=Archive Manager
++_Comment=Create and modify an archive
++_Keywords=zip;tar;extract;unpack;
+ TryExec=file-roller
+ Exec=file-roller %U
+ StartupNotify=true
+ Terminal=false
+ Type=Application
+-# Translators: Do NOT translate or transliterate this text (this is an icon file name)!
+ Icon=file-roller
+ Categories=GTK;GNOME;Utility;Archiving;Compression;X-GNOME-Utilities;
+ NotShowIn=KDE;
+diff '--exclude=.git' -urNa a/file-roller.spec.in b/file-roller.spec.in
+--- a/file-roller.spec.in	1969-12-31 19:00:00.000000000 -0500
++++ b/file-roller.spec.in	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,98 @@
++%define release 6
++%define prefix  /usr
++%define name	@PACKAGE@
++%define version @VERSION@
++
++Summary:	An archive manager for GNOME.
++Name:		%{name}
++Version:    	%{version}
++Release:	%{release}
++Copyright:	GPL
++Vendor:		GNOME
++URL:		http://fileroller.sourceforge.net
++Group:		Applications/Archiving
++Source0:	%{name}-%{version}.tar.gz
++Packager:       Paolo Bacchilega <paolo.bacch@tin.it>
++BuildRoot:	%{_builddir}/%{name}-%{version}-root
++Requires:       glib2 >= @GLIB_REQUIRED@
++Requires:       gtk2 >= @GTK_REQUIRED@
++BuildRequires:	glib2-devel >= @GLIB_REQUIRED@
++BuildRequires:	gtk2-devel >= @GTK_REQUIRED@
++
++Docdir:         %{prefix}/share/doc
++
++%description
++File Roller is an archive manager for the GNOME environment.  This means that 
++you can : create and modify archives; view the content of an archive; view a 
++file contained in the archive; extract files from the archive.
++File Roller is only a front-end (a graphical interface) to archiving programs 
++like tar and zip. The supported file types are :
++    * 7-Zip Compressed File (.7z)
++    * WinAce Compressed File (.ace)
++    * ALZip Compressed File (.alz)
++    * AIX Small Indexed Archive  (.ar)
++    * ARJ Compressed Archive (.arj)
++    * Cabinet File (.cab)
++    * UNIX CPIO Archive (.cpio)
++    * Debian Linux Package (.deb) [Read-only mode]
++    * ISO-9660 CD Disc Image (.iso) [Read-only mode]
++    * Java Archive (.jar)
++    * Java Enterprise archive (.ear)
++    * Java Web Archive (.war)
++    * LHA Archive (.lzh, .lha)
++    * WinRAR Compressed Archive (.rar)
++    * RAR Archived Comic Book (.cbr)
++    * RPM Linux Package (.rpm) [Read-only mode]
++    * Tape Archive File:
++          * uncompressed (.tar) 
++      or compressed with:
++          * gzip (.tar.gz , .tgz)
++          * bzip (.tar.bz , .tbz)
++          * bzip2 (.tar.bz2 , .tbz2)
++          * compress (.tar.Z , .taz)
++          * lzip (.tar.lz , .tlz)
++          * lzop (.tar.lzo , .tzo)
++          * 7zip (.tar.7z)
++          * xz (.tar.xz)
++    * Stuffit Archives (.bin, .sit)
++    * Windows Imaging Format (.wim, .swm)
++    * ZIP Archive (.zip)
++    * ZIP Archived Comic Book (.cbz)
++    * ZOO Compressed Archive File (.zoo)
++    * Single files compressed with gzip, bzip, bzip2, compress, lzip, lzop, 
++      rzip, xz.
++
++%prep
++%setup 
++
++%build
++%configure --disable-schemas-install
++make
++
++%install
++rm -rf $RPM_BUILD_ROOT
++make DESTDIR=$RPM_BUILD_ROOT install
++
++%clean
++rm -rf $RPM_BUILD_ROOT
++
++%files
++%defattr(-,root,root)
++%{_bindir}/file-roller
++%{_datadir}/applications/file-roller.desktop
++%{_datadir}/file-roller/glade/*.glade
++%{_datadir}/locale/*/LC_MESSAGES/file-roller.mo
++%{_datadir}/application-registry/file-roller.applications
++%{_datadir}/mime-info/*
++%{_datadir}/pixmaps/file-roller.png
++%{_datadir}/omf/file-roller/*.omf
++%doc %{_datadir}/gnome/help/file-roller
++%doc AUTHORS NEWS README COPYING
++%config %{_sysconfdir}/gconf/schemas/*
++
++%post
++GCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source` gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/file-roller.schemas
++if which scrollkeeper-update>/dev/null 2>&1; then scrollkeeper-update; fi
++
++%postun
++if which scrollkeeper-update>/dev/null 2>&1; then scrollkeeper-update; fi
+diff '--exclude=.git' -urNa a/git.mk b/git.mk
+--- a/git.mk	1969-12-31 19:00:00.000000000 -0500
++++ b/git.mk	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,200 @@
++# git.mk
++#
++# Copyright 2009, Red Hat, Inc.
++# Written by Behdad Esfahbod
++#
++# Copying and distribution of this file, with or without modification,
++# are permitted in any medium without royalty provided the copyright
++# notice and this notice are preserved.
++#
++# The canonical source for this file is pango/git.mk, or whereever the
++# header of pango/git.mk suggests in the future.
++#
++# To use in your project, import this file in your git repo's toplevel,
++# then do "make -f git.mk".  This modifies all Makefile.am files in
++# your project to include git.mk.
++#
++# This enables automatic .gitignore generation.  If you need to ignore
++# more files, add them to the GITIGNOREFILES variable in your Makefile.am.
++# But think twice before doing that.  If a file has to be in .gitignore,
++# chances are very high that it's a generated file and should be in one
++# of MOSTLYCLEANFILES, CLEANFILES, DISTCLEANFILES, or MAINTAINERCLEANFILES.
++#
++# The only case that you need to manually add a file to GITIGNOREFILES is
++# when remove files in one of mostlyclean-local, clean-local, distclean-local,
++# or maintainer-clean-local.
++#
++# Note that for files like editor backup, etc, there are better places to
++# ignore them.  See "man gitignore".
++#
++# If "make maintainer-clean" removes the files but they are not recognized
++# by this script (that is, if "git status" shows untracked files still), send
++# me the output of "git status" as well as your Makefile.am and Makefile for
++# the directories involved.
++#
++# For a list of toplevel files that should be in MAINTAINERCLEANFILES, see
++# pango/Makefile.am.
++#
++# Don't EXTRA_DIST this file.  It is supposed to only live in git clones,
++# not tarballs.  It serves no useful purpose in tarballs and clutters the
++# build dir.
++#
++# This file knows how to handle autoconf, automake, libtool, gtk-doc,
++# gnome-doc-utils, mallard, intltool, gsettings.
++#
++#
++# KNOWN ISSUES:
++#
++# - Recursive configure doesn't work as $(top_srcdir)/git.mk inside the
++#   submodule doesn't find us.  If you have configure.{in,ac} files in
++#   subdirs, add a proxy git.mk file in those dirs that simply does:
++#   "include $(top_srcdir)/../git.mk".  Add more ..'s to your taste.
++#   And add those files to git.  See vte/gnome-pty-helper/git.mk for
++#   example.
++#
++# ChangeLog
++#
++# - 2010-12-06 Add support for Mallard docs
++# - 2010-12-06 Start this change log
++
++git-all: git-mk-install
++
++git-mk-install:
++	@echo Installing git makefile
++	@any_failed=; find $(top_srcdir) -name Makefile.am | while read x; do \
++		if grep 'include .*/git.mk' $$x >/dev/null; then \
++			echo $$x already includes git.mk; \
++		else \
++			failed=; \
++			echo "Updating $$x"; \
++			{ cat $$x; \
++			  echo ''; \
++			  echo '-include $$(top_srcdir)/git.mk'; \
++			} > $$x.tmp || failed=1; \
++			if test x$$failed = x; then \
++				mv $$x.tmp $$x || failed=1; \
++			fi; \
++			if test x$$failed = x; then : else \
++				echo Failed updating $$x; >&2 \
++				any_failed=1; \
++			fi; \
++	fi; done; test -z "$$any_failed"
++
++.PHONY: git-all git-mk-install
++
++
++### .gitignore generation
++
++$(srcdir)/.gitignore: Makefile.am $(top_srcdir)/git.mk
++	$(AM_V_GEN) \
++	{ \
++		if test "x$(DOC_MODULE)" = x -o "x$(DOC_MAIN_SGML_FILE)" = x; then :; else \
++			for x in \
++				$(DOC_MODULE)-decl-list.txt \
++				$(DOC_MODULE)-decl.txt \
++				tmpl/$(DOC_MODULE)-unused.sgml \
++				"tmpl/*.bak" \
++				xml html \
++			; do echo /$$x; done; \
++		fi; \
++		if test "x$(DOC_MODULE)$(DOC_ID)" = x -o "x$(DOC_LINGUAS)" = x; then :; else \
++			for x in \
++				$(_DOC_C_DOCS) \
++				$(_DOC_LC_DOCS) \
++				$(_DOC_OMF_ALL) \
++				$(_DOC_DSK_ALL) \
++				$(_DOC_HTML_ALL) \
++				$(_DOC_MOFILES) \
++				$(_DOC_POFILES) \
++				$(DOC_H_FILE) \
++				"*/.xml2po.mo" \
++				"*/*.omf.out" \
++			; do echo /$$x; done; \
++		fi; \
++		if test "x$(gsettings_SCHEMAS)" = x; then :; else \
++			for x in \
++				$(gsettings_SCHEMAS:.xml=.valid) \
++				$(gsettings__enum_file) \
++			; do echo /$$x; done; \
++		fi; \
++		if test -f $(srcdir)/po/Makefile.in.in; then \
++			for x in \
++				po/Makefile.in.in \
++				po/Makefile.in \
++				po/Makefile \
++				po/POTFILES \
++				po/stamp-it \
++				po/.intltool-merge-cache \
++				"po/*.gmo" \
++				"po/*.mo" \
++				po/$(GETTEXT_PACKAGE).pot \
++				intltool-extract.in \
++				intltool-merge.in \
++				intltool-update.in \
++			; do echo /$$x; done; \
++		fi; \
++		if test -f $(srcdir)/configure; then \
++			for x in \
++				autom4te.cache \
++				configure \
++				config.h \
++				stamp-h1 \
++				libtool \
++				config.lt \
++			; do echo /$$x; done; \
++		fi; \
++		for x in \
++			.gitignore \
++			$(GITIGNOREFILES) \
++			$(CLEANFILES) \
++			$(PROGRAMS) \
++			$(check_PROGRAMS) \
++			$(EXTRA_PROGRAMS) \
++			$(LTLIBRARIES) \
++			so_locations \
++			.libs _libs \
++			$(MOSTLYCLEANFILES) \
++			"*.$(OBJEXT)" \
++			"*.lo" \
++			$(DISTCLEANFILES) \
++			$(am__CONFIG_DISTCLEAN_FILES) \
++			$(CONFIG_CLEAN_FILES) \
++			TAGS ID GTAGS GRTAGS GSYMS GPATH tags \
++			"*.tab.c" \
++			$(MAINTAINERCLEANFILES) \
++			$(BUILT_SOURCES) \
++			$(DEPDIR) \
++			Makefile \
++			Makefile.in \
++			"*.orig" \
++			"*.rej" \
++			"*.bak" \
++			"*~" \
++			".*.sw[nop]" \
++			".dirstamp" \
++		; do echo /$$x; done; \
++	} | \
++	sed "s@^/`echo "$(srcdir)" | sed 's/\(.\)/[\1]/g'`/@/@" | \
++	sed 's@/[.]/@/@g' | \
++	LC_ALL=C sort | uniq > $@.tmp && \
++	mv $@.tmp $@;
++
++all: $(srcdir)/.gitignore gitignore-recurse-maybe
++gitignore-recurse-maybe:
++	@if test "x$(SUBDIRS)" = "x$(DIST_SUBDIRS)"; then :; else \
++		$(MAKE) $(AM_MAKEFLAGS) gitignore-recurse; \
++	fi;
++gitignore-recurse:
++	@for subdir in $(DIST_SUBDIRS); do \
++	  case " $(SUBDIRS) " in \
++	    *" $$subdir "*) :;; \
++	    *) test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) .gitignore gitignore-recurse || echo "Skipping $$subdir");; \
++	  esac; \
++	done
++gitignore: $(srcdir)/.gitignore gitignore-recurse
++
++maintainer-clean: gitignore-clean
++gitignore-clean:
++	-rm -f $(srcdir)/.gitignore
++
++.PHONY: gitignore-clean gitignore gitignore-recurse gitignore-recurse-maybe
+diff '--exclude=.git' -urNa a/help/LINGUAS b/help/LINGUAS
+--- a/help/LINGUAS	2018-03-12 14:52:57.000000000 -0400
++++ b/help/LINGUAS	1969-12-31 19:00:00.000000000 -0500
+@@ -1,22 +0,0 @@
+-# please keep this list sorted alphabetically
+-#
+-ca
+-cs
+-da
+-de
+-el
+-es
+-fi
+-fr
+-gl
+-hu
+-id
+-ja
+-ko
+-pl
+-pt_BR
+-ru
+-sl
+-sv
+-te
+-zh_CN
+diff '--exclude=.git' -urNa a/help/Makefile.am b/help/Makefile.am
+--- a/help/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/help/Makefile.am	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,31 @@
++@YELP_HELP_RULES@
++
++# Module name
++HELP_ID = file-roller
++
++# List of figures to be included
++HELP_MEDIA = \
++	figures/file-roller-3-12.png \
++	figures/file-roller-icon.png
++
++# List of pages
++HELP_FILES = \
++	archive-create.page \
++	archive-edit.page \
++	archive-extract.page \
++	archive-extract-advanced-options.page \
++	archive-open.page \
++	archive-view.page \
++	index.page \
++	introduction.page \
++	legal.xml \
++	keyboard-shortcuts.page \
++	password-protection.page \
++	supported-formats.page \
++	test-integrity.page \
++	troubleshooting-archive-open.page \
++	troubleshooting-password.page
++
++HELP_LINGUAS = ca cs da de el es fi fr gl hu id ja ko pl pt_BR ru sl sv te zh_CN
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/help/meson.build b/help/meson.build
+--- a/help/meson.build	2018-03-12 14:52:57.000000000 -0400
++++ b/help/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1,23 +0,0 @@
+-gnome.yelp('file-roller',
+-  sources : [
+-    'archive-create.page',
+-    'archive-edit.page',
+-    'archive-extract.page',
+-    'archive-extract-advanced-options.page',
+-    'archive-open.page',
+-    'archive-view.page',
+-    'index.page',
+-    'introduction.page',
+-    'legal.xml',
+-    'keyboard-shortcuts.page',
+-    'password-protection.page',
+-    'supported-formats.page',
+-    'test-integrity.page',
+-    'troubleshooting-archive-open.page',
+-    'troubleshooting-password.page'
+-  ],
+-  media : [
+-    'figures/file-roller-3-12.png',
+-    'figures/file-roller-icon.png'
+-  ]
+-)
+diff '--exclude=.git' -urNa a/meson.build b/meson.build
+--- a/meson.build	2018-03-12 14:52:57.000000000 -0400
++++ b/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1,170 +0,0 @@
+-project('file-roller', 'c',
+-  license : 'GPL2+',
+-  version : '3.28.0',
+-  meson_version : '>=0.43'
+-)
+-
+-glib_version = '>=2.36'
+-gtk_version = '>=3.13.2'
+-nautilus_version = '>=2.22.2'
+-json_glib_version = '>=0.14.0'
+-libnotify_version = '>=0.4.3'
+-libarchive_version = '>=3.0.0'
+-
+-gnome = import('gnome')
+-i18n = import('i18n')
+-gettext_package = meson.project_name()
+-prefix = get_option('prefix')
+-datadir = join_paths(prefix, get_option('datadir'))
+-privexecdir = join_paths(prefix, get_option('libexecdir'), meson.project_name())
+-c_comp = meson.get_compiler('c')
+-
+-meson.add_install_script('postinstall.py')
+-
+-# Dependencies
+-
+-libm_dep = c_comp.find_library('m')
+-thread_dep = dependency('threads')
+-glib_dep = dependency('glib-2.0', version : glib_version)
+-gthread_dep = dependency('gthread-2.0')
+-gtk_dep = dependency('gtk+-3.0', version : gtk_version)
+-
+-# Optional dependencies
+-
+-if get_option('nautilus-actions')
+-  libnautilus_extension_dep = dependency('libnautilus-extension', version : nautilus_version, required : false)
+-  build_nautilus_actions = libnautilus_extension_dep.found()
+-else
+-  build_nautilus_actions = false
+-endif
+-
+-libjson_glib_dep = dependency('json-glib-1.0', version : json_glib_version, required : false)
+-use_json_glib = libjson_glib_dep.found()
+- 
+-if get_option('notification')
+-  libnotify_dep = dependency('libnotify', version : libnotify_version, required : false)
+-  use_libnotify = libnotify_dep.found()
+-else
+-  use_libnotify = false
+-endif
+-
+-if get_option('libarchive')
+-  libarchive_dep = dependency('libarchive', version : libarchive_version, required : false)
+-  use_libarchive = libarchive_dep.found()
+-else
+-  use_libarchive = false
+-endif
+-
+-use_magic = false
+-if get_option('magic')
+-  libmagic_dep = c_comp.find_library('magic')
+-  if c_comp.compiles('''#include <magic.h>
+-                        int main () { magic_t m = magic_open(MAGIC_NONE); }''', 
+-                     dependencies : libmagic_dep)
+-    use_magic = true    
+-  endif
+-endif
+-
+-have_mkdtemp = c_comp.has_function('mkdtemp')
+-
+-cpio_path = 'cpio'
+-if get_option('cpio') == 'auto'
+-  cpio = find_program('gcpio', 'cpio', required : false)
+-  if cpio.found()
+-    cpio_path = cpio.path()
+-  endif
+-endif
+-
+-# config.h
+-
+-config_data = configuration_data()
+-config_data.set_quoted('GETTEXT_PACKAGE', gettext_package)
+-config_data.set_quoted('LOCALEDIR', join_paths(prefix, get_option('localedir')))
+-config_data.set_quoted('PACKAGE_NAME', meson.project_name())
+-config_data.set_quoted('PACKAGE_VERSION', meson.project_version())
+-if get_option('run-in-place')
+-  config_data.set_quoted('PRIVDATADIR', join_paths(meson.source_root(), 'data'))
+-  config_data.set_quoted('PRIVEXECDIR', join_paths(meson.source_root(), 'src', 'commands'))
+-  config_data.set_quoted('UIDIR', join_paths(meson.source_root(), 'data', 'ui'))
+-  config_data.set_quoted('SHDIR', join_paths(meson.source_root(), 'src', 'sh'))  
+-else
+-  config_data.set_quoted('PRIVDATADIR', join_paths(datadir, meson.project_name()))
+-  config_data.set_quoted('PRIVEXECDIR', privexecdir)  
+-  config_data.set_quoted('UIDIR', join_paths(datadir, meson.project_name(), 'ui'))
+-  config_data.set_quoted('SHDIR', join_paths(prefix, get_option('libexecdir'), meson.project_name()))  
+-endif
+-if use_json_glib
+-  config_data.set('HAVE_JSON_GLIB', 1)
+-endif
+-if use_libnotify
+-  config_data.set('ENABLE_NOTIFICATION', 1)
+-endif
+-if use_libarchive
+-  config_data.set('ENABLE_LIBARCHIVE', 1)
+-endif
+-if get_option('packagekit')
+-  config_data.set('ENABLE_PACKAGEKIT', 1)
+-endif
+-if get_option('buildtype').contains('debug')
+-  config_data.set('DEBUG', 1)
+-endif
+-if have_mkdtemp
+-  config_data.set('HAVE_MKDTEMP', 1)
+-endif
+-if use_magic
+-  config_data.set('ENABLE_MAGIC', 1)
+-endif
+-config_data.set_quoted('CPIO_PATH', cpio_path)
+-config_file = configure_file(output : 'config.h', configuration : config_data)
+-config_inc = include_directories('.')
+-
+-# C args
+-
+-c_args = []
+-if get_option('buildtype').contains('debug')
+-  test_args = [ 
+-    '-Wall', 
+-    '-Wcast-align', 
+-    '-Wtype-limits', 
+-    '-Wclobbered', 
+-    '-Wempty-body', 
+-    '-Wignored-qualifiers', 
+-    '-Wmissing-prototypes',
+-    '-Wnested-externs', 
+-    '-Wpointer-arith', 
+-    '-Wno-sign-compare', 
+-    '-Wformat-security'
+-  ]
+-else
+-  c_args += [ '-Wno-deprecated-declarations' ]
+-  test_args = [ '-Wall' ]
+-endif
+-c_args += c_comp.get_supported_arguments(test_args)
+-
+-# Subdirectories
+-
+-subdir('data')
+-subdir('help')
+-if build_nautilus_actions
+-  subdir('nautilus')
+-endif
+-subdir('po')
+-subdir('src')
+-
+-# Summary
+-
+-summary = [
+-  'configuration summary:',
+-  '',
+-  '           project: @0@ @1@'.format(meson.project_name(), meson.project_version()),
+-  '            prefix: @0@'.format(prefix),
+-  '  nautilus actions: @0@'.format(build_nautilus_actions),
+-  '     notifications: @0@'.format(use_libnotify),
+-  '        packagekit: @0@'.format(get_option('packagekit')),
+-  '        libarchive: @0@'.format(use_libarchive),
+-  '             magic: @0@'.format(use_magic),
+-  '      have mkdtemp: @0@'.format(have_mkdtemp),
+-  '              cpio: @0@'.format(cpio_path),
+-  ''
+-]
+-message('\n'.join(summary))
+diff '--exclude=.git' -urNa a/meson_options.txt b/meson_options.txt
+--- a/meson_options.txt	2018-03-12 14:52:57.000000000 -0400
++++ b/meson_options.txt	1969-12-31 19:00:00.000000000 -0500
+@@ -1,41 +0,0 @@
+-option('run-in-place', 
+-  type : 'boolean', 
+-  value : false, 
+-  description : 'Load ui data from the source tree'
+-)
+-
+-option('nautilus-actions',
+-  type : 'boolean', 
+-  value : true, 
+-  description : 'Build the nautilus context menu actions'
+-)
+-
+-option('notification',
+-  type : 'boolean', 
+-  value : true, 
+-  description : 'Enable operation completion notification'
+-)
+-
+-option('packagekit',
+-  type : 'boolean', 
+-  value : true, 
+-  description : 'Build PackageKit installer for missing utilities'
+-)
+-
+-option('libarchive',
+-  type : 'boolean', 
+-  value : true, 
+-  description : 'Enable code that requires libarchive'
+-)
+-
+-option('magic',
+-  type : 'boolean', 
+-  value : true, 
+-  description : 'Use libmagic to detect file type'
+-)
+-
+-option('cpio',
+-  type : 'string',
+-  value : 'auto',
+-  description : 'Path to the cpio program'
+-)
+diff '--exclude=.git' -urNa a/nautilus/Makefile.am b/nautilus/Makefile.am
+--- a/nautilus/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/nautilus/Makefile.am	2018-04-25 00:48:55.285557881 -0400
+@@ -0,0 +1,23 @@
++AM_CPPFLAGS =						\
++	-DLOCALEDIR=\"$(localedir)\" 			\
++	-I$(top_srcdir)					\
++	-I$(top_builddir)				\
++	$(DISABLE_DEPRECATED)				\
++	$(NAUTILUS_CFLAGS)				\
++	$(FR_CFLAGS)					\
++	$(JSON_GLIB_CFLAGS)				\
++	$(LIBNOTIFY_CFLAGS)
++
++nautilus_extensiondir=$(NAUTILUS_EXTENSION_DIR)
++
++nautilus_extension_LTLIBRARIES=libnautilus-fileroller.la
++
++libnautilus_fileroller_la_SOURCES =     \
++	nautilus-fileroller.c           \
++	nautilus-fileroller.h           \
++	fileroller-module.c
++
++libnautilus_fileroller_la_LDFLAGS = -module -avoid-version -no-undefined
++libnautilus_fileroller_la_LIBADD  = $(NAUTILUS_LIBS)
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/nautilus/meson.build b/nautilus/meson.build
+--- a/nautilus/meson.build	2018-03-12 14:52:57.000000000 -0400
++++ b/nautilus/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1,20 +0,0 @@
+-shared_module('nautilus-fileroller', 
+-  sources : [
+-    'nautilus-fileroller.c',
+-    'fileroller-module.c'
+-  ],
+-  dependencies : [ 
+-    libm_dep, 
+-    thread_dep,
+-    glib_dep, 
+-    gthread_dep, 
+-    gtk_dep, 
+-    libnautilus_extension_dep,
+-    use_json_glib ? libjson_glib_dep : [],
+-    use_libnotify ? libnotify_dep : []    
+-  ],  
+-  include_directories : config_inc,
+-  c_args : c_args,
+-  install : true,
+-  install_dir : libnautilus_extension_dep.get_pkgconfig_variable('extensiondir')
+-)
+diff '--exclude=.git' -urNa a/nautilus/nautilus-fileroller.c b/nautilus/nautilus-fileroller.c
+--- a/nautilus/nautilus-fileroller.c	2018-03-12 14:52:57.000000000 -0400
++++ b/nautilus/nautilus-fileroller.c	2018-04-25 00:48:55.286557877 -0400
+@@ -28,7 +28,6 @@
+ #include <libnautilus-extension/nautilus-extension-types.h>
+ #include <libnautilus-extension/nautilus-file-info.h>
+ #include <libnautilus-extension/nautilus-menu-provider.h>
+-#include <locale.h>
+ #include "nautilus-fileroller.h"
+ 
+ 
+@@ -258,9 +257,9 @@
+ 		NautilusMenuItem *item;
+ 
+ 		item = nautilus_menu_item_new ("NautilusFr::extract_here",
+-					       g_dcgettext ("file-roller", "Extract Here", LC_MESSAGES),
++					       g_dgettext ("file-roller", "Extract Here"),
+ 					       /* Translators: the current position is the current folder */
+-					       g_dcgettext ("file-roller", "Extract the selected archive to the current position", LC_MESSAGES),
++					       g_dgettext ("file-roller", "Extract the selected archive to the current position"),
+ 					       "drive-harddisk");
+ 		g_signal_connect (item,
+ 				  "activate",
+@@ -277,8 +276,8 @@
+ 		NautilusMenuItem *item;
+ 
+ 		item = nautilus_menu_item_new ("NautilusFr::extract_to",
+-					       g_dcgettext ("file-roller", "Extract Toâ€¦", LC_MESSAGES),
+-					       g_dcgettext ("file-roller", "Extract the selected archive", LC_MESSAGES),
++					       g_dgettext ("file-roller", "Extract Toâ€¦"),
++					       g_dgettext ("file-roller", "Extract the selected archive"),
+ 					       "drive-harddisk");
+ 		g_signal_connect (item,
+ 				  "activate",
+diff '--exclude=.git' -urNa a/po/POTFILES.in b/po/POTFILES.in
+--- a/po/POTFILES.in	2018-03-12 14:52:57.000000000 -0400
++++ b/po/POTFILES.in	2018-04-25 00:48:55.286557877 -0400
+@@ -2,10 +2,11 @@
+ #
+ # DO NOT EDIT.  This file is automatically generated, to
+ # update the content run the following command:
+-# ./make-potfiles-in.py > POTFILES.in
++# sh update-potfiles.sh > POTFILES.in
++[encoding: UTF-8]
+ data/org.gnome.FileRoller.appdata.xml.in
+ data/org.gnome.FileRoller.desktop.in.in
+-data/org.gnome.FileRoller.gschema.xml
++[type: gettext/gsettings]data/org.gnome.FileRoller.gschema.xml
+ nautilus/fileroller-module.c
+ nautilus/nautilus-fileroller.c
+ nautilus/nautilus-fileroller.h
+@@ -37,14 +38,14 @@
+ src/file-data.h
+ src/file-utils.c
+ src/file-utils.h
+-src/fr-application-menu.c
+-src/fr-application-menu.h
+ src/fr-application.c
+ src/fr-application.h
+-src/fr-archive-libarchive.c
+-src/fr-archive-libarchive.h
++src/fr-application-menu.c
++src/fr-application-menu.h
+ src/fr-archive.c
+ src/fr-archive.h
++src/fr-archive-libarchive.c
++src/fr-archive-libarchive.h
+ src/fr-command-7z.c
+ src/fr-command-7z.h
+ src/fr-command-ace.c
+@@ -55,12 +56,14 @@
+ src/fr-command-ar.h
+ src/fr-command-arj.c
+ src/fr-command-arj.h
++src/fr-command.c
+ src/fr-command-cfile.c
+ src/fr-command-cfile.h
+ src/fr-command-cpio.c
+ src/fr-command-cpio.h
+ src/fr-command-dpkg.c
+ src/fr-command-dpkg.h
++src/fr-command.h
+ src/fr-command-iso.c
+ src/fr-command-iso.h
+ src/fr-command-jar.c
+@@ -85,8 +88,6 @@
+ src/fr-command-zip.h
+ src/fr-command-zoo.c
+ src/fr-command-zoo.h
+-src/fr-command.c
+-src/fr-command.h
+ src/fr-error.c
+ src/fr-error.h
+ src/fr-file-selector-dialog.c
+@@ -127,20 +128,20 @@
+ src/rar-utils.h
+ src/test-server.c
+ src/typedefs.h
+-src/ui/add-dialog-options.ui
+-src/ui/add-options.ui
+-src/ui/app-menu.ui
+-src/ui/app-menubar.ui
+-src/ui/ask-password.ui
+-src/ui/delete.ui
+-src/ui/extract-dialog-options.ui
+-src/ui/file-selector.ui
+-src/ui/gears-menu.ui
+-src/ui/menus-toolbars.ui
+-src/ui/menus.ui
+-src/ui/new-archive-dialog.ui
+-src/ui/password.ui
+-src/ui/progress-dialog.ui
+-src/ui/properties.ui
+-src/ui/request-dialog.ui
+-src/ui/update.ui
++[type: gettext/glade]src/ui/add-dialog-options.ui
++[type: gettext/glade]src/ui/add-options.ui
++[type: gettext/glade]src/ui/app-menubar.ui
++[type: gettext/glade]src/ui/app-menu.ui
++[type: gettext/glade]src/ui/ask-password.ui
++[type: gettext/glade]src/ui/delete.ui
++[type: gettext/glade]src/ui/extract-dialog-options.ui
++[type: gettext/glade]src/ui/file-selector.ui
++[type: gettext/glade]src/ui/gears-menu.ui
++[type: gettext/glade]src/ui/menus-toolbars.ui
++[type: gettext/glade]src/ui/menus.ui
++[type: gettext/glade]src/ui/new-archive-dialog.ui
++[type: gettext/glade]src/ui/password.ui
++[type: gettext/glade]src/ui/progress-dialog.ui
++[type: gettext/glade]src/ui/properties.ui
++[type: gettext/glade]src/ui/request-dialog.ui
++[type: gettext/glade]src/ui/update.ui
+diff '--exclude=.git' -urNa a/po/make-potfiles-in.py b/po/make-potfiles-in.py
+--- a/po/make-potfiles-in.py	2018-03-12 14:52:58.000000000 -0400
++++ b/po/make-potfiles-in.py	1969-12-31 19:00:00.000000000 -0500
+@@ -1,44 +0,0 @@
+-#!/usr/bin/env python3
+-
+-import os
+-import re
+-
+-root_dir = '..'
+-valid_extensions = [ 
+-    '.c', 
+-    '.h', 
+-    '.cpp', 
+-    '.ui', 
+-    '.gschema.xml', 
+-    '.schemas.in', 
+-    '.xml.in', 
+-    '.desktop.in.in', 
+-    '.extension.in.in' 
+-]
+-prefix_for_ext = {
+-    '.ui'              : '[type: gettext/glade]',
+-    '.extension.in.in' : '[type: gettext/ini]',
+-    '.gschema.xml'     : '[type: gettext/gsettings]'
+-}
+-
+-print("# List of source files which contain translatable strings.")
+-print("#")
+-print("# DO NOT EDIT.  This file is automatically generated, to")
+-print("# update the content run the following command:")
+-print("# ./make-potfiles-in.py > POTFILES.in")
+-#print("[encoding: UTF-8]")
+-
+-all_files = []
+-for root, dirs, files in os.walk(root_dir):
+-    all_files += map(lambda file: os.path.join(root, file), files)
+-    
+-for file in sorted(all_files):
+-    # ignore the build directory   
+-    if 'build' in file:
+-        continue
+-    
+-    for ext in valid_extensions:
+-        if file.endswith(ext):        
+-            prefix = ''#prefix_for_ext.get(ext, '')
+-            file = os.path.relpath(file, root_dir)
+-            print("{0}{1}".format(prefix, file)) 
+diff '--exclude=.git' -urNa a/po/meson.build b/po/meson.build
+--- a/po/meson.build	2018-03-12 14:52:58.000000000 -0400
++++ b/po/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1 +0,0 @@
+-i18n.gettext(gettext_package, preset : 'glib')
+diff '--exclude=.git' -urNa a/po/update-potfiles.sh b/po/update-potfiles.sh
+--- a/po/update-potfiles.sh	1969-12-31 19:00:00.000000000 -0500
++++ b/po/update-potfiles.sh	2018-04-25 00:48:55.286557877 -0400
+@@ -0,0 +1,18 @@
++#!/bin/sh
++
++echo "# List of source files which contain translatable strings."
++echo "#"
++echo "# DO NOT EDIT.  This file is automatically generated, to"
++echo "# update the content run the following command:"
++echo "# sh update-potfiles.sh > POTFILES.in"
++echo "[encoding: UTF-8]"
++files=`find .. \( -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.ui' -o -name '*.gschema.xml' -o -name '*.schemas.in' -o -name "*.xml.in" -o -name '*.desktop.in.in' -o -name '*.extension.in.in' \) -printf "%P\n" | sort`
++for f in $files; do
++	case $f in
++        build/*) ;;
++	*.ui) echo "[type: gettext/glade]$f" ;;
++	*.extension.in.in) echo "[type: gettext/ini]$f" ;;
++        *.gschema.xml) echo "[type: gettext/gsettings]$f" ;;
++	*) echo $f
++	esac
++done
+diff '--exclude=.git' -urNa a/postinstall.py b/postinstall.py
+--- a/postinstall.py	2018-03-12 14:52:58.000000000 -0400
++++ b/postinstall.py	1969-12-31 19:00:00.000000000 -0500
+@@ -1,27 +0,0 @@
+-#!/usr/bin/env python3
+-
+-import os
+-import subprocess
+-
+-prefix = os.environ.get('MESON_INSTALL_PREFIX', '/usr/local')
+-datadir = os.path.join(prefix, 'share')
+-
+-# Packaging tools define DESTDIR and this isn't needed for them
+-if 'DESTDIR' not in os.environ:
+-    print('Updating icon cacheâ€¦')
+-    icon_cache_dir = os.path.join(datadir, 'icons', 'hicolor')
+-    if not os.path.exists(icon_cache_dir):
+-        os.makedirs(icon_cache_dir)
+-    subprocess.call(['gtk-update-icon-cache', '-qtf', icon_cache_dir])
+-
+-    print('Updating desktop databaseâ€¦')
+-    desktop_database_dir = os.path.join(datadir, 'applications')
+-    if not os.path.exists(desktop_database_dir):
+-        os.makedirs(desktop_database_dir)
+-    subprocess.call(['update-desktop-database', '-q', desktop_database_dir])
+-
+-    print('Compiling GSettings schemasâ€¦')
+-    schemas_dir = os.path.join(datadir, 'glib-2.0', 'schemas')
+-    if not os.path.exists(schemas_dir):
+-        os.makedirs(schemas_dir)
+-    subprocess.call(['glib-compile-schemas', schemas_dir])
+diff '--exclude=.git' -urNa a/src/Makefile.am b/src/Makefile.am
+--- a/src/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/src/Makefile.am	2018-04-25 00:48:55.286557877 -0400
+@@ -0,0 +1,236 @@
++SUBDIRS = commands sh ui
++
++bin_PROGRAMS = file-roller
++noinst_PROGRAMS = test-server
++
++if MKDTEMP_MISSING
++MKDTEMP_FILES=mkdtemp.c mkdtemp.h
++else
++MKDTEMP_FILES=
++endif
++
++if RUN_IN_PLACE
++privdatadir = $(abs_top_srcdir)/data/
++uidir = $(abs_top_srcdir)/data/ui
++privexecdir = $(abs_top_builddir)/src/commands/
++shdir = $(abs_top_srcdir)/src/sh/
++applications_dir = $(abs_top_builddir)/data
++else
++privdatadir = $(datadir)/file-roller/
++uidir = $(datadir)/file-roller/ui
++privexecdir = $(libexecdir)/file-roller/
++shdir = $(libexecdir)/file-roller/
++applications_dir = $(datadir)/applications
++endif
++
++AM_CPPFLAGS =						\
++	-I$(top_srcdir)					\
++	-I$(top_builddir)				\
++        -DPRIVDATADIR=\"$(privdatadir)\"		\
++        -DUI_DIR=\"$(uidir)\"				\
++        -DPKG_DATA_DIR=\"$(pkgdatadir)\"                \
++	-DPRIVEXECDIR=\"$(privexecdir)\"		\
++	-DSHDIR=\"$(shdir)\"				\
++	-DLOCALEDIR=\"$(localedir)\" 			\
++	$(DISABLE_DEPRECATED)				\
++	$(FR_CFLAGS)					\
++	$(JSON_GLIB_CFLAGS)				\
++	$(LIBNOTIFY_CFLAGS)				\
++	$(LIBARCHIVE_CFLAGS)
++
++BUILT_SOURCES =			\
++	fr-marshal.c		\
++	fr-marshal.h		\
++	fr-enum-types.h		\
++	fr-enum-types.c		\
++	fr-resources.c		\
++	fr-resources.h		\
++	$(NULL)
++
++COMMON_SOURCES = 			\
++	dlg-add.c			\
++	dlg-add.h			\
++	dlg-ask-password.c		\
++	dlg-ask-password.h		\
++	dlg-batch-add.c			\
++	dlg-batch-add.h			\
++	dlg-delete.c			\
++	dlg-delete.h			\
++	dlg-extract.c			\
++	dlg-extract.h			\
++	dlg-open-with.c			\
++	dlg-open-with.h			\
++	dlg-package-installer.c		\
++	dlg-package-installer.h		\
++	dlg-password.c			\
++	dlg-password.h			\
++	dlg-prop.c			\
++	dlg-prop.h			\
++	dlg-update.c			\
++	dlg-update.h			\
++	egg-macros.h			\
++	eggtreemultidnd.c		\
++	eggtreemultidnd.h		\
++	file-data.c			\
++	file-data.h			\
++	file-utils.c			\
++	file-utils.h			\
++	fr-application.c		\
++	fr-application.h		\
++	fr-application-menu.c		\
++	fr-application-menu.h		\
++	fr-archive.c			\
++	fr-archive.h			\
++	fr-command.c			\
++	fr-command.h			\
++	fr-command-7z.c			\
++	fr-command-7z.h			\
++	fr-command-ace.c		\
++	fr-command-ace.h		\
++	fr-command-alz.c		\
++	fr-command-alz.h		\
++	fr-command-ar.c			\
++	fr-command-ar.h			\
++	fr-command-arj.c		\
++	fr-command-arj.h		\
++	fr-command-cfile.c		\
++	fr-command-cfile.h		\
++	fr-command-cpio.c		\
++	fr-command-cpio.h		\
++	fr-command-dpkg.c		\
++	fr-command-dpkg.h		\
++	fr-command-iso.c		\
++	fr-command-iso.h		\
++	fr-command-jar.h		\
++	fr-command-jar.c		\
++	fr-command-lha.c		\
++	fr-command-lha.h		\
++	fr-command-lrzip.c		\
++	fr-command-lrzip.h		\
++	fr-command-rar.c		\
++	fr-command-rar.h		\
++	fr-command-rpm.c		\
++	fr-command-rpm.h		\
++	fr-command-tar.c		\
++	fr-command-tar.h		\
++	fr-command-unsquashfs.c		\
++	fr-command-unsquashfs.h		\
++	fr-command-unstuff.c		\
++	fr-command-unstuff.h		\
++	fr-command-zip.c		\
++	fr-command-zip.h		\
++	fr-command-zoo.c		\
++	fr-command-zoo.h		\
++	fr-error.c			\
++	fr-error.h			\
++	fr-file-selector-dialog.c	\
++	fr-file-selector-dialog.h	\
++	fr-init.c			\
++	fr-init.h			\
++	fr-list-model.c			\
++	fr-list-model.h			\
++	fr-location-bar.c		\
++	fr-location-bar.h		\
++	fr-new-archive-dialog.c		\
++	fr-new-archive-dialog.h		\
++	fr-process.c			\
++	fr-process.h			\
++	fr-window.c			\
++	fr-window.h			\
++	fr-window-actions-callbacks.c	\
++	fr-window-actions-callbacks.h	\
++	fr-window-actions-entries.h	\
++	gio-utils.c			\
++	gio-utils.h			\
++	glib-utils.c			\
++	glib-utils.h			\
++	gth-icon-cache.c		\
++	gth-icon-cache.h		\
++	gtk-utils.c			\
++	gtk-utils.h			\
++	java-utils.c			\
++	java-utils.h			\
++	open-file.c			\
++	open-file.h			\
++	preferences.c			\
++	preferences.h			\
++	rar-utils.c			\
++	rar-utils.h			\
++	typedefs.h			\
++	$(MKDTEMP_FILES)		\
++	$(BUILT_SOURCES)
++
++if ENABLE_JSON_GLIB
++COMMON_SOURCES +=			\
++	fr-command-unarchiver.h		\
++	fr-command-unarchiver.c
++endif
++
++if ENABLE_LIBARCHIVE
++COMMON_SOURCES +=			\
++	fr-archive-libarchive.h		\
++	fr-archive-libarchive.c
++endif
++
++fr-marshal.h: fr-marshal.list 
++	$(AM_V_GEN)( $(GLIB_GENMARSHAL) $< --header --prefix=fr_marshal > $@ )
++
++fr-marshal.c: fr-marshal.list $(GLIB_GENMARSHAL)
++	$(AM_V_GEN)( echo "#include \"fr-marshal.h\"" > $@ && \
++	$(GLIB_GENMARSHAL) $< --body --prefix=fr_marshal >> $@ )
++
++fr-enum-types.h: typedefs.h 
++	$(AM_V_GEN)( $(GLIB_MKENUMS) \
++		--fhead "#ifndef FR_ENUM_TYPES_H\n#define FR_ENUM_TYPES_H\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
++		--fprod "/* enumerations from \"@filename@\" */\n" \
++		--vhead "GType @enum_name@_get_type (void);\n#define FR_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" \
++		--ftail "G_END_DECLS\n\n#endif /* FR_ENUM_TYPES_H */" \
++		$^> xgen-$(@F) \
++	&& mv -f xgen-$(@F) fr-enum-types.h )
++	
++fr-enum-types.c: typedefs.h
++	$(AM_V_GEN)( $(GLIB_MKENUMS) \
++		--fhead "#include <glib-object.h>\n#include \"fr-enum-types.h\"\n" \
++		--fprod "\n/* enumerations from \"@filename@\" */\n#include \"@filename@\"" \
++		--vhead "GType\n@enum_name@_get_type (void)\n{\n  static GType etype = 0;\n  if (etype == 0) {\n    static const G@Type@Value values[] = {" \
++		--vprod "      { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
++		--vtail "      { 0, NULL, NULL }\n    };\n    etype = g_@type@_register_static (\"@EnumName@\", values);\n  }\n  return etype;\n}\n" \
++		$^> xgen-$(@F) \
++	&& mv -f xgen-$(@F) fr-enum-types.c )
++
++RESOURCES = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir=$(srcdir) $(srcdir)/file-roller.gresource.xml)
++
++fr-resources.c: file-roller.gresource.xml $(RESOURCES)
++	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fr $(srcdir)/file-roller.gresource.xml
++
++fr-resources.h: file-roller.gresource.xml $(RESOURCES)
++	$(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate --c-name fr $(srcdir)/file-roller.gresource.xml
++
++file_roller_SOURCES = 			\
++	$(COMMON_SOURCES)		\
++	main.c
++
++file_roller_LDADD =					\
++	$(FR_LIBS)					\
++	$(JSON_GLIB_LIBS)				\
++	$(LIBNOTIFY_LIBS)				\
++	$(LIBARCHIVE_LIBS)
++
++if ENABLE_MAGIC
++file_roller_LDADD += $(MAGIC_LIBS)
++endif
++
++test_server_SOURCES = test-server.c
++test_server_FLAGS = $(FR_CFLAGS) $(JSON_GLIB_CFLAGS)
++test_server_LDADD = $(FR_LIBS) $(JSON_GLIB_LIBS)
++
++EXTRA_DIST = 				\
++	file-roller.gresource.xml	\
++	fr-marshal.list 
++
++CLEANFILES = $(BUILT_SOURCES)
++
++dist-hook:
++	cd $(distdir); rm -f $(CLEANFILES)
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/src/commands/Makefile.am b/src/commands/Makefile.am
+--- a/src/commands/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/src/commands/Makefile.am	2018-04-25 00:48:55.286557877 -0400
+@@ -0,0 +1,9 @@
++privexecdir = $(libexecdir)/$(PACKAGE)
++privexec_PROGRAMS = rpm2cpio
++
++AM_CPPFLAGS = $(DISABLE_DEPRECATED) $(FR_CFLAGS)
++
++rpm2cpio_SOURCES = rpm2cpio.c
++rpm2cpio_LDADD = $(FR_LIBS)
++
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/src/commands/meson.build b/src/commands/meson.build
+--- a/src/commands/meson.build	2018-03-12 14:52:58.000000000 -0400
++++ b/src/commands/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1,10 +0,0 @@
+-executable('rpm2cpio', 'rpm2cpio.c',
+-  dependencies : [ 
+-    libm_dep, 
+-    glib_dep 
+-  ],
+-  include_directories : config_inc,
+-  c_args : c_args,
+-  install : true,
+-  install_dir : privexecdir
+-)
+diff '--exclude=.git' -urNa a/src/fr-application-menu.c b/src/fr-application-menu.c
+--- a/src/fr-application-menu.c	2018-03-12 14:52:58.000000000 -0400
++++ b/src/fr-application-menu.c	2018-04-25 00:48:55.286557877 -0400
+@@ -126,7 +126,7 @@
+ 	const char *documenters [] = { "Alexander Kirillov", "Breda McColgan", NULL };
+ 
+ 	gtk_show_about_dialog (GTK_WINDOW (_gtk_application_get_current_window (G_APPLICATION (user_data))),
+-			       "version", PACKAGE_VERSION,
++			       "version", VERSION,
+ 			       "copyright", _("Copyright \xc2\xa9 2001â€“2014 Free Software Foundation, Inc."),
+ 			       "comments", _("An archive manager for GNOME."),
+ 			       "authors", authors,
+diff '--exclude=.git' -urNa a/src/fr-init.c b/src/fr-init.c
+--- a/src/fr-init.c	2018-03-12 14:52:58.000000000 -0400
++++ b/src/fr-init.c	2018-04-25 00:48:55.286557877 -0400
+@@ -638,7 +638,7 @@
+ 					       NULL);
+ 
+ 	gtk_icon_theme_append_search_path (gtk_icon_theme_get_default (),
+-					   PRIVDATADIR G_DIR_SEPARATOR_S "icons");
++					   PKG_DATA_DIR G_DIR_SEPARATOR_S "icons");
+ 
+ 	migrate_options_directory ();
+ 	register_archives ();
+diff '--exclude=.git' -urNa a/src/gtk-utils.c b/src/gtk-utils.c
+--- a/src/gtk-utils.c	2018-03-12 14:52:58.000000000 -0400
++++ b/src/gtk-utils.c	2018-04-25 00:48:55.286557877 -0400
+@@ -534,7 +534,7 @@
+ 	GtkBuilder *builder;
+ 	GError     *error = NULL;
+ 
+-	filename = g_build_filename (UIDIR, ui_file, NULL);
++	filename = g_build_filename (UI_DIR, ui_file, NULL);
+ 	builder = gtk_builder_new ();
+         if (! gtk_builder_add_from_file (builder, filename, &error)) {
+                 g_warning ("%s\n", error->message);
+diff '--exclude=.git' -urNa a/src/meson.build b/src/meson.build
+--- a/src/meson.build	2018-03-12 14:52:58.000000000 -0400
++++ b/src/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1,120 +0,0 @@
+-# Sources
+-
+-source_files = files(
+-  'dlg-add.c',
+-  'dlg-ask-password.c',
+-  'dlg-batch-add.c',
+-  'dlg-delete.c',
+-  'dlg-extract.c',
+-  'dlg-open-with.c',
+-  'dlg-package-installer.c',
+-  'dlg-password.c',
+-  'dlg-prop.c',
+-  'dlg-update.c',
+-  'eggtreemultidnd.c',
+-  'file-data.c',
+-  'file-utils.c',
+-  'fr-application.c',
+-  'fr-application-menu.c',
+-  'fr-archive.c',
+-  'fr-command-7z.c',
+-  'fr-command-ace.c',
+-  'fr-command-alz.c',
+-  'fr-command-ar.c',
+-  'fr-command-arj.c',
+-  'fr-command.c',
+-  'fr-command-cfile.c',
+-  'fr-command-cpio.c',
+-  'fr-command-dpkg.c',
+-  'fr-command-iso.c',
+-  'fr-command-jar.c',
+-  'fr-command-lha.c',
+-  'fr-command-lrzip.c',
+-  'fr-command-rar.c',
+-  'fr-command-rpm.c',
+-  'fr-command-tar.c',
+-  'fr-command-unsquashfs.c',
+-  'fr-command-unstuff.c',
+-  'fr-command-zip.c',
+-  'fr-command-zoo.c',
+-  'fr-error.c',
+-  'fr-file-selector-dialog.c',
+-  'fr-init.c',
+-  'fr-list-model.c',
+-  'fr-location-bar.c',
+-  'fr-new-archive-dialog.c',
+-  'fr-process.c',
+-  'fr-window-actions-callbacks.c',
+-  'fr-window.c',
+-  'gio-utils.c',
+-  'glib-utils.c',
+-  'gth-icon-cache.c',
+-  'gtk-utils.c',
+-  'java-utils.c',
+-  'main.c',
+-  'open-file.c',
+-  'preferences.c',
+-  'rar-utils.c'
+-)
+-if libjson_glib_dep.found()
+-  source_files += [ 'fr-command-unarchiver.c' ]
+-endif
+-if use_libarchive
+-  source_files += [ 'fr-archive-libarchive.c' ]
+-endif 
+-if not have_mkdtemp
+-  source_files += [ 'mkdtemp.c' ]
+-endif
+-
+-gresource_files = gnome.compile_resources('fr-resources', 'file-roller.gresource.xml', c_name : 'fr')
+-
+-marshal_files = gnome.genmarshal('fr-marshal', prefix : 'fr_marshal', sources : 'fr-marshal.list' )
+-
+-enum_files = gnome.mkenums_simple('fr-enum-types', 
+-  sources: [ 'typedefs.h' ]
+-)
+-
+-# Build targets
+-
+-executable('file-roller', 
+-  sources : [ 
+-    config_file, 
+-    source_files, 
+-    gresource_files, 
+-    marshal_files,
+-    enum_files
+-  ],     
+-  dependencies : [ 
+-    libm_dep, 
+-    thread_dep,
+-    glib_dep, 
+-    gthread_dep, 
+-    gtk_dep, 
+-    use_json_glib ? libjson_glib_dep : [],
+-    use_libnotify ? libnotify_dep : [],
+-    use_libarchive ? libarchive_dep : [],
+-    use_magic ? libmagic_dep : []
+-  ],
+-  include_directories : config_inc,
+-  c_args : c_args,
+-  install : true
+-)
+-
+-executable('test-server', 'test-server.c',
+-  dependencies : [ 
+-    libm_dep, 
+-    thread_dep,
+-    glib_dep, 
+-    gthread_dep, 
+-    gtk_dep, 
+-    use_json_glib ? libjson_glib_dep : []
+-  ],  
+-  include_directories : config_inc,
+-  c_args : c_args,
+-  install : false
+-)
+-
+-# Subdirectories
+-
+-subdir('commands')
+-subdir('sh')
+diff '--exclude=.git' -urNa a/src/sh/Makefile.am b/src/sh/Makefile.am
+--- a/src/sh/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/src/sh/Makefile.am	2018-04-25 00:48:55.287557872 -0400
+@@ -0,0 +1,5 @@
++shdir = $(libexecdir)/$(PACKAGE)
++sh_DATA = isoinfo.sh 
++
++EXTRA_DIST = $(sh_DATA)
++-include $(top_srcdir)/git.mk
+diff '--exclude=.git' -urNa a/src/sh/meson.build b/src/sh/meson.build
+--- a/src/sh/meson.build	2018-03-12 14:52:58.000000000 -0400
++++ b/src/sh/meson.build	1969-12-31 19:00:00.000000000 -0500
+@@ -1 +0,0 @@
+-install_data('isoinfo.sh', install_dir : privexecdir)
+diff '--exclude=.git' -urNa a/src/ui/Makefile.am b/src/ui/Makefile.am
+--- a/src/ui/Makefile.am	1969-12-31 19:00:00.000000000 -0500
++++ b/src/ui/Makefile.am	2018-04-25 00:48:55.287557872 -0400
+@@ -0,0 +1,20 @@
++EXTRA_DIST = 				\
++	add-dialog-options.ui		\
++	add-options.ui			\
++	app-menu.ui			\
++	app-menubar.ui			\
++	ask-password.ui			\
++	delete.ui			\
++	extract-dialog-options.ui	\
++	file-selector.ui		\
++	gears-menu.ui			\
++	menus.ui			\
++	menus-toolbars.ui		\
++	new-archive-dialog.ui		\
++	password.ui			\
++	progress-dialog.ui		\
++	properties.ui			\
++	request-dialog.ui		\
++	update.ui
++
++-include $(top_srcdir)/git.mk

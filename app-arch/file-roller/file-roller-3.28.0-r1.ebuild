@@ -3,7 +3,7 @@
 EAPI="6"
 GNOME2_LA_PUNT="yes"
 
-inherit gnome2 readme.gentoo-r1 meson
+inherit autotools gnome2 readme.gentoo-r1
 
 DESCRIPTION="Archive manager for GNOME"
 HOMEPAGE="https://wiki.gnome.org/Apps/FileRoller"
@@ -27,7 +27,7 @@ RDEPEND="
 	x11-libs/gdk-pixbuf:2
 	x11-libs/pango
 	libnotify? ( >=x11-libs/libnotify-0.4.3:= )
-	nautilus? ( >=gnome-base/nautilus-2.22.2 )
+	nautilus? ( >=gnome-base/nautilus-3[-vanilla-menu-compress] )
 	packagekit? ( app-admin/packagekit-base )
 "
 DEPEND="${RDEPEND}
@@ -60,25 +60,46 @@ unstuff - app-arch/stuffit
 zoo     - app-arch/zoo"
 
 src_prepare() {
+	# From GNOME:
+	# 	https://git.gnome.org/browse/file-roller/commit/?id=80ce23d399e3911cc44447ca2e13e60b4356c14a
+	eapply "${FILESDIR}"/${PN}-3.28.0-support-autotools.patch
+
+	if use nautilus; then
+		# From GNOME:
+		# 	https://git.gnome.org/browse/file-roller/commit/?id=a4b806fffe8824c8eb5fb18ee404d879902529ec
+		# 	https://git.gnome.org/browse/file-roller/commit/?id=fad2372ccbbfd40013b4225002f4a737d67928bc
+		# 	https://git.gnome.org/browse/file-roller/commit/?id=aab1b7335c40b8b0e3d5a00cf8305dc53d48f3c8
+		# 	https://git.gnome.org/browse/file-roller/commit/?id=366a5147bd097a877d85295a36fb062213355a36
+		# 	https://git.gnome.org/browse/file-roller/commit/?id=da09ee41ca7c9b63082cf2a35ae19701c34adca7
+		eapply -R "${FILESDIR}"/${PN}-3.25.1-use-unicode-in-translatable-strings.patch
+		eapply -R "${FILESDIR}"/${PN}-3.23.92-nautilus-fileroller-remove-compress-support.patch
+		eapply -R "${FILESDIR}"/${PN}-3.23.91-nautilus-fileroller-remove-mime-types-already-supported-by-nautilus.patch
+		eapply -R "${FILESDIR}"/${PN}-3.23.91-revert-remove-nautilus-extension.patch
+		eapply -R "${FILESDIR}"/${PN}-3.21.91-remove-nautilus-extension.patch
+	fi
+
 	# File providing Gentoo package names for various archivers
 	cp -f "${FILESDIR}"/3.22-packages.match data/packages.match || die
+
+	eautoreconf
 	gnome2_src_prepare
 }
 
 src_configure() {
-	local emesonargs=(
-		-Dnautilus-actions=$(usex nautilus true false)
-		-Drun-in-place=false
-		-Dnotification=$(usex libnotify true false)
-		-Dpackagekit=$(usex packagekit true false)
-		-Dlibarchive=true
-		-Dmagic=true
-	)
-	meson_src_configure
+	# --disable-debug because enabling it adds -O0 to CFLAGS
+	gnome2_src_configure \
+		--disable-run-in-place \
+		--disable-static \
+		--disable-debug \
+		--enable-magic \
+		--enable-libarchive \
+		$(use_enable libnotify notification) \
+		$(use_enable nautilus nautilus-actions) \
+		$(use_enable packagekit)
 }
 
 src_install() {
-	meson_src_install
+	gnome2_src_install
 	readme.gentoo_create_doc
 }
 

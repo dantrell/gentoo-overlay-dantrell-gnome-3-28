@@ -1,7 +1,7 @@
 diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view.c
---- a/src/nautilus-files-view.c	2016-09-19 14:54:58.000000000 -0400
-+++ b/src/nautilus-files-view.c	2016-09-27 14:16:28.636733112 -0400
-@@ -4649,7 +4649,8 @@
+--- a/src/nautilus-files-view.c	2018-04-24 22:32:26.116421066 -0400
++++ b/src/nautilus-files-view.c	2018-04-24 22:32:37.616359773 -0400
+@@ -4878,7 +4878,8 @@
  static GMenu *
  build_menu_for_extension_menu_items (NautilusFilesView *view,
                                       const gchar       *extension_prefix,
@@ -11,16 +11,16 @@ diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view
  {
      GList *l;
      GMenu *gmenu;
-@@ -4673,37 +4674,40 @@
+@@ -4903,35 +4904,38 @@
                        "name", &name,
                        NULL);
  
--        extension_id = g_strdup_printf ("%s_%d", extension_prefix, idx);
--        prefix = g_strdup_printf ("extension_%s_", extension_id);
--        parsed_name = nautilus_escape_action_name (name, prefix);
--        add_extension_action (view, item, parsed_name);
+-        escaped_name = g_uri_escape_string (name, NULL, TRUE);
+-        extension_id = g_strdup_printf ("extension_%s_%d_%s",
+-                                        extension_prefix, idx, escaped_name);
+-        add_extension_action (view, item, extension_id);
 -
--        detailed_action_name = g_strconcat ("view.", parsed_name, NULL);
+-        detailed_action_name = g_strconcat ("view.", extension_id, NULL);
 -        menu_item = g_menu_item_new (label, detailed_action_name);
 -
 -        if (menu != NULL)
@@ -36,12 +36,12 @@ diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view
 -            g_object_unref (children_menu);
 +       if (strcmp(category, "extensions") == 0 && strncmp(name, "TerminalNautilus", strlen("TerminalNautilus")) != 0 ||
 +           strcmp(category, "terminal-extensions") == 0 && strncmp(name, "TerminalNautilus", strlen("TerminalNautilus")) == 0) {
-+            extension_id = g_strdup_printf ("%s_%d", extension_prefix, idx);
-+            prefix = g_strdup_printf ("%s_%s_", category, extension_id);
-+            parsed_name = nautilus_escape_action_name (name, prefix);
-+            add_extension_action (view, item, parsed_name);
++            escaped_name = g_uri_escape_string (name, NULL, TRUE);
++            extension_id = g_strdup_printf ("extension_%s_%d_%s",
++                                            extension_prefix, idx, escaped_name);
++            add_extension_action (view, item, extension_id);
 +
-+            detailed_action_name =  g_strconcat ("view.", parsed_name, NULL);
++            detailed_action_name = g_strconcat ("view.", extension_id, NULL);
 +            menu_item = g_menu_item_new (label, detailed_action_name);
 +
 +            if (menu != NULL) {
@@ -60,8 +60,6 @@ diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view
 +            idx++;
 +
 +            g_free (extension_id);
-+            g_free (parsed_name);
-+            g_free (prefix);
 +            g_free (detailed_action_name);
 +            g_object_unref (menu_item);
          }
@@ -70,8 +68,6 @@ diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view
 -        idx++;
 -
 -        g_free (extension_id);
--        g_free (parsed_name);
--        g_free (prefix);
 -        g_free (detailed_action_name);
          g_free (name);
          g_free (label);
@@ -79,7 +75,7 @@ diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view
      }
  
      return gmenu;
-@@ -4715,15 +4719,22 @@
+@@ -4943,15 +4947,22 @@
                            GList             *menu_items,
                            GMenu             *insertion_menu)
  {
@@ -107,8 +103,8 @@ diff '--exclude=.git' -urN a/src/nautilus-files-view.c b/src/nautilus-files-view
  
  static void
 diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.ui b/src/resources/ui/nautilus-files-view-context-menus.ui
---- a/src/resources/ui/nautilus-files-view-context-menus.ui	2016-09-13 17:06:51.000000000 -0400
-+++ b/src/resources/ui/nautilus-files-view-context-menus.ui	2016-09-27 14:08:21.284709558 -0400
+--- a/src/resources/ui/nautilus-files-view-context-menus.ui	2018-04-24 22:32:26.117421061 -0400
++++ b/src/resources/ui/nautilus-files-view-context-menus.ui	2018-04-24 22:37:49.608699835 -0400
 @@ -12,10 +12,10 @@
        <attribute name="hidden-when">action-disabled</attribute>
      </submenu>
@@ -124,7 +120,7 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
      </section>
      <section>
        <item>
-@@ -32,6 +32,12 @@
+@@ -32,14 +32,17 @@
      </section>
      <section>
        <item>
@@ -137,8 +133,6 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
          <attribute name="label" translatable="yes">P_roperties</attribute>
          <attribute name="action">view.properties</attribute>
          <attribute name="hidden-when">action-disabled</attribute>
-@@ -56,9 +62,6 @@
-         <attribute name="hidden-when">action-disabled</attribute>
        </item>
      </section>
 -    <section>
@@ -147,7 +141,7 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
    </menu>
    <menu id="selection-menu">
      <section>
-@@ -96,6 +99,7 @@
+@@ -77,6 +80,7 @@
          <attribute name="action">view.open-item-new-window</attribute>
          <attribute name="hidden-when">action-disabled</attribute>
        </item>
@@ -155,7 +149,7 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
      </section>
      <section>
        <item>
-@@ -105,6 +109,9 @@
+@@ -86,6 +90,9 @@
        </item>
      </section>
      <section>
@@ -165,7 +159,7 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
        <attribute name="id">drive-section</attribute>
        <item>
          <attribute name="label" translatable="yes">_Mount</attribute>
-@@ -168,6 +175,10 @@
+@@ -149,6 +156,10 @@
          <attribute name="label" translatable="yes">Copy to…</attribute>
          <attribute name="action">view.copy-to</attribute>
        </item>
@@ -176,7 +170,7 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
      </section>
      <section>
        <item>
-@@ -215,12 +226,6 @@
+@@ -179,12 +190,6 @@
      </section>
      <section>
        <item>
@@ -189,17 +183,19 @@ diff '--exclude=.git' -urN a/src/resources/ui/nautilus-files-view-context-menus.
          <attribute name="label" translatable="yes">Set As Wallpaper</attribute>
          <attribute name="action">view.set-as-wallpaper</attribute>
          <attribute name="hidden-when">action-disabled</attribute>
-@@ -234,7 +239,6 @@
+@@ -198,9 +203,6 @@
        </item>
      </section>
      <section>
 -      <attribute name="id">extensions</attribute>
+-    </section>
+-    <section>
        <item>
-         <attribute name="label" translatable="yes">_Extract Here</attribute>
-         <attribute name="action">view.extract-here</attribute>
+         <attribute name="label" translatable="yes">Tags</attribute>
+         <attribute name="action">view.edit-tags</attribute>
 diff '--exclude=.git' -urN a/src/resources/ui/nautilus-pathbar-context-menu.ui b/src/resources/ui/nautilus-pathbar-context-menu.ui
---- a/src/resources/ui/nautilus-pathbar-context-menu.ui	2016-09-13 17:06:51.000000000 -0400
-+++ b/src/resources/ui/nautilus-pathbar-context-menu.ui	2016-09-27 14:02:37.079983828 -0400
+--- a/src/resources/ui/nautilus-pathbar-context-menu.ui	2018-04-09 16:02:06.000000000 -0400
++++ b/src/resources/ui/nautilus-pathbar-context-menu.ui	2018-04-24 22:32:37.616359773 -0400
 @@ -14,6 +14,9 @@
        </item>
      </section>
