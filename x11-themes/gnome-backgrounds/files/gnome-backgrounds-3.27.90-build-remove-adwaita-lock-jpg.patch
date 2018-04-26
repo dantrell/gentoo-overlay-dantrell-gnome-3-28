@@ -1,0 +1,24 @@
+From acdebed0c93b785f81b2adf1d136178eac86ce80 Mon Sep 17 00:00:00 2001
+From: Emmanuele Bassi <ebassi@gnome.org>
+Date: Tue, 21 Nov 2017 10:32:55 +0000
+Subject: build: Remove adwaita-lock.jpg
+
+---
+ backgrounds/meson.build | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/backgrounds/meson.build b/backgrounds/meson.build
+index bf6ab09..91a3b0e 100644
+--- a/backgrounds/meson.build
++++ b/backgrounds/meson.build
+@@ -10,7 +10,6 @@ adwaita_timed = configure_file(
+ 
+ backgrounds = [
+   'adwaita-day.jpg',
+-  'adwaita-lock.jpg',
+   'adwaita-morning.jpg',
+   'adwaita-night.jpg',
+   'Bokeh_Tails.jpg',
+-- 
+cgit v0.12
+

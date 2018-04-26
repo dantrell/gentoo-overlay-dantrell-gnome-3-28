@@ -46,5 +46,5 @@ src_install() {
 	# From GNOME:
 	# 	https://git.gnome.org/browse/bijiben/commit/?id=0b89cde5c61febe581e804360442a4fa489ddde6
 	insinto /usr/share/glib-2.0/schemas
-	doins "${WORKDIR}"/"${P}"/data/org.gnome.bijiben.gschema.xml
+	doins "${S}"/data/org.gnome.bijiben.gschema.xml
 }

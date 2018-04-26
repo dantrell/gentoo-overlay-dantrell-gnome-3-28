@@ -46,7 +46,7 @@ COMMON_DEPEND="
 	>=media-libs/libcanberra-0.13[gtk3]
 	>=media-sound/pulseaudio-2[glib]
 	>=sys-auth/polkit-0.97
-	>=sys-power/upower-0.99:=
+	>=sys-power/upower-0.99.6:=
 
 	virtual/libgudev
 	x11-apps/xmodmap
@@ -207,5 +207,5 @@ src_install() {
 	# From GNOME:
 	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
 	insinto /usr/share/glib-2.0/schemas
-	doins "${WORKDIR}"/"${P}"/shell/org.gnome.ControlCenter.gschema.xml
+	doins "${S}"/shell/org.gnome.ControlCenter.gschema.xml
 }
