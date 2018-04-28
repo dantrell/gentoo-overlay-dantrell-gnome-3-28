@@ -24,7 +24,7 @@ COMMON_DEPEND="
 	x11-libs/cairo:=[X]
 	x11-libs/libX11
 	x11-misc/xkeyboard-config
-	>=gnome-base/gsettings-desktop-schemas-3.5.91
+	>=gnome-base/gsettings-desktop-schemas-3.27.0
 	introspection? ( >=dev-libs/gobject-introspection-0.9.7:= )
 	seccomp? ( >=sys-libs/libseccomp-2.0 )
 	udev? (

@@ -74,13 +74,15 @@ pkg_setup() {
 }
 
 src_prepare() {
-	use vala && vala_src_prepare
-	gnome2_src_prepare
-
 	# Make CMakeLists versioned vala enabled
-	sed -e "s;\(find_program(VALAC\) valac);\1 ${VALAC});" \
-	    -e "s;\(find_program(VAPIGEN\) vapigen);\1 ${VAPIGEN});" \
-		-i "${S}"/CMakeLists.txt || die
+	eapply "${FILESDIR}"/${PN}-3.24.2-assume-vala-bindings.patch
+
+	# From GNOME:
+	# 	https://git.gnome.org/browse/evolution-data-server/commit/?id=00ab1d07aa14b4f93cab3778cd6e61f00af2cbf2
+	eapply "${FILESDIR}"/${PN}-3.28.2-link-webkitgtk-only-with-libedataserverui-when-oauth2-is-enabled.patch
+
+	use vala && vala_src_prepare
+	cmake-utils_src_prepare
 }
 
 src_configure() {
@@ -88,7 +90,6 @@ src_configure() {
 	# so include the right dir in CPPFLAGS
 	use berkdb && append-cppflags "-I$(db_includedir)"
 
-	# phonenumber does not exist in tree
 	local mycmakeargs=(
 		-DWITH_SYSTEMDUSERUNITDIR="$(systemd_get_userunitdir)"
 		-DENABLE_GTK_DOC=$(usex api-doc-extras)
@@ -106,12 +107,12 @@ src_configure() {
 		-DENABLE_GOA=$(usex gnome-online-accounts)
 		-DENABLE_UOA=OFF
 		-DWITH_LIBDB=$(usex berkdb "${EPREFIX}"/usr "OFF")
-		# ENABLE_BACKTRACES requires libdwarf ?
 		-DENABLE_IPV6=$(usex ipv6)
 		-DENABLE_WEATHER=$(usex weather)
 		-DENABLE_GOOGLE=$(usex google)
 		-DENABLE_LARGEFILE=ON
 		-DENABLE_VALA_BINDINGS=$(usex vala)
+		-DENABLE_OAUTH2=$(usex google "ON" "OFF")
 	)
 
 	cmake-utils_src_configure

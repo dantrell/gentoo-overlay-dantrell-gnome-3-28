@@ -13,7 +13,7 @@ LICENSE="GPL-2+ LGPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="+bluetooth browser-extension deprecated-background doc elogind +ibus +networkmanager nsplugin systemd vanilla-motd vanilla-screen"
+IUSE="+bluetooth browser-extension deprecated-background doc elogind +networkmanager nsplugin systemd vanilla-motd vanilla-screen"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
 	?? ( elogind systemd )
 "
@@ -46,6 +46,7 @@ COMMON_DEPEND="
 	${PYTHON_DEPS}
 	dev-python/pygobject:3[${PYTHON_USEDEP}]
 
+	>=app-i18n/ibus-1.4.99[dconf(+),gtk,introspection]
 	dev-libs/dbus-glib
 	dev-libs/libxml2:2
 	media-libs/libcanberra[gtk3]
@@ -100,7 +101,6 @@ RDEPEND="${COMMON_DEPEND}
 	networkmanager? (
 		net-misc/mobile-broadband-provider-info
 		sys-libs/timezone-data )
-	ibus? ( >=app-i18n/ibus-1.4.99[dconf(+),gtk,introspection] )
 "
 # avoid circular dependency, see bug #546134
 PDEPEND="
