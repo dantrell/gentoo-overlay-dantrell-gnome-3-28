@@ -29,7 +29,7 @@ RDEPEND="
 	>=dev-libs/glib-2.38:2
 	>=dev-libs/gobject-introspection-0.9.6:=
 	>=dev-libs/libxml2-2.7.8:2
-	>=sys-libs/libosinfo-0.2.12
+	>=sys-libs/libosinfo-1.1.0
 	>=app-emulation/qemu-1.3.1[spice,smartcard,usbredir]
 	>=app-emulation/libvirt-0.9.3[libvirtd,qemu]
 	>=app-emulation/libvirt-glib-0.2.3
