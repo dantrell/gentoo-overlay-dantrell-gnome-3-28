@@ -12,7 +12,7 @@ LICENSE="LGPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="+gnome +libproxy smartcard test"
+IUSE="+gnome +libproxy smartcard +ssl test"
 
 RDEPEND="
 	>=dev-libs/glib-2.46.0:2[${MULTILIB_USEDEP}]
