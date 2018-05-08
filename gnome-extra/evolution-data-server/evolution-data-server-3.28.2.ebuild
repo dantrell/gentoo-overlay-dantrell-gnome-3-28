@@ -77,10 +77,6 @@ src_prepare() {
 	# Make CMakeLists versioned vala enabled
 	eapply "${FILESDIR}"/${PN}-3.24.2-assume-vala-bindings.patch
 
-	# From GNOME:
-	# 	https://git.gnome.org/browse/evolution-data-server/commit/?id=00ab1d07aa14b4f93cab3778cd6e61f00af2cbf2
-	eapply "${FILESDIR}"/${PN}-3.28.2-link-webkitgtk-only-with-libedataserverui-when-oauth2-is-enabled.patch
-
 	use vala && vala_src_prepare
 	cmake-utils_src_prepare
 }
