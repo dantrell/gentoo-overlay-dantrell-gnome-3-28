@@ -44,7 +44,7 @@ DEPEND="${COMMON_DEPEND}
 	>=dev-util/gdbus-codegen-2.33
 	>=sys-devel/gettext-0.19.7
 	virtual/pkgconfig
-	x11-proto/xproto
+	x11-base/xorg-proto
 	app-misc/tracker
 	>=media-libs/gexiv2-0.10.0
 "
