@@ -1,11 +1,10 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI="6"
-GNOME2_EAUTORECONF="yes"
 GNOME2_LA_PUNT="yes"
 PYTHON_COMPAT=( python{3_4,3_5,3_6} )
 
-inherit gnome2 python-any-r1 systemd udev virtualx
+inherit autotools gnome2 python-any-r1 systemd udev virtualx
 
 DESCRIPTION="Gnome Settings Daemon"
 HOMEPAGE="https://git.gnome.org/browse/gnome-settings-daemon"
@@ -14,7 +13,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="+colord +cups debug elogind input_devices_wacom networkmanager policykit smartcard systemd test +udev wayland"
+IUSE="+colord +cups debug elogind input_devices_wacom networkmanager policykit smartcard systemd test +udev vanilla-inactivity wayland"
 REQUIRED_USE="
 	?? ( elogind systemd )
 	input_devices_wacom? ( udev )
@@ -93,20 +92,6 @@ DEPEND="${COMMON_DEPEND}
 	x11-base/xorg-proto
 "
 
-PATCHES=(
-	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/07b346e4f99a912861978eb77058504af0871d3a
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/acdd75f8f1d3802149a34531f19e7dc12595dddf
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/f69e9d8c74a46b700d751ec93cd82a3699d6c497
-	"${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
-	# Make colord and wacom optional; requires eautoreconf
-	"${FILESDIR}"/${PN}-3.24.3-optional.patch
-	# Allow specifying udevrulesdir via configure, bug 509484; requires eautoreconf
-	"${FILESDIR}"/${PN}-3.26.2-udevrulesdir-configure.patch
-	# Fix build when Wayland is disabled
-	"${FILESDIR}"/${PN}-3.24.3-fix-without-gdkwayland.patch
-)
-
 python_check_deps() {
 	if use test; then
 		has_version "dev-python/pygobject:3[${PYTHON_USEDEP}]" &&
@@ -116,6 +101,29 @@ python_check_deps() {
 
 pkg_setup() {
 	use test && python-any-r1_pkg_setup
+}
+
+src_prepare() {
+	# From GNOME:
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/07b346e4f99a912861978eb77058504af0871d3a
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/acdd75f8f1d3802149a34531f19e7dc12595dddf
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/f69e9d8c74a46b700d751ec93cd82a3699d6c497
+	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
+	# Make colord and wacom optional; requires eautoreconf
+	eapply "${FILESDIR}"/${PN}-3.24.3-optional.patch
+	# Allow specifying udevrulesdir via configure, bug 509484; requires eautoreconf
+	eapply "${FILESDIR}"/${PN}-3.26.2-udevrulesdir-configure.patch
+	# Fix build when Wayland is disabled
+	eapply "${FILESDIR}"/${PN}-3.24.3-fix-without-gdkwayland.patch
+
+	if ! use vanilla-inactivity; then
+		# From GNOME:
+		# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/2fdb48fa3333638cee889b8bb80dc1d2b65aaa4a
+		eapply -R "${FILESDIR}"/${PN}-3.27.90-power-default-to-suspend-after-20-minutes-of-inactivity.patch
+	fi
+
+	eautoreconf
+	gnome2_src_prepare
 }
 
 src_configure() {

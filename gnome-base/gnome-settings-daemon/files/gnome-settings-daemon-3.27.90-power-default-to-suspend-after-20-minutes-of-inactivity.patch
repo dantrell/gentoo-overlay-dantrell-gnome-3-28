@@ -1,0 +1,72 @@
+From 2fdb48fa3333638cee889b8bb80dc1d2b65aaa4a Mon Sep 17 00:00:00 2001
+From: Bastien Nocera <hadess@hadess.net>
+Date: Tue, 16 Jan 2018 10:35:27 +0100
+Subject: [PATCH] power: Default to suspend after 20 minutes of inactivity
+
+According to the EU Commission Regulation No 801/2013, amending
+Regulation (EC) No 1275/2008:
+"
+The default period of time after which the power management function,
+or a similar function, switches the equipment automatically into a
+condition providing networked standby shall not exceed 20 minutes.
+"
+
+(Full text at:
+http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32013R0801&from=EN )
+
+Though this addition only seems to be applicable to "networked
+equipment", the original directive and its 2008 "ecodesign" regulation
+mentions that computers are covered (as "Information technology equipment intended
+primarily for use in the domestic environment"), and that:
+"
+When equipment is not providing the main function, or when other energy-using
+product(s) are not dependent on its functions, equipment shall, unless
+inappropriate for the intended use, offer a power management function, or a
+similar function, that switches equipment after the shortest possible period
+of time appropriate for the intended use of the equipment, automatically into
+[standby mode].
+"
+
+(Full text at:
+http://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32008R1275&from=EN)
+
+Furthermore, the EnergyStar standard that allows shipping into the USA
+mentions that, for most computers types:
+"
+Sleep Mode shall be set to activate after no more than 30 minutes of
+user inactivity.
+"
+
+(Full text at:
+http://docketpublic.energy.ca.gov/PublicDocuments/16-AAER-02/TN213577_20160909T143121_ENERGY_STAR_Product_Specification_for_Computers_Eligibility_Cri.pdf)
+
+https://bugzilla.gnome.org/show_bug.cgi?id=681869
+---
+ data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
+index ddb6da1..24a3c01 100644
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
+@@ -11,7 +11,7 @@
+       <_description>If the screen should be dimmed to save power when the computer is idle.</_description>
+     </key>
+     <key name="sleep-inactive-ac-timeout" type="i">
+-      <default>0</default>
++      <default>1200</default>
+       <_summary>Sleep timeout computer when on AC</_summary>
+       <_description>The amount of time in seconds the computer on AC power needs to be inactive before it goes to sleep. A value of 0 means never.</_description>
+     </key>
+@@ -21,7 +21,7 @@
+       <_description>The type of sleeping that should be performed when the computer is inactive.</_description>
+     </key>
+     <key name="sleep-inactive-battery-timeout" type="i">
+-      <default>0</default>
++      <default>1200</default>
+       <_summary>Sleep timeout computer when on battery</_summary>
+       <_description>The amount of time in seconds the computer on battery power needs to be inactive before it goes to sleep. A value of 0 means never.</_description>
+     </key>
+--
+libgit2 0.27.0
+
