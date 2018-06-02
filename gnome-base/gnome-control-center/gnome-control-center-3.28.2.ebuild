@@ -136,10 +136,8 @@ DEPEND="${COMMON_DEPEND}
 src_prepare() {
 	# From GNOME:
 	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
-	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/4bd2c2462b9f7ccfa5fa42f02e6b1322965760f2
 	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/9a611e0d69dc10c7cdedaace471e3407235e18d6
 	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
-	eapply "${FILESDIR}"/${PN}-3.28.2-user-accounts-fix-building-without-cheese.patch
 	eapply "${FILESDIR}"/${PN}-3.29.0-keyboard-remove-deprecated-gdk-error-trap-push-pop-calls.patch
 
 	# Make some panels and dependencies optional; requires eautoreconf

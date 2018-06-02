@@ -10,7 +10,7 @@ HOMEPAGE="https://git.gnome.org/browse/glib-networking/"
 
 LICENSE="LGPL-2+"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="*"
 
 IUSE="+gnome +libproxy smartcard +ssl test"
 
