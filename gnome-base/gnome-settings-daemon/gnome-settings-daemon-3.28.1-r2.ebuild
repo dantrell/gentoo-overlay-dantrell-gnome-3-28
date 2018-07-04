@@ -122,6 +122,10 @@ src_prepare() {
 		eapply -R "${FILESDIR}"/${PN}-3.27.90-power-default-to-suspend-after-20-minutes-of-inactivity.patch
 	fi
 
+	# From Ben Wolsieffer:
+	# 	https://bugzilla.gnome.org/show_bug.cgi?id=734964
+	eapply "${FILESDIR}"/${PN}-3.12.0-optionally-allow-suspending-with-multiple-monitors-on-lid-close.patch
+
 	eautoreconf
 	gnome2_src_prepare
 }
