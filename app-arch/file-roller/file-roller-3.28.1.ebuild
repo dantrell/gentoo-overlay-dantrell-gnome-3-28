@@ -62,7 +62,7 @@ zoo     - app-arch/zoo"
 src_prepare() {
 	# From GNOME:
 	# 	https://git.gnome.org/browse/file-roller/commit/?id=80ce23d399e3911cc44447ca2e13e60b4356c14a
-	eapply "${FILESDIR}"/${PN}-3.28.0-support-autotools.patch
+	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
 
 	if use nautilus; then
 		# From GNOME:
