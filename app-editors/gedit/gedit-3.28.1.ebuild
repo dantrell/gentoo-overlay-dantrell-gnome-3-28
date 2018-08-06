@@ -22,8 +22,8 @@ REQUIRED_USE="python? ( introspection ${PYTHON_REQUIRED_USE} )"
 COMMON_DEPEND="
 	>=dev-libs/libxml2-2.5.0:2
 	>=dev-libs/glib-2.44:2[dbus]
-	>=x11-libs/gtk+-3.21.3:3[introspection?]
-	>=x11-libs/gtksourceview-3.21.2:3.0[introspection?]
+	>=x11-libs/gtk+-3.22.0:3[introspection?]
+	>=x11-libs/gtksourceview-3.22.0:3.0[introspection?]
 	>=dev-libs/libpeas-1.14.1[gtk]
 
 	gnome-base/gsettings-desktop-schemas

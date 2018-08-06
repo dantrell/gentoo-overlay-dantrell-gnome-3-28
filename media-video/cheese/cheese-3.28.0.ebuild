@@ -42,6 +42,7 @@ RDEPEND="${COMMON_DEPEND}
 	>=media-plugins/gst-plugins-v4l2-1.4:1.0
 	>=media-plugins/gst-plugins-vpx-1.4:1.0
 "
+# libxml2+gdk-pixbuf required for glib-compile-resources
 DEPEND="${COMMON_DEPEND}
 	$(vala_depend)
 	app-text/docbook-xml-dtd:4.3

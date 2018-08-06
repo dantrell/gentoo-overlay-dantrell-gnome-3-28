@@ -21,7 +21,7 @@ COMMON_DEPEND="
 	>=x11-libs/gtk+-3.15:3
 "
 RDEPEND="${COMMON_DEPEND}
-	!<x11-themes/gnome-themes-extra-3.14
+	!<x11-themes/gnome-themes-standard-3.14
 "
 DEPEND="${COMMON_DEPEND}
 	$(vala_depend)

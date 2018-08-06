@@ -16,17 +16,18 @@ KEYWORDS="*"
 IUSE="djvu dvi gstreamer gnome gnome-keyring +introspection nautilus nsplugin +postscript t1lib tiff xps"
 
 # atk used in libview
-# gdk-pixbuf used all over the place
+# bundles unarr
 COMMON_DEPEND="
 	dev-libs/atk
 	>=dev-libs/glib-2.36:2[dbus]
 	>=dev-libs/libxml2-2.5:2
 	sys-libs/zlib:=
-	x11-libs/gdk-pixbuf:2
+	>=x11-libs/gdk-pixbuf-2.36.5:2
 	>=x11-libs/gtk+-3.16.0:3[introspection?]
 	gnome-base/gsettings-desktop-schemas
 	>=x11-libs/cairo-1.10:=
 	>=app-text/poppler-0.33:=[cairo]
+	>=app-arch/libarchive-3.2.0
 	djvu? ( >=app-text/djvu-3.5.22:= )
 	dvi? (
 		virtual/tex-base

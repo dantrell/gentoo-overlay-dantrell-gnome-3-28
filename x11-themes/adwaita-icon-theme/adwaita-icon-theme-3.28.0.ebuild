@@ -29,7 +29,7 @@ COMMON_DEPEND="
 	gnome-base/librsvg:2
 "
 RDEPEND="${COMMON_DEPEND}
-	!<x11-themes/gnome-themes-extra-3.14
+	!<x11-themes/gnome-themes-standard-3.14
 	x11-libs/gtk+:3
 "
 DEPEND="${COMMON_DEPEND}
