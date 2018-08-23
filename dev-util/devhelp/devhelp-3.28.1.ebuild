@@ -5,7 +5,7 @@ EAPI="6"
 # https://bugzilla.redhat.com/show_bug.cgi?id=979450
 PYTHON_COMPAT=( python{3_4,3_5,3_6,3_7} )
 
-inherit autotools gnome2 python-single-r1 toolchain-funcs
+inherit gnome2 python-single-r1 toolchain-funcs
 
 DESCRIPTION="An API documentation browser for GNOME"
 HOMEPAGE="https://wiki.gnome.org/Apps/Devhelp"
@@ -14,16 +14,15 @@ LICENSE="GPL-2+"
 SLOT="0/3-4" # subslot = 3-(libdevhelp-3 soname version)
 KEYWORDS="*"
 
-IUSE="gedit +introspection +vanilla-dpi"
+IUSE="gedit +introspection"
 REQUIRED_USE="gedit? ( ${PYTHON_REQUIRED_USE} )"
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.38:2[dbus]
 	>=x11-libs/gtk+-3.20:3
+	>=net-libs/webkit-gtk-2.19.2:4
 	gnome-base/gsettings-desktop-schemas
 	introspection? ( >=dev-libs/gobject-introspection-1.30:= )
-	vanilla-dpi? ( >=net-libs/webkit-gtk-2.19.2:4 )
-	!vanilla-dpi? ( >=net-libs/webkit-gtk-2.6.0:4 )
 "
 RDEPEND="${COMMON_DEPEND}
 	gedit? (
@@ -46,17 +45,6 @@ DEPEND="${COMMON_DEPEND}
 
 pkg_setup() {
 	use gedit && python-single-r1_pkg_setup
-}
-
-src_prepare() {
-	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/devhelp/commit/25cd3af113d1b450ed8415c47cefc2ef7a50bca0
-	if ! use vanilla-dpi; then
-		eapply "${FILESDIR}"/${PN}-3.28.1-use-old-font-size-functionality.patch
-	fi
-
-	eautoreconf
-	gnome2_src_prepare
 }
 
 src_configure() {
