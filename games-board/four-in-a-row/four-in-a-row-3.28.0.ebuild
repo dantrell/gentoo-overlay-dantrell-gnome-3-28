@@ -23,6 +23,6 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	app-text/yelp-tools
 	dev-libs/appstream-glib
-	>=dev-util/intltool-0.50
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "

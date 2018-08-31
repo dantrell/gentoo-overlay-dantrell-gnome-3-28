@@ -15,11 +15,12 @@ IUSE="+introspection nls test"
 
 RDEPEND="
 	>=dev-libs/glib-2.34.3:2[${MULTILIB_USEDEP}]
-	introspection? ( >=dev-libs/gobject-introspection-0.6.7:= )
+	introspection? ( >=dev-libs/gobject-introspection-1.32.0:= )
 "
 DEPEND="${RDEPEND}
 	>=dev-lang/perl-5
-	dev-util/gtk-doc-am
+	dev-util/glib-utils
+	>=dev-util/gtk-doc-am-1.25
 	>=virtual/pkgconfig-0-r1[${MULTILIB_USEDEP}]
 	nls? ( >=sys-devel/gettext-0.19.2 )
 "
