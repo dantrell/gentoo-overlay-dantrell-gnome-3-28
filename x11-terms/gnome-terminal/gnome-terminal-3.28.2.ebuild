@@ -14,11 +14,11 @@ KEYWORDS="*"
 
 IUSE="debug +deprecated-transparency +gnome-shell +nautilus vanilla-hotkeys"
 
-# FIXME: automagic dependency on gtk+[X], just transitive but needs proper control
+# FIXME: automagic dependency on gtk+[X], just transitive but needs proper control, bug 624960
 RDEPEND="
 	>=dev-libs/glib-2.42:2[dbus]
 	>=x11-libs/gtk+-3.20:3[X]
-	>=x11-libs/vte-0.51.92:2.91
+	>=x11-libs/vte-0.52.2:2.91
 	>=dev-libs/libpcre2-10
 	>=gnome-base/dconf-0.14
 	>=gnome-base/gsettings-desktop-schemas-0.1.0
@@ -26,7 +26,7 @@ RDEPEND="
 	gnome-shell? ( gnome-base/gnome-shell )
 	nautilus? ( >=gnome-base/nautilus-3 )
 "
-# itstool required for help/* with non-en LINGUAS, see bug #549358
+# itstool/yelp-tools required for help/* with non-en LINGUAS, see bug #549358
 # xmllint required for glib-compile-resources, see bug #549304
 DEPEND="${RDEPEND}
 	app-text/yelp-tools
@@ -69,8 +69,7 @@ src_configure() {
 		--disable-migration \
 		$(use_enable debug) \
 		$(use_enable gnome-shell search-provider) \
-		$(use_with nautilus nautilus-extension) \
-		VALAC=$(type -P true)
+		$(use_with nautilus nautilus-extension)
 }
 
 src_install() {

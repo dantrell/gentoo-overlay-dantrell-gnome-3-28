@@ -13,21 +13,19 @@ KEYWORDS="*"
 
 IUSE=""
 
-COMMON_DEPEND="
+RDEPEND="
 	>=dev-libs/glib-2.40:2
-	dev-libs/libgnome-games-support:1
-	>=gnome-base/librsvg-2.32.0:2
+	dev-libs/libgee:0.8
 	>=x11-libs/gtk+-3.12:3
+	dev-libs/libgnome-games-support:1=
+	>=gnome-base/librsvg-2.32.0:2
 "
-RDEPEND="${COMMON_DEPEND}
-	!<x11-themes/gnome-themes-standard-3.14
-"
-DEPEND="${COMMON_DEPEND}
+DEPEND="${RDEPEND}
 	$(vala_depend)
 	app-text/yelp-tools
 	dev-libs/appstream-glib
-	>=dev-util/intltool-0.50
-	sys-devel/gettext
+	dev-libs/libxml2:2
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "
 

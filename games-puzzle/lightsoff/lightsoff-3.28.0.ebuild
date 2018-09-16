@@ -14,18 +14,19 @@ KEYWORDS="*"
 IUSE=""
 
 RDEPEND="
-	>=dev-libs/glib-2.38:2
-	>=gnome-base/librsvg-2.32:2
-	>=media-libs/clutter-1.14:1.0
-	>=media-libs/clutter-gtk-1.5.5:1.0
+	>=dev-libs/glib-2.38.0:2
 	>=x11-libs/gtk+-3.13.4:3
+	>=media-libs/clutter-1.14.0:1.0
+	>=media-libs/clutter-gtk-1.5.5:1.0
+	>=gnome-base/librsvg-2.32.0:2
 "
+# libxml2:2 needed for glib-compile-resources xml-stripblanks attributes
 DEPEND="${RDEPEND}
 	$(vala_depend)
-	app-text/yelp-tools
 	dev-libs/appstream-glib
-	>=dev-util/intltool-0.50
-	sys-devel/gettext
+	dev-libs/libxml2:2
+	dev-util/itstool
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "
 
