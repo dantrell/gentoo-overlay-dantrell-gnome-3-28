@@ -1,6 +1,6 @@
 diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
---- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+--- a/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/Makefile.am	2018-09-26 15:56:00.776455439 -0500
 @@ -0,0 +1,22 @@
 +NULL =
 +
@@ -25,8 +25,8 @@ diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
 +DISTCLEANFILES = \
 +	$(NULL)
 diff '--exclude=.git' -urN a/acinclude.m4 b/acinclude.m4
---- a/acinclude.m4	1969-12-31 19:00:00.000000000 -0500
-+++ b/acinclude.m4	2018-04-22 00:25:30.452860000 -0400
+--- a/acinclude.m4	1969-12-31 18:00:00.000000000 -0600
++++ b/acinclude.m4	2018-09-26 15:56:00.776455439 -0500
 @@ -0,0 +1,137 @@
 +dnl EXTRA_COMPILE_WARNINGS
 +dnl Turn on many useful compiler warnings
@@ -166,8 +166,8 @@ diff '--exclude=.git' -urN a/acinclude.m4 b/acinclude.m4
 +])
 +
 diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
---- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
-+++ b/autogen.sh	2018-04-22 00:25:30.452860000 -0400
+--- a/autogen.sh	1969-12-31 18:00:00.000000000 -0600
++++ b/autogen.sh	2018-09-26 15:56:00.776455439 -0500
 @@ -0,0 +1,42 @@
 +#!/bin/sh
 +# Run this to generate all the initial makefiles, etc.
@@ -212,13 +212,13 @@ diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
 +	echo "Skipping configure process."
 +fi
 diff '--exclude=.git' -urN a/configure.ac b/configure.ac
---- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
-+++ b/configure.ac	2018-04-22 00:25:30.452860000 -0400
+--- a/configure.ac	1969-12-31 18:00:00.000000000 -0600
++++ b/configure.ac	2018-09-26 15:56:16.084381464 -0500
 @@ -0,0 +1,572 @@
 +AC_PREREQ([2.69])
 +
 +AC_INIT([gnome-settings-daemon],
-+        [3.27.3],
++        [3.28.1],
 +        [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-settings-daemon])
 +
 +AC_CONFIG_SRCDIR([gnome-settings-daemon/gnome-settings-bus.c])
@@ -788,8 +788,8 @@ diff '--exclude=.git' -urN a/configure.ac b/configure.ac
 +        Profiling support:        ${enable_profiling}
 +"
 diff '--exclude=.git' -urN a/data/Makefile.am b/data/Makefile.am
---- a/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+--- a/data/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/Makefile.am	2018-09-26 15:56:00.776455439 -0500
 @@ -0,0 +1,48 @@
 +NULL =
 +
@@ -840,8 +840,8 @@ diff '--exclude=.git' -urN a/data/Makefile.am b/data/Makefile.am
 +	$(gsettings_SCHEMAS:.xml=.valid)
 +
 diff '--exclude=.git' -urN a/data/gnome-settings-daemon.pc.in b/data/gnome-settings-daemon.pc.in
---- a/data/gnome-settings-daemon.pc.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/gnome-settings-daemon.pc.in	2018-04-22 00:25:30.452860000 -0400
+--- a/data/gnome-settings-daemon.pc.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/gnome-settings-daemon.pc.in	2018-09-26 15:56:00.776455439 -0500
 @@ -0,0 +1,8 @@
 +prefix=@prefix@
 +includedir=@includedir@
@@ -852,8 +852,8 @@ diff '--exclude=.git' -urN a/data/gnome-settings-daemon.pc.in b/data/gnome-setti
 +Version: @VERSION@
 +Cflags: -I${includedir}/gnome-settings-daemon-@GSD_API_VERSION@
 diff '--exclude=.git' -urN a/data/meson.build b/data/meson.build
---- a/data/meson.build	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/meson.build	2018-04-22 00:25:35.434837000 -0400
+--- a/data/meson.build	2018-04-12 12:08:48.000000000 -0500
++++ b/data/meson.build	2018-09-26 15:56:00.776455439 -0500
 @@ -16,10 +16,17 @@
  schema_conf.set('GETTEXT_PACKAGE', meson.project_name())
  
@@ -876,8 +876,8 @@ diff '--exclude=.git' -urN a/data/meson.build b/data/meson.build
      install_dir: gsd_schemadir
    )
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in
---- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,164 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -1044,8 +1044,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.gschema.
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in	2018-04-22 00:25:35.434837000 -0400
+--- a/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.peripherals.gschema.xml.in.in	2018-09-26 15:56:00.777455434 -0500
 @@ -0,0 +1,163 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.peripherals" path="/org/gnome/settings-daemon/peripherals/">
@@ -1211,8 +1211,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.gschema.
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in
---- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,92 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -1307,8 +1307,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.wacom.gs
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.peripherals.wacom.gschema.xml.in.in	2018-09-26 15:56:00.777455434 -0500
 @@ -0,0 +1,91 @@
 +<schemalist>
 +  <schema id="org.gnome.settings-daemon.peripherals.wacom.deprecated">
@@ -1402,8 +1402,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.peripherals.wacom.gs
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,45 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -1451,8 +1451,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.color.gschem
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.color.gschema.xml.in.in	2018-09-26 15:56:00.777455434 -0500
 @@ -0,0 +1,44 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.color" path="/org/gnome/settings-daemon/plugins/color/">
@@ -1499,8 +1499,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.color.gschem
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,18 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -1521,8 +1521,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.gschema.xml.
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.gschema.xml.in.in	2018-09-26 15:56:00.777455434 -0500
 @@ -0,0 +1,17 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins" path="/org/gnome/settings-daemon/plugins/">
@@ -1542,8 +1542,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.gschema.xml.
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,32 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -1578,8 +1578,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.housekeeping
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.housekeeping.gschema.xml.in.in	2018-09-26 15:56:00.777455434 -0500
 @@ -0,0 +1,31 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.housekeeping" path="/org/gnome/settings-daemon/plugins/housekeeping/">
@@ -1613,8 +1613,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.housekeeping
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,203 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -1820,8 +1820,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.media-keys.g
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.media-keys.gschema.xml.in.in	2018-09-26 15:56:00.777455434 -0500
 @@ -0,0 +1,202 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.media-keys" path="/org/gnome/settings-daemon/plugins/media-keys/">
@@ -2026,8 +2026,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.media-keys.g
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,45 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -2075,8 +2075,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.power.gschem
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.power.gschema.xml.in.in	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,44 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.power" path="/org/gnome/settings-daemon/plugins/power/">
@@ -2123,8 +2123,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.power.gschem
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,10 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -2137,8 +2137,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.sharing.gsch
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.sharing.gschema.xml.in.in	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,9 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.sharing.service">
@@ -2150,8 +2150,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.sharing.gsch
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in
---- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in	1969-12-31 19:00:00.000000000 -0500
+--- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in	2018-04-12 12:08:48.000000000 -0500
++++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in	1969-12-31 18:00:00.000000000 -0600
 @@ -1,35 +0,0 @@
 -<?xml version="1.0" encoding="UTF-8"?>
 -<schemalist>
@@ -2189,8 +2189,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.xsettings.gs
 -  </schema>
 -</schemalist>
 diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in
---- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in	2018-04-22 00:25:35.435837000 -0400
+--- a/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in	1969-12-31 18:00:00.000000000 -0600
++++ b/data/org.gnome.settings-daemon.plugins.xsettings.gschema.xml.in.in	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,34 @@
 +<schemalist>
 +  <schema gettext-domain="@GETTEXT_PACKAGE@" id="org.gnome.settings-daemon.plugins.xsettings" path="/org/gnome/settings-daemon/plugins/xsettings/">
@@ -2227,8 +2227,8 @@ diff '--exclude=.git' -urN a/data/org.gnome.settings-daemon.plugins.xsettings.gs
 +  </schema>
 +</schemalist>
 diff '--exclude=.git' -urN a/gnome-settings-daemon/Makefile.am b/gnome-settings-daemon/Makefile.am
---- a/gnome-settings-daemon/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/gnome-settings-daemon/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+--- a/gnome-settings-daemon/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/gnome-settings-daemon/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,93 @@
 +NULL =
 +BUILT_SOURCES = $(NULL)
@@ -2324,8 +2324,8 @@ diff '--exclude=.git' -urN a/gnome-settings-daemon/Makefile.am b/gnome-settings-
 +
 +# vim: ts=8
 diff '--exclude=.git' -urN a/meson.build b/meson.build
---- a/meson.build	2018-04-12 13:08:48.000000000 -0400
-+++ b/meson.build	2018-04-22 00:25:35.436837000 -0400
+--- a/meson.build	2018-04-12 12:08:48.000000000 -0500
++++ b/meson.build	2018-09-26 15:56:00.778455429 -0500
 @@ -199,6 +199,11 @@
  
  po_dir = join_paths(meson.source_root(), 'po')
@@ -2339,8 +2339,8 @@ diff '--exclude=.git' -urN a/meson.build b/meson.build
  
  subdir('tests')
 diff '--exclude=.git' -urN a/plugins/Makefile.am b/plugins/Makefile.am
---- a/plugins/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+--- a/plugins/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,47 @@
 +NULL =
 +
@@ -2390,8 +2390,8 @@ diff '--exclude=.git' -urN a/plugins/Makefile.am b/plugins/Makefile.am
 +SUBDIRS = common $(enabled_plugins)
 +DIST_SUBDIRS = $(SUBDIRS) $(disabled_plugins)
 diff '--exclude=.git' -urN a/plugins/a11y-settings/Makefile.am b/plugins/a11y-settings/Makefile.am
---- a/plugins/a11y-settings/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/a11y-settings/Makefile.am	2018-04-22 00:25:30.452860000 -0400
+--- a/plugins/a11y-settings/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/a11y-settings/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,37 @@
 +plugin_name = a11y-settings
 +
@@ -2431,8 +2431,8 @@ diff '--exclude=.git' -urN a/plugins/a11y-settings/Makefile.am b/plugins/a11y-se
 +DISTCLEANFILES =		\
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/clipboard/Makefile.am b/plugins/clipboard/Makefile.am
---- a/plugins/clipboard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/clipboard/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/clipboard/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/clipboard/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,46 @@
 +NULL =
 +
@@ -2481,8 +2481,8 @@ diff '--exclude=.git' -urN a/plugins/clipboard/Makefile.am b/plugins/clipboard/M
 +	$(desktop_DATA)		\
 +	$(NULL)
 diff '--exclude=.git' -urN a/plugins/color/Makefile.am b/plugins/color/Makefile.am
---- a/plugins/color/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/color/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/color/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/color/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,96 @@
 +plugin_name = color
 +
@@ -2581,8 +2581,8 @@ diff '--exclude=.git' -urN a/plugins/color/Makefile.am b/plugins/color/Makefile.
 +DISTCLEANFILES =			\
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/common/Makefile.am b/plugins/common/Makefile.am
---- a/plugins/common/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/common/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/common/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/common/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,80 @@
 +plugin_name = common
 +
@@ -2665,8 +2665,8 @@ diff '--exclude=.git' -urN a/plugins/common/Makefile.am b/plugins/common/Makefil
 +glib_resources_namespace = gsd
 +include Makefile.am.gresources
 diff '--exclude=.git' -urN a/plugins/common/Makefile.am.gresources b/plugins/common/Makefile.am.gresources
---- a/plugins/common/Makefile.am.gresources	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/common/Makefile.am.gresources	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/common/Makefile.am.gresources	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/common/Makefile.am.gresources	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,34 @@
 +resources_xml=$(addprefix $(srcdir)/,$(glib_resources_xml))
 +resources_srcdir=$(dir $(resources_xml))
@@ -2703,8 +2703,8 @@ diff '--exclude=.git' -urN a/plugins/common/Makefile.am.gresources b/plugins/com
 +	&& (cmp -s xgen-gr.c $(glib_resources_c) || cp -f xgen-gr.c $(glib_resources_c)) \
 +	&& rm -f xgen-gr.c
 diff '--exclude=.git' -urN a/plugins/datetime/Makefile.am b/plugins/datetime/Makefile.am
---- a/plugins/datetime/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/datetime/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/datetime/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/datetime/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,61 @@
 +plugin_name = datetime
 +
@@ -2768,8 +2768,8 @@ diff '--exclude=.git' -urN a/plugins/datetime/Makefile.am b/plugins/datetime/Mak
 +DISTCLEANFILES = \
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/dummy/Makefile.am b/plugins/dummy/Makefile.am
---- a/plugins/dummy/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/dummy/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/dummy/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/dummy/Makefile.am	2018-09-26 15:56:00.778455429 -0500
 @@ -0,0 +1,45 @@
 +plugin_name = dummy
 +
@@ -2817,8 +2817,8 @@ diff '--exclude=.git' -urN a/plugins/dummy/Makefile.am b/plugins/dummy/Makefile.
 +
 +DISTCLEANFILES = $(NULL)
 diff '--exclude=.git' -urN a/plugins/housekeeping/Makefile.am b/plugins/housekeeping/Makefile.am
---- a/plugins/housekeeping/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/housekeeping/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/housekeeping/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/housekeeping/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,67 @@
 +plugin_name = housekeeping
 +
@@ -2888,8 +2888,8 @@ diff '--exclude=.git' -urN a/plugins/housekeeping/Makefile.am b/plugins/housekee
 +
 +DISTCLEANFILES = $(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/keyboard/Makefile.am b/plugins/keyboard/Makefile.am
---- a/plugins/keyboard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/keyboard/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/keyboard/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/keyboard/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,47 @@
 +NULL =
 +
@@ -2939,8 +2939,8 @@ diff '--exclude=.git' -urN a/plugins/keyboard/Makefile.am b/plugins/keyboard/Mak
 +	$(desktop_DATA)		\
 +	$(NULL)
 diff '--exclude=.git' -urN a/plugins/media-keys/Makefile.am b/plugins/media-keys/Makefile.am
---- a/plugins/media-keys/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/media-keys/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/media-keys/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/media-keys/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,95 @@
 +icondir = $(datadir)/icons/hicolor
 +context = actions
@@ -3038,8 +3038,8 @@ diff '--exclude=.git' -urN a/plugins/media-keys/Makefile.am b/plugins/media-keys
 +DISTCLEANFILES =		\
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/mouse/Makefile.am b/plugins/mouse/Makefile.am
---- a/plugins/mouse/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/mouse/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/mouse/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/mouse/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,50 @@
 +plugin_name = mouse
 +
@@ -3092,8 +3092,8 @@ diff '--exclude=.git' -urN a/plugins/mouse/Makefile.am b/plugins/mouse/Makefile.
 +CLEANFILES = $(desktop_DATA)
 +DISTCLEANFILES = $(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/power/Makefile.am b/plugins/power/Makefile.am
---- a/plugins/power/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/power/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/power/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/power/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,131 @@
 +BUILT_SOURCES =
 +
@@ -3227,8 +3227,8 @@ diff '--exclude=.git' -urN a/plugins/power/Makefile.am b/plugins/power/Makefile.
 +	$(GSD_POWER_ENUM_FILES)					\
 +	gsdpowerenums.pyc gsdpowerenums.py
 diff '--exclude=.git' -urN a/plugins/power/meson.build b/plugins/power/meson.build
---- a/plugins/power/meson.build	2018-04-12 13:08:48.000000000 -0400
-+++ b/plugins/power/meson.build	2018-04-22 00:25:35.436837000 -0400
+--- a/plugins/power/meson.build	2018-04-12 12:08:48.000000000 -0500
++++ b/plugins/power/meson.build	2018-09-26 15:56:00.779455424 -0500
 @@ -67,11 +67,11 @@
      configuration: plugins_conf
    )
@@ -3244,8 +3244,8 @@ diff '--exclude=.git' -urN a/plugins/power/meson.build b/plugins/power/meson.bui
      install_dir: join_paths(gsd_datadir, 'polkit-1', 'actions')
    )
 diff '--exclude=.git' -urN a/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in b/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in
---- a/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in	2018-04-22 00:25:35.436837000 -0400
+--- a/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in	2018-04-12 12:08:48.000000000 -0500
++++ b/plugins/power/org.gnome.settings-daemon.plugins.power.policy.in.in	2018-09-26 15:56:00.779455424 -0500
 @@ -18,8 +18,8 @@
            - A normal active user on the local machine does not need permission
              to change the backlight brightness.
@@ -3258,8 +3258,8 @@ diff '--exclude=.git' -urN a/plugins/power/org.gnome.settings-daemon.plugins.pow
        <allow_any>no</allow_any>
        <allow_inactive>no</allow_inactive>
 diff '--exclude=.git' -urN a/plugins/print-notifications/Makefile.am b/plugins/print-notifications/Makefile.am
---- a/plugins/print-notifications/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/print-notifications/Makefile.am	2018-04-22 00:28:31.755014702 -0400
+--- a/plugins/print-notifications/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/print-notifications/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,57 @@
 +plugin_name = print-notifications
 +
@@ -3319,8 +3319,8 @@ diff '--exclude=.git' -urN a/plugins/print-notifications/Makefile.am b/plugins/p
 +DISTCLEANFILES =		\
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/rfkill/Makefile.am b/plugins/rfkill/Makefile.am
---- a/plugins/rfkill/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/rfkill/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/rfkill/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/rfkill/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,38 @@
 +plugin_name = rfkill
 +
@@ -3361,8 +3361,8 @@ diff '--exclude=.git' -urN a/plugins/rfkill/Makefile.am b/plugins/rfkill/Makefil
 +CLEANFILES = $(desktop_DATA)
 +DISTCLEANFILES = $(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/screensaver-proxy/Makefile.am b/plugins/screensaver-proxy/Makefile.am
---- a/plugins/screensaver-proxy/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/screensaver-proxy/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/screensaver-proxy/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/screensaver-proxy/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,39 @@
 +plugin_name = screensaver-proxy
 +
@@ -3404,8 +3404,8 @@ diff '--exclude=.git' -urN a/plugins/screensaver-proxy/Makefile.am b/plugins/scr
 +
 +DISTCLEANFILES = $(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/sharing/Makefile.am b/plugins/sharing/Makefile.am
---- a/plugins/sharing/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/sharing/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/sharing/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/sharing/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,32 @@
 +plugin_name = sharing
 +
@@ -3440,8 +3440,8 @@ diff '--exclude=.git' -urN a/plugins/sharing/Makefile.am b/plugins/sharing/Makef
 +CLEANFILES = $(desktop_DATA)
 +DISTCLEANFILES = $(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/smartcard/Makefile.am b/plugins/smartcard/Makefile.am
---- a/plugins/smartcard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/smartcard/Makefile.am	2018-04-22 00:25:30.453860000 -0400
+--- a/plugins/smartcard/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/smartcard/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,77 @@
 +plugin_name = smartcard
 +libsmartcard_headers = gsd-smartcard-manager.h \
@@ -3521,8 +3521,8 @@ diff '--exclude=.git' -urN a/plugins/smartcard/Makefile.am b/plugins/smartcard/M
 +	$(BUILT_SOURCES) \
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/sound/Makefile.am b/plugins/sound/Makefile.am
---- a/plugins/sound/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/sound/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+--- a/plugins/sound/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/sound/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,37 @@
 +plugin_name = sound
 +
@@ -3562,8 +3562,8 @@ diff '--exclude=.git' -urN a/plugins/sound/Makefile.am b/plugins/sound/Makefile.
 +DISTCLEANFILES = \
 +	$(desktop_DATA)
 diff '--exclude=.git' -urN a/plugins/wacom/Makefile.am b/plugins/wacom/Makefile.am
---- a/plugins/wacom/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/wacom/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+--- a/plugins/wacom/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/wacom/Makefile.am	2018-09-26 15:56:00.779455424 -0500
 @@ -0,0 +1,73 @@
 +plugin_name = wacom
 +
@@ -3639,8 +3639,8 @@ diff '--exclude=.git' -urN a/plugins/wacom/Makefile.am b/plugins/wacom/Makefile.
 +	org.gnome.settings-daemon.plugins.wacom.policy	\
 +	org.gnome.settings-daemon.plugins.wacom.policy.in
 diff '--exclude=.git' -urN a/plugins/wacom/meson.build b/plugins/wacom/meson.build
---- a/plugins/wacom/meson.build	2018-04-12 13:08:48.000000000 -0400
-+++ b/plugins/wacom/meson.build	2018-04-22 00:25:35.436837000 -0400
+--- a/plugins/wacom/meson.build	2018-04-12 12:08:48.000000000 -0500
++++ b/plugins/wacom/meson.build	2018-09-26 15:56:00.779455424 -0500
 @@ -6,11 +6,11 @@
    configuration: plugins_conf
  )
@@ -3656,8 +3656,8 @@ diff '--exclude=.git' -urN a/plugins/wacom/meson.build b/plugins/wacom/meson.bui
    install_dir: join_paths(gsd_datadir, 'polkit-1', 'actions')
  )
 diff '--exclude=.git' -urN a/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in b/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in
---- a/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in	2018-04-22 00:25:35.436837000 -0400
+--- a/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in	2018-04-12 12:08:48.000000000 -0500
++++ b/plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in.in	2018-09-26 15:56:00.780455420 -0500
 @@ -17,8 +17,8 @@
            - A normal active user on the local machine does not need permission
              to change the LED setting for a Wacom tablet
@@ -3681,8 +3681,8 @@ diff '--exclude=.git' -urN a/plugins/wacom/org.gnome.settings-daemon.plugins.wac
        <allow_any>no</allow_any>
        <allow_inactive>no</allow_inactive>
 diff '--exclude=.git' -urN a/plugins/xsettings/Makefile.am b/plugins/xsettings/Makefile.am
---- a/plugins/xsettings/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/plugins/xsettings/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+--- a/plugins/xsettings/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/plugins/xsettings/Makefile.am	2018-09-26 15:56:00.780455420 -0500
 @@ -0,0 +1,106 @@
 +NULL =
 +
@@ -3791,8 +3791,8 @@ diff '--exclude=.git' -urN a/plugins/xsettings/Makefile.am b/plugins/xsettings/M
 +	$(desktop_DATA)		\
 +	$(NULL)
 diff '--exclude=.git' -urN a/po/POTFILES.in b/po/POTFILES.in
---- a/po/POTFILES.in	2018-04-12 13:08:48.000000000 -0400
-+++ b/po/POTFILES.in	2018-04-22 00:25:35.436837000 -0400
+--- a/po/POTFILES.in	2018-04-12 12:08:48.000000000 -0500
++++ b/po/POTFILES.in	2018-09-26 15:56:00.780455420 -0500
 @@ -1,14 +1,14 @@
  # Files with translatable strings.
  # Please keep this file in alphabetical order.
@@ -3818,8 +3818,8 @@ diff '--exclude=.git' -urN a/po/POTFILES.in b/po/POTFILES.in
  plugins/color/gsd-color-manager.c
  plugins/datetime/gsd-datetime-manager.c
 diff '--exclude=.git' -urN a/po/POTFILES.skip b/po/POTFILES.skip
---- a/po/POTFILES.skip	2018-04-12 13:08:48.000000000 -0400
-+++ b/po/POTFILES.skip	2018-04-22 00:25:35.436837000 -0400
+--- a/po/POTFILES.skip	2018-04-12 12:08:48.000000000 -0500
++++ b/po/POTFILES.skip	2018-09-26 15:56:00.780455420 -0500
 @@ -1,5 +1,15 @@
  # Files with translatable strings to skip.
  # Please keep this file in alphabetical order.
@@ -3837,8 +3837,8 @@ diff '--exclude=.git' -urN a/po/POTFILES.skip b/po/POTFILES.skip
  plugins/power/org.gnome.settings-daemon.plugins.power.policy.in
  plugins/wacom/org.gnome.settings-daemon.plugins.wacom.policy.in
 diff '--exclude=.git' -urN a/tests/Makefile.am b/tests/Makefile.am
---- a/tests/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/tests/Makefile.am	2018-04-22 00:25:30.454860000 -0400
+--- a/tests/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/tests/Makefile.am	2018-09-26 15:56:00.780455420 -0500
 @@ -0,0 +1,11 @@
 +noinst_PROGRAMS = shiftkey
 +

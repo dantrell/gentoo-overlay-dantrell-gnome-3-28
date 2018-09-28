@@ -1,6 +1,6 @@
 diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
---- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/Makefile.am	2018-09-26 15:45:31.873505665 -0500
 @@ -0,0 +1,47 @@
 +SUBDIRS =			\
 +	gnome-session		\
@@ -50,8 +50,8 @@ diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
 +GITIGNOREFILES = $(PACKAGE)-\*.tar.{gz,bz2,xz}
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
---- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
-+++ b/autogen.sh	2018-04-25 15:14:05.245268257 -0400
+--- a/autogen.sh	1969-12-31 18:00:00.000000000 -0600
++++ b/autogen.sh	2018-09-26 15:45:31.873505665 -0500
 @@ -0,0 +1,21 @@
 +#!/bin/sh
 +# Run this to generate all the initial makefiles, etc.
@@ -75,11 +75,11 @@ diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
 +
 +. gnome-autogen.sh
 diff '--exclude=.git' -urN a/configure.ac b/configure.ac
---- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
-+++ b/configure.ac	2018-04-25 15:14:05.245268257 -0400
+--- a/configure.ac	1969-12-31 18:00:00.000000000 -0600
++++ b/configure.ac	2018-09-26 15:45:39.850466826 -0500
 @@ -0,0 +1,412 @@
 +AC_INIT([gnome-session],
-+        [3.26.0],
++        [3.28.1],
 +        [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-session])
 +
 +AC_CONFIG_SRCDIR([gnome-session])
@@ -491,8 +491,8 @@ diff '--exclude=.git' -urN a/configure.ac b/configure.ac
 +
 +"
 diff '--exclude=.git' -urN a/data/Makefile.am b/data/Makefile.am
---- a/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/data/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/Makefile.am	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,65 @@
 +uidir = $(pkgdatadir)
 +ui_DATA =
@@ -560,8 +560,8 @@ diff '--exclude=.git' -urN a/data/Makefile.am b/data/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/doc/Makefile.am b/doc/Makefile.am
---- a/doc/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/doc/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/doc/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/doc/Makefile.am	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,9 @@
 +SUBDIRS = dbus
 +
@@ -573,8 +573,8 @@ diff '--exclude=.git' -urN a/doc/Makefile.am b/doc/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/doc/dbus/Makefile.am b/doc/dbus/Makefile.am
---- a/doc/dbus/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/doc/dbus/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/doc/dbus/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/doc/dbus/Makefile.am	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,49 @@
 +SPEC_XML_FILES =					\
 +	gnome-session.xml				\
@@ -626,8 +626,8 @@ diff '--exclude=.git' -urN a/doc/dbus/Makefile.am b/doc/dbus/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/doc/man/Makefile.am b/doc/man/Makefile.am
---- a/doc/man/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/doc/man/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/doc/man/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/doc/man/Makefile.am	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,30 @@
 +XSLTPROC_FLAGS = \
 +        --nonet \
@@ -660,8 +660,8 @@ diff '--exclude=.git' -urN a/doc/man/Makefile.am b/doc/man/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/git.mk b/git.mk
---- a/git.mk	1969-12-31 19:00:00.000000000 -0500
-+++ b/git.mk	2018-04-25 15:14:05.245268257 -0400
+--- a/git.mk	1969-12-31 18:00:00.000000000 -0600
++++ b/git.mk	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,227 @@
 +# git.mk
 +#
@@ -891,8 +891,8 @@ diff '--exclude=.git' -urN a/git.mk b/git.mk
 +
 +.PHONY: gitignore-clean gitignore gitignore-recurse gitignore-recurse-maybe
 diff '--exclude=.git' -urN a/gnome-session/Makefile.am b/gnome-session/Makefile.am
---- a/gnome-session/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/gnome-session/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/gnome-session/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/gnome-session/Makefile.am	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,222 @@
 +EXTRA_DIST = gnome-session.in
 +NULL =
@@ -1117,8 +1117,8 @@ diff '--exclude=.git' -urN a/gnome-session/Makefile.am b/gnome-session/Makefile.
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/tools/Makefile.am b/tools/Makefile.am
---- a/tools/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/tools/Makefile.am	2018-04-25 15:14:05.245268257 -0400
+--- a/tools/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/tools/Makefile.am	2018-09-26 15:45:31.874505660 -0500
 @@ -0,0 +1,106 @@
 +bin_PROGRAMS = gnome-session-quit gnome-session-inhibit
 +libexec_PROGRAMS = \

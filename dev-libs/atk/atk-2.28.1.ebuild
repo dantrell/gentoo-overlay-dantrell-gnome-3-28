@@ -14,7 +14,7 @@ KEYWORDS="*"
 IUSE="+introspection nls test"
 
 RDEPEND="
-	>=dev-libs/glib-2.34.3:2[${MULTILIB_USEDEP}]
+	>=dev-libs/glib-2.32:2[${MULTILIB_USEDEP}]
 	introspection? ( >=dev-libs/gobject-introspection-1.32.0:= )
 "
 DEPEND="${RDEPEND}

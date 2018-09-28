@@ -31,7 +31,7 @@ RDEPEND="${COMMON_DEPEND}
 	x11-libs/libnotify[introspection]
 
 	>=gnome-base/gnome-settings-daemon-3
-	>=gnome-base/gnome-shell-3.26
+	>=gnome-base/gnome-shell-3.28
 	>=gnome-base/nautilus-3
 
 	!gnome-extra/gnome-tweak-tool

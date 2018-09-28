@@ -99,10 +99,10 @@ src_prepare() {
 src_configure() {
 	local emesonargs=(
 		-D docs=$(usex doc true false)
-		-D profiling=false
 		-D extensions=$(usex sendto true false)
 		-D packagekit=$(usex packagekit true false)
 		-D selinux=$(usex selinux true false)
+		-D profiling=false
 		-D tests=$(usex test all none)
 	)
 	meson_src_configure

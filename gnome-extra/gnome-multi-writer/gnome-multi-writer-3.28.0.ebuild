@@ -9,7 +9,7 @@ HOMEPAGE="https://wiki.gnome.org/Apps/MultiWriter"
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS=""
+KEYWORDS="*"
 
 IUSE="introspection"
 
@@ -20,7 +20,7 @@ RDEPEND="
 	sys-fs/udisks:2
 	virtual/libgudev:=
 	>=media-libs/libcanberra-0.10
-	>=sys-auth/polkit-0.100
+	>=sys-auth/polkit-0.115
 	>=dev-libs/glib-2.45.8
 	x11-themes/gnome-icon-theme-extras
 "
@@ -31,21 +31,3 @@ DEPEND="${RDEPEND}
 	>=dev-util/intltool-0.50
 	sys-devel/gettext
 "
-
-src_prepare() {
-	# From Arch:
-	# 	https://git.archlinux.org/svntogit/community.git/tree/trunk/PKGBUILD?h=packages/gnome-multi-writer
-	sed -i -e 's|libexec|lib/gnome-multi-writer|' src/meson.build || die
-
-	gnome2_src_prepare
-}
-
-src_configure() {
-	local emesonargs=(
-		-Denable-gtk-doc=false
-		-Denable-man=false
-		-Denable-introspection=$(usex introspection true false)
-	)
-
-	meson_src_configure
-}

@@ -6,7 +6,7 @@ GNOME2_LA_PUNT="yes"
 inherit autotools bash-completion-r1 gnome2
 
 DESCRIPTION="GNOME's main interface to configure various aspects of the desktop"
-HOMEPAGE="https://git.gnome.org/browse/gnome-control-center/"
+HOMEPAGE="https://gitlab.gnome.org/GNOME/gnome-control-center/"
 
 LICENSE="GPL-2+"
 SLOT="2"
@@ -137,7 +137,7 @@ src_prepare() {
 	# From GNOME:
 	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
 	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/9a611e0d69dc10c7cdedaace471e3407235e18d6
-	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
+	eapply "${FILESDIR}"/${PN}-3.28.2-support-autotools.patch
 	eapply "${FILESDIR}"/${PN}-3.29.0-keyboard-remove-deprecated-gdk-error-trap-push-pop-calls.patch
 
 	# Make some panels and dependencies optional; requires eautoreconf
@@ -171,7 +171,7 @@ src_prepare() {
 	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
 	#~cd "${S}"/subprojects
 	#~rm -rf libgd
-	#~git clone https://git.gnome.org/browse/libgd
+	#~git clone https://gitlab.gnome.org/GNOME/libgd
 	#~cd "${S}"
 	#~rm -rf build
 

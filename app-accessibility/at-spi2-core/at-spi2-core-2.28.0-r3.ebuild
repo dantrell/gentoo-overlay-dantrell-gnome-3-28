@@ -43,8 +43,8 @@ PATCHES=(
 	"${FILESDIR}"/${PN}-2.0.2-disable-teamspaces-test.patch
 
 	# From GNOME:
-	# 	https://git.gnome.org/browse/at-spi2-core/commit/?id=10d81a5c3d11ad87dc5ceb5519ebde003a86ba58
-	# 	https://git.gnome.org/browse/at-spi2-core/commit/?id=840cbcb3b84b8fe8ea76b32ef6c775cebb66d193
+	# 	https://gitlab.gnome.org/GNOME/at-spi2-core/commit/10d81a5c3d11ad87dc5ceb5519ebde003a86ba58
+	# 	https://gitlab.gnome.org/GNOME/at-spi2-core/commit/840cbcb3b84b8fe8ea76b32ef6c775cebb66d193
 	"${FILESDIR}"/${PN}-2.28.0-support-autotools.patch
 )
 

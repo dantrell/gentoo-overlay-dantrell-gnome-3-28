@@ -1,6 +1,6 @@
 diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
---- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/Makefile.am	2018-04-27 03:51:54.437858960 -0400
+--- a/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,31 @@
 +DISTCHECK_CONFIGURE_FLAGS = --enable-introspection --enable-gtk-doc
 +
@@ -34,8 +34,8 @@ diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/atspi/Makefile.am b/atspi/Makefile.am
---- a/atspi/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/atspi/Makefile.am	2018-04-27 03:51:54.437858960 -0400
+--- a/atspi/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/atspi/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,160 @@
 +lib_LTLIBRARIES =
 +
@@ -198,8 +198,8 @@ diff '--exclude=.git' -urN a/atspi/Makefile.am b/atspi/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
---- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
-+++ b/autogen.sh	2018-04-27 03:51:54.438858955 -0400
+--- a/autogen.sh	1969-12-31 18:00:00.000000000 -0600
++++ b/autogen.sh	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,18 @@
 +#!/bin/sh
 +
@@ -220,8 +220,8 @@ diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
 +test -n "$NOCONFIGURE" || "$srcdir/configure" "$@"
 +
 diff '--exclude=.git' -urN a/bus/Makefile.am b/bus/Makefile.am
---- a/bus/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/bus/Makefile.am	2018-04-27 03:51:54.438858955 -0400
+--- a/bus/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/bus/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,48 @@
 +CLEANFILES =
 +DISTCLEANFILES =
@@ -272,10 +272,10 @@ diff '--exclude=.git' -urN a/bus/Makefile.am b/bus/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/configure.ac b/configure.ac
---- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
-+++ b/configure.ac	2018-04-27 03:51:54.438858955 -0400
+--- a/configure.ac	1969-12-31 18:00:00.000000000 -0600
++++ b/configure.ac	2018-09-26 15:49:10.911440683 -0500
 @@ -0,0 +1,188 @@
-+AC_INIT([at-spi2-core], [2.26.1], [accessibility-atspi@lists.linux-foundation.org])
++AC_INIT([at-spi2-core], [2.28.0], [accessibility-atspi@lists.linux-foundation.org])
 +AC_PREREQ([2.59])
 +AC_CONFIG_AUX_DIR(config)
 +AC_CONFIG_MACRO_DIR([m4])
@@ -464,8 +464,8 @@ diff '--exclude=.git' -urN a/configure.ac b/configure.ac
 +
 +AC_OUTPUT
 diff '--exclude=.git' -urN a/dbind/Makefile.am b/dbind/Makefile.am
---- a/dbind/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/dbind/Makefile.am	2018-04-27 03:51:54.438858955 -0400
+--- a/dbind/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/dbind/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,27 @@
 +noinst_LTLIBRARIES = libdbind.la
 +
@@ -495,16 +495,16 @@ diff '--exclude=.git' -urN a/dbind/Makefile.am b/dbind/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/doc/Makefile.am b/doc/Makefile.am
---- a/doc/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/doc/Makefile.am	2018-04-27 03:51:54.438858955 -0400
+--- a/doc/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/doc/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,4 @@
 +
 +SUBDIRS=libatspi
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/po/Makevars b/po/Makevars
---- a/po/Makevars	1969-12-31 19:00:00.000000000 -0500
-+++ b/po/Makevars	2018-04-27 03:53:16.221443684 -0400
+--- a/po/Makevars	1969-12-31 18:00:00.000000000 -0600
++++ b/po/Makevars	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,78 @@
 +# Makefile variables for PO directory in any package using GNU gettext.
 +
@@ -585,8 +585,8 @@ diff '--exclude=.git' -urN a/po/Makevars b/po/Makevars
 +# externally.
 +DIST_DEPENDS_ON_UPDATE_PO = no
 diff '--exclude=.git' -urN a/registryd/Makefile.am b/registryd/Makefile.am
---- a/registryd/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/registryd/Makefile.am	2018-04-27 03:51:54.438858955 -0400
+--- a/registryd/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/registryd/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,68 @@
 +EXTRA_DIST = \
 +	meson.build
@@ -657,8 +657,8 @@ diff '--exclude=.git' -urN a/registryd/Makefile.am b/registryd/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/test/Makefile.am b/test/Makefile.am
---- a/test/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/test/Makefile.am	2018-04-27 03:51:54.438858955 -0400
+--- a/test/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/test/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,10 @@
 +LDADD = $(top_builddir)/atspi/libatspi.la
 +noinst_PROGRAMS = memory
@@ -671,8 +671,8 @@ diff '--exclude=.git' -urN a/test/Makefile.am b/test/Makefile.am
 +
 +EXTRA_DIST = meson.build
 diff '--exclude=.git' -urN a/xml/Makefile.am b/xml/Makefile.am
---- a/xml/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/xml/Makefile.am	2018-04-27 03:51:54.438858955 -0400
+--- a/xml/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/xml/Makefile.am	2018-09-26 15:48:43.275574885 -0500
 @@ -0,0 +1,41 @@
 +EXTRA_DIST = \
 +	Accessibility.xml \

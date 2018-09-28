@@ -1,6 +1,6 @@
 diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
---- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/Makefile.am	2018-04-22 01:52:19.383387747 -0400
+--- a/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/Makefile.am	2018-09-26 15:53:21.545225617 -0500
 @@ -0,0 +1,57 @@
 +ACLOCAL_AMFLAGS = -I m4 -I subprojects/gvc -I subprojects/libgd ${ACLOCAL_FLAGS}
 +
@@ -60,8 +60,8 @@ diff '--exclude=.git' -urN a/Makefile.am b/Makefile.am
 +		echo A git clone is required to generate a ChangeLog >&2; \
 +	fi
 diff '--exclude=.git' -urN a/Makefile.decl b/Makefile.decl
---- a/Makefile.decl	1969-12-31 19:00:00.000000000 -0500
-+++ b/Makefile.decl	2018-04-22 01:52:19.383387747 -0400
+--- a/Makefile.decl	1969-12-31 18:00:00.000000000 -0600
++++ b/Makefile.decl	2018-09-26 15:53:21.545225617 -0500
 @@ -0,0 +1,53 @@
 +GTESTER        = gtester		# in $PATH for non-GLIB packages
 +GTESTER_REPORT = gtester-report		# in $PATH for non-GLIB packages
@@ -117,8 +117,8 @@ diff '--exclude=.git' -urN a/Makefile.decl b/Makefile.decl
 +# run make test as part of make check
 +check-local: test
 diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
---- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
-+++ b/autogen.sh	2018-04-22 01:52:19.383387747 -0400
+--- a/autogen.sh	1969-12-31 18:00:00.000000000 -0600
++++ b/autogen.sh	2018-09-26 15:53:21.545225617 -0500
 @@ -0,0 +1,31 @@
 +#!/bin/sh
 +# Run this to generate all the initial makefiles, etc.
@@ -152,10 +152,10 @@ diff '--exclude=.git' -urN a/autogen.sh b/autogen.sh
 +
 +. gnome-autogen.sh
 diff '--exclude=.git' -urN a/configure.ac b/configure.ac
---- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
-+++ b/configure.ac	2018-04-22 22:44:53.018735600 -0400
+--- a/configure.ac	1969-12-31 18:00:00.000000000 -0600
++++ b/configure.ac	2018-09-26 15:53:29.325187956 -0500
 @@ -0,0 +1,601 @@
-+m4_define([gnome_control_center_version], 3.26.0)
++m4_define([gnome_control_center_version], 3.28.2)
 +AC_INIT([gnome-control-center], [gnome_control_center_version],
 +        [http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-control-center])
 +
@@ -757,14 +757,14 @@ diff '--exclude=.git' -urN a/configure.ac b/configure.ac
 +AC_MSG_NOTICE([** gnome-session libexecdir: $GNOMESESSIONDIR])
 +AC_MSG_NOTICE([End options])
 diff '--exclude=.git' -urN a/data/Makefile.am b/data/Makefile.am
---- a/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/Makefile.am	2018-04-22 01:52:19.383387747 -0400
+--- a/data/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/Makefile.am	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1,2 @@
 +SUBDIRS = icons
 +DIST_SUBDIRS = icons
 diff '--exclude=.git' -urN a/data/icons/Makefile.am b/data/icons/Makefile.am
---- a/data/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/Makefile.am	2018-04-22 01:52:19.383387747 -0400
+--- a/data/icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/Makefile.am	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1,85 @@
 +NULL =
 +
@@ -852,8 +852,8 @@ diff '--exclude=.git' -urN a/data/icons/Makefile.am b/data/icons/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/git.mk b/git.mk
---- a/git.mk	1969-12-31 19:00:00.000000000 -0500
-+++ b/git.mk	2018-04-22 01:52:19.383387747 -0400
+--- a/git.mk	1969-12-31 18:00:00.000000000 -0600
++++ b/git.mk	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1,311 @@
 +# git.mk
 +#
@@ -1167,8 +1167,8 @@ diff '--exclude=.git' -urN a/git.mk b/git.mk
 +
 +.PHONY: gitignore-clean gitignore gitignore-recurse gitignore-recurse-maybe
 diff '--exclude=.git' -urN a/m4/as-ac-expand.m4 b/m4/as-ac-expand.m4
---- a/m4/as-ac-expand.m4	1969-12-31 19:00:00.000000000 -0500
-+++ b/m4/as-ac-expand.m4	2018-04-22 01:52:19.383387747 -0400
+--- a/m4/as-ac-expand.m4	1969-12-31 18:00:00.000000000 -0600
++++ b/m4/as-ac-expand.m4	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1,43 @@
 +dnl as-ac-expand.m4 0.2.0
 +dnl autostars m4 macro for expanding directories using configure's prefix
@@ -1214,8 +1214,8 @@ diff '--exclude=.git' -urN a/m4/as-ac-expand.m4 b/m4/as-ac-expand.m4
 +  exec_prefix=$exec_prefix_save
 +])
 diff '--exclude=.git' -urN a/m4/ax_config_dir.m4 b/m4/ax_config_dir.m4
---- a/m4/ax_config_dir.m4	1969-12-31 19:00:00.000000000 -0500
-+++ b/m4/ax_config_dir.m4	2018-04-22 01:52:19.384387742 -0400
+--- a/m4/ax_config_dir.m4	1969-12-31 18:00:00.000000000 -0600
++++ b/m4/ax_config_dir.m4	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1,109 @@
 +dnl Copied from Audacity 1.3.10 which itself is licensed under the GPL v2 or
 +dnl any later version
@@ -1327,13 +1327,13 @@ diff '--exclude=.git' -urN a/m4/ax_config_dir.m4 b/m4/ax_config_dir.m4
 +])
 +
 diff '--exclude=.git' -urN a/m4/empty b/m4/empty
---- a/m4/empty	1969-12-31 19:00:00.000000000 -0500
-+++ b/m4/empty	2018-04-22 01:52:19.384387742 -0400
+--- a/m4/empty	1969-12-31 18:00:00.000000000 -0600
++++ b/m4/empty	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1 @@
 +Empty file to keep stub m4 directory here.
 diff '--exclude=.git' -urN a/man/Makefile.am b/man/Makefile.am
---- a/man/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/man/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/man/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/man/Makefile.am	2018-09-26 15:53:21.546225613 -0500
 @@ -0,0 +1,23 @@
 +XSLTPROC_FLAGS = \
 +        --nonet \
@@ -1359,8 +1359,8 @@ diff '--exclude=.git' -urN a/man/Makefile.am b/man/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/Makefile.am b/panels/Makefile.am
---- a/panels/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,36 @@
 +SUBDIRS= \
 +	common \
@@ -1399,8 +1399,8 @@ diff '--exclude=.git' -urN a/panels/Makefile.am b/panels/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/background/Makefile.am b/panels/background/Makefile.am
---- a/panels/background/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/background/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/background/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/background/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,100 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = background
@@ -1503,8 +1503,8 @@ diff '--exclude=.git' -urN a/panels/background/Makefile.am b/panels/background/M
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/bluetooth/Makefile.am b/panels/bluetooth/Makefile.am
---- a/panels/bluetooth/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/bluetooth/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/bluetooth/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/bluetooth/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,38 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = bluetooth
@@ -1545,8 +1545,8 @@ diff '--exclude=.git' -urN a/panels/bluetooth/Makefile.am b/panels/bluetooth/Mak
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/Makefile.am b/panels/color/Makefile.am
---- a/panels/color/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,50 @@
 +SUBDIRS = icons
 +
@@ -1599,8 +1599,8 @@ diff '--exclude=.git' -urN a/panels/color/Makefile.am b/panels/color/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/16x16/Makefile.am b/panels/color/icons/16x16/Makefile.am
---- a/panels/color/icons/16x16/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/16x16/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/16x16/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/16x16/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 16x16
@@ -1616,8 +1616,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/16x16/Makefile.am b/panels/color
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/22x22/Makefile.am b/panels/color/icons/22x22/Makefile.am
---- a/panels/color/icons/22x22/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/22x22/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/22x22/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/22x22/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 22x22
@@ -1633,8 +1633,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/22x22/Makefile.am b/panels/color
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/24x24/Makefile.am b/panels/color/icons/24x24/Makefile.am
---- a/panels/color/icons/24x24/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/24x24/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/24x24/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/24x24/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 24x24
@@ -1650,8 +1650,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/24x24/Makefile.am b/panels/color
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/256x256/Makefile.am b/panels/color/icons/256x256/Makefile.am
---- a/panels/color/icons/256x256/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/256x256/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/256x256/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/256x256/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 256x256
@@ -1667,8 +1667,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/256x256/Makefile.am b/panels/col
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/32x32/Makefile.am b/panels/color/icons/32x32/Makefile.am
---- a/panels/color/icons/32x32/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/32x32/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/32x32/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/32x32/Makefile.am	2018-09-26 15:53:21.547225608 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 32x32
@@ -1684,8 +1684,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/32x32/Makefile.am b/panels/color
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/48x48/Makefile.am b/panels/color/icons/48x48/Makefile.am
---- a/panels/color/icons/48x48/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/48x48/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/48x48/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/48x48/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 48x48
@@ -1701,8 +1701,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/48x48/Makefile.am b/panels/color
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/64x64/Makefile.am b/panels/color/icons/64x64/Makefile.am
---- a/panels/color/icons/64x64/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/64x64/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/64x64/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/64x64/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 64x64
@@ -1718,8 +1718,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/64x64/Makefile.am b/panels/color
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/Makefile.am b/panels/color/icons/Makefile.am
---- a/panels/color/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,22 @@
 +SUBDIRS = scalable 16x16 22x22 24x24 32x32 48x48 64x64 256x256
 +
@@ -1744,8 +1744,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/Makefile.am b/panels/color/icons
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/color/icons/scalable/Makefile.am b/panels/color/icons/scalable/Makefile.am
---- a/panels/color/icons/scalable/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/color/icons/scalable/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/color/icons/scalable/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/color/icons/scalable/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,13 @@
 +themedir = $(datadir)/icons/hicolor
 +size = scalable
@@ -1761,8 +1761,8 @@ diff '--exclude=.git' -urN a/panels/color/icons/scalable/Makefile.am b/panels/co
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/common/Makefile.am b/panels/common/Makefile.am
---- a/panels/common/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/common/Makefile.am	2018-04-22 01:52:19.384387742 -0400
+--- a/panels/common/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/common/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,100 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = common
@@ -1865,8 +1865,8 @@ diff '--exclude=.git' -urN a/panels/common/Makefile.am b/panels/common/Makefile.
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/datetime/Makefile.am b/panels/datetime/Makefile.am
---- a/panels/datetime/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/datetime/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/datetime/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/datetime/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,116 @@
 +include $(top_srcdir)/Makefile.decl
 +
@@ -1985,8 +1985,8 @@ diff '--exclude=.git' -urN a/panels/datetime/Makefile.am b/panels/datetime/Makef
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/datetime/po-timezones/Makefile.am b/panels/datetime/po-timezones/Makefile.am
---- a/panels/datetime/po-timezones/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/datetime/po-timezones/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/datetime/po-timezones/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/datetime/po-timezones/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,35 @@
 +PO_LINGUAS = $(subst .po,,$(wildcard *.po))
 +
@@ -2024,8 +2024,8 @@ diff '--exclude=.git' -urN a/panels/datetime/po-timezones/Makefile.am b/panels/d
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/display/Makefile.am b/panels/display/Makefile.am
---- a/panels/display/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/display/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/display/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/display/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,80 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = display
@@ -2108,8 +2108,8 @@ diff '--exclude=.git' -urN a/panels/display/Makefile.am b/panels/display/Makefil
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/info/Makefile.am b/panels/info/Makefile.am
---- a/panels/info/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/info/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/info/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/info/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,69 @@
 +include $(top_srcdir)/Makefile.decl
 +
@@ -2181,8 +2181,8 @@ diff '--exclude=.git' -urN a/panels/info/Makefile.am b/panels/info/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/keyboard/Makefile.am b/panels/keyboard/Makefile.am
---- a/panels/keyboard/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/keyboard/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/keyboard/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/keyboard/Makefile.am	2018-09-26 15:53:21.548225603 -0500
 @@ -0,0 +1,76 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = keyboard
@@ -2261,8 +2261,8 @@ diff '--exclude=.git' -urN a/panels/keyboard/Makefile.am b/panels/keyboard/Makef
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/keyboard/gnome-keybindings.its b/panels/keyboard/gnome-keybindings.its
---- a/panels/keyboard/gnome-keybindings.its	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/keyboard/gnome-keybindings.its	2016-10-11 10:59:11.000000000 -0400
+--- a/panels/keyboard/gnome-keybindings.its	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/keyboard/gnome-keybindings.its	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,11 @@
 +<?xml version="1.0"?>
 +<its:rules xmlns:its="http://www.w3.org/2005/11/its" version="2.0">
@@ -2276,8 +2276,8 @@ diff '--exclude=.git' -urN a/panels/keyboard/gnome-keybindings.its b/panels/keyb
 +  <gt:escapeRule selector="/KeyListEntries" escape="no"/>
 +</its:rules>
 diff '--exclude=.git' -urN a/panels/keyboard/gnome-keybindings.loc b/panels/keyboard/gnome-keybindings.loc
---- a/panels/keyboard/gnome-keybindings.loc	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/keyboard/gnome-keybindings.loc	2016-10-11 10:59:11.000000000 -0400
+--- a/panels/keyboard/gnome-keybindings.loc	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/keyboard/gnome-keybindings.loc	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,6 @@
 +<?xml version="1.0"?>
 +<locatingRules>
@@ -2286,8 +2286,8 @@ diff '--exclude=.git' -urN a/panels/keyboard/gnome-keybindings.loc b/panels/keyb
 +  </locatingRule>
 +</locatingRules>
 diff '--exclude=.git' -urN a/panels/mouse/Makefile.am b/panels/mouse/Makefile.am
---- a/panels/mouse/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/mouse/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/mouse/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/mouse/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,56 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = mouse
@@ -2346,8 +2346,8 @@ diff '--exclude=.git' -urN a/panels/mouse/Makefile.am b/panels/mouse/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/network/Makefile.am b/panels/network/Makefile.am
---- a/panels/network/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/network/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/network/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/network/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,65 @@
 +cappletname = network
 +
@@ -2415,8 +2415,8 @@ diff '--exclude=.git' -urN a/panels/network/Makefile.am b/panels/network/Makefil
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/network/connection-editor/Makefile.am b/panels/network/connection-editor/Makefile.am
---- a/panels/network/connection-editor/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/network/connection-editor/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/network/connection-editor/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/network/connection-editor/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,56 @@
 +noinst_LTLIBRARIES = libconnection-editor.la
 +
@@ -2475,8 +2475,8 @@ diff '--exclude=.git' -urN a/panels/network/connection-editor/Makefile.am b/pane
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/network/wireless-security/Makefile.am b/panels/network/wireless-security/Makefile.am
---- a/panels/network/wireless-security/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/network/wireless-security/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/network/wireless-security/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/network/wireless-security/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,72 @@
 +noinst_LTLIBRARIES = libwireless-security.la
 +
@@ -2551,8 +2551,8 @@ diff '--exclude=.git' -urN a/panels/network/wireless-security/Makefile.am b/pane
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/notifications/Makefile.am b/panels/notifications/Makefile.am
---- a/panels/notifications/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/notifications/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/notifications/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/notifications/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,39 @@
 +cappletname = notifications
 +
@@ -2594,8 +2594,8 @@ diff '--exclude=.git' -urN a/panels/notifications/Makefile.am b/panels/notificat
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/Makefile.am b/panels/online-accounts/Makefile.am
---- a/panels/online-accounts/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/online-accounts/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,46 @@
 +cappletname = online-accounts
 +
@@ -2644,8 +2644,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/Makefile.am b/panels/online-
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/16x16/Makefile.am b/panels/online-accounts/icons/16x16/Makefile.am
---- a/panels/online-accounts/icons/16x16/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/16x16/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/online-accounts/icons/16x16/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/16x16/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2662,8 +2662,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/16x16/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/22x22/Makefile.am b/panels/online-accounts/icons/22x22/Makefile.am
---- a/panels/online-accounts/icons/22x22/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/22x22/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/online-accounts/icons/22x22/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/22x22/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2680,8 +2680,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/22x22/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/24x24/Makefile.am b/panels/online-accounts/icons/24x24/Makefile.am
---- a/panels/online-accounts/icons/24x24/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/24x24/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/online-accounts/icons/24x24/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/24x24/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2698,8 +2698,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/24x24/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/256x256/Makefile.am b/panels/online-accounts/icons/256x256/Makefile.am
---- a/panels/online-accounts/icons/256x256/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/256x256/Makefile.am	2018-04-22 01:52:19.385387737 -0400
+--- a/panels/online-accounts/icons/256x256/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/256x256/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2716,8 +2716,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/256x256/Makefile.am b/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/32x32/Makefile.am b/panels/online-accounts/icons/32x32/Makefile.am
---- a/panels/online-accounts/icons/32x32/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/32x32/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/online-accounts/icons/32x32/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/32x32/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2734,8 +2734,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/32x32/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/48x48/Makefile.am b/panels/online-accounts/icons/48x48/Makefile.am
---- a/panels/online-accounts/icons/48x48/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/48x48/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/online-accounts/icons/48x48/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/48x48/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2752,8 +2752,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/48x48/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/online-accounts/icons/Makefile.am b/panels/online-accounts/icons/Makefile.am
---- a/panels/online-accounts/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/online-accounts/icons/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/online-accounts/icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/online-accounts/icons/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,25 @@
 +
 +SUBDIRS = 16x16 22x22 24x24 32x32 48x48 256x256
@@ -2781,8 +2781,8 @@ diff '--exclude=.git' -urN a/panels/online-accounts/icons/Makefile.am b/panels/o
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/Makefile.am b/panels/power/Makefile.am
---- a/panels/power/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,50 @@
 +cappletname = power
 +
@@ -2835,8 +2835,8 @@ diff '--exclude=.git' -urN a/panels/power/Makefile.am b/panels/power/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/16x16/Makefile.am b/panels/power/icons/16x16/Makefile.am
---- a/panels/power/icons/16x16/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/16x16/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/16x16/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/16x16/Makefile.am	2018-09-26 15:53:21.549225598 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2853,8 +2853,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/16x16/Makefile.am b/panels/power
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/22x22/Makefile.am b/panels/power/icons/22x22/Makefile.am
---- a/panels/power/icons/22x22/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/22x22/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/22x22/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/22x22/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2871,8 +2871,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/22x22/Makefile.am b/panels/power
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/24x24/Makefile.am b/panels/power/icons/24x24/Makefile.am
---- a/panels/power/icons/24x24/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/24x24/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/24x24/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/24x24/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2889,8 +2889,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/24x24/Makefile.am b/panels/power
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/256x256/Makefile.am b/panels/power/icons/256x256/Makefile.am
---- a/panels/power/icons/256x256/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/256x256/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/256x256/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/256x256/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2907,8 +2907,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/256x256/Makefile.am b/panels/pow
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/32x32/Makefile.am b/panels/power/icons/32x32/Makefile.am
---- a/panels/power/icons/32x32/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/32x32/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/32x32/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/32x32/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2925,8 +2925,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/32x32/Makefile.am b/panels/power
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/48x48/Makefile.am b/panels/power/icons/48x48/Makefile.am
---- a/panels/power/icons/48x48/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/48x48/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/48x48/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/48x48/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -2943,8 +2943,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/48x48/Makefile.am b/panels/power
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/power/icons/Makefile.am b/panels/power/icons/Makefile.am
---- a/panels/power/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/power/icons/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/power/icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/power/icons/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,24 @@
 +
 +SUBDIRS = 16x16 22x22 24x24 32x32 48x48 256x256
@@ -2971,8 +2971,8 @@ diff '--exclude=.git' -urN a/panels/power/icons/Makefile.am b/panels/power/icons
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/printers/Makefile.am b/panels/printers/Makefile.am
---- a/panels/printers/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/printers/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/printers/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/printers/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,89 @@
 +include $(top_srcdir)/Makefile.decl
 +
@@ -3064,8 +3064,8 @@ diff '--exclude=.git' -urN a/panels/printers/Makefile.am b/panels/printers/Makef
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/privacy/Makefile.am b/panels/privacy/Makefile.am
---- a/panels/privacy/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/privacy/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/privacy/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/privacy/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,38 @@
 +cappletname = privacy
 +
@@ -3106,8 +3106,8 @@ diff '--exclude=.git' -urN a/panels/privacy/Makefile.am b/panels/privacy/Makefil
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/region/Makefile.am b/panels/region/Makefile.am
---- a/panels/region/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/region/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/region/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/region/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,52 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = region
@@ -3162,8 +3162,8 @@ diff '--exclude=.git' -urN a/panels/region/Makefile.am b/panels/region/Makefile.
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/search/Makefile.am b/panels/search/Makefile.am
---- a/panels/search/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/search/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/search/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/search/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,41 @@
 +cappletname = search
 +
@@ -3207,8 +3207,8 @@ diff '--exclude=.git' -urN a/panels/search/Makefile.am b/panels/search/Makefile.
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sharing/Makefile.am b/panels/sharing/Makefile.am
---- a/panels/sharing/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sharing/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/sharing/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sharing/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,81 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = sharing
@@ -3292,8 +3292,8 @@ diff '--exclude=.git' -urN a/panels/sharing/Makefile.am b/panels/sharing/Makefil
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/Makefile.am b/panels/sound/Makefile.am
---- a/panels/sound/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/Makefile.am	2018-04-22 01:52:19.386387733 -0400
+--- a/panels/sound/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,74 @@
 +SUBDIRS = data
 +
@@ -3370,8 +3370,8 @@ diff '--exclude=.git' -urN a/panels/sound/Makefile.am b/panels/sound/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/Makefile.am b/panels/sound/data/Makefile.am
---- a/panels/sound/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,42 @@
 +NULL =
 +
@@ -3416,16 +3416,16 @@ diff '--exclude=.git' -urN a/panels/sound/data/Makefile.am b/panels/sound/data/M
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/Makefile.am b/panels/sound/data/icons/16x16/Makefile.am
---- a/panels/sound/data/icons/16x16/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/16x16/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/16x16/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/16x16/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,4 @@
 +SUBDIRS = status apps devices
 +
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/apps/Makefile.am b/panels/sound/data/icons/16x16/apps/Makefile.am
---- a/panels/sound/data/icons/16x16/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/16x16/apps/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/16x16/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/16x16/apps/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,19 @@
 +NULL =
 +
@@ -3447,8 +3447,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/apps/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/devices/Makefile.am b/panels/sound/data/icons/16x16/devices/Makefile.am
---- a/panels/sound/data/icons/16x16/devices/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/16x16/devices/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/16x16/devices/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/16x16/devices/Makefile.am	2018-09-26 15:53:21.550225593 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3469,8 +3469,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/devices/Makefile.am b
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/status/Makefile.am b/panels/sound/data/icons/16x16/status/Makefile.am
---- a/panels/sound/data/icons/16x16/status/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/16x16/status/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/16x16/status/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/16x16/status/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,21 @@
 +NULL =
 +
@@ -3494,16 +3494,16 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/16x16/status/Makefile.am b/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/22x22/Makefile.am b/panels/sound/data/icons/22x22/Makefile.am
---- a/panels/sound/data/icons/22x22/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/22x22/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/22x22/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/22x22/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,4 @@
 +SUBDIRS = status apps
 +
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/22x22/apps/Makefile.am b/panels/sound/data/icons/22x22/apps/Makefile.am
---- a/panels/sound/data/icons/22x22/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/22x22/apps/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/22x22/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/22x22/apps/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,19 @@
 +NULL =
 +
@@ -3525,8 +3525,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/22x22/apps/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/22x22/status/Makefile.am b/panels/sound/data/icons/22x22/status/Makefile.am
---- a/panels/sound/data/icons/22x22/status/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/22x22/status/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/22x22/status/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/22x22/status/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,21 @@
 +NULL =
 +
@@ -3550,16 +3550,16 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/22x22/status/Makefile.am b/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/Makefile.am b/panels/sound/data/icons/24x24/Makefile.am
---- a/panels/sound/data/icons/24x24/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/24x24/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/24x24/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/24x24/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,4 @@
 +SUBDIRS = status apps devices
 +
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/apps/Makefile.am b/panels/sound/data/icons/24x24/apps/Makefile.am
---- a/panels/sound/data/icons/24x24/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/24x24/apps/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/24x24/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/24x24/apps/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3580,8 +3580,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/apps/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/devices/Makefile.am b/panels/sound/data/icons/24x24/devices/Makefile.am
---- a/panels/sound/data/icons/24x24/devices/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/24x24/devices/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/24x24/devices/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/24x24/devices/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3602,8 +3602,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/devices/Makefile.am b
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/status/Makefile.am b/panels/sound/data/icons/24x24/status/Makefile.am
---- a/panels/sound/data/icons/24x24/status/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/24x24/status/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/24x24/status/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/24x24/status/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,21 @@
 +NULL =
 +
@@ -3627,16 +3627,16 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/24x24/status/Makefile.am b/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/Makefile.am b/panels/sound/data/icons/32x32/Makefile.am
---- a/panels/sound/data/icons/32x32/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/32x32/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/32x32/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/32x32/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,4 @@
 +SUBDIRS = status apps devices
 +
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/apps/Makefile.am b/panels/sound/data/icons/32x32/apps/Makefile.am
---- a/panels/sound/data/icons/32x32/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/32x32/apps/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/32x32/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/32x32/apps/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,19 @@
 +NULL =
 +
@@ -3658,8 +3658,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/apps/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/devices/Makefile.am b/panels/sound/data/icons/32x32/devices/Makefile.am
---- a/panels/sound/data/icons/32x32/devices/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/32x32/devices/Makefile.am	2018-04-22 01:52:19.387387728 -0400
+--- a/panels/sound/data/icons/32x32/devices/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/32x32/devices/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3680,8 +3680,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/devices/Makefile.am b
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/status/Makefile.am b/panels/sound/data/icons/32x32/status/Makefile.am
---- a/panels/sound/data/icons/32x32/status/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/32x32/status/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/32x32/status/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/32x32/status/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,21 @@
 +NULL =
 +
@@ -3705,16 +3705,16 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/32x32/status/Makefile.am b/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/48x48/Makefile.am b/panels/sound/data/icons/48x48/Makefile.am
---- a/panels/sound/data/icons/48x48/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/48x48/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/48x48/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/48x48/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,4 @@
 +SUBDIRS = apps devices
 +
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/48x48/apps/Makefile.am b/panels/sound/data/icons/48x48/apps/Makefile.am
---- a/panels/sound/data/icons/48x48/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/48x48/apps/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/48x48/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/48x48/apps/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3735,8 +3735,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/48x48/apps/Makefile.am b/pa
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/48x48/devices/Makefile.am b/panels/sound/data/icons/48x48/devices/Makefile.am
---- a/panels/sound/data/icons/48x48/devices/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/48x48/devices/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/48x48/devices/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/48x48/devices/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3757,8 +3757,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/48x48/devices/Makefile.am b
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/Makefile.am b/panels/sound/data/icons/Makefile.am
---- a/panels/sound/data/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -3775,16 +3775,16 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/Makefile.am b/panels/sound/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/scalable/Makefile.am b/panels/sound/data/icons/scalable/Makefile.am
---- a/panels/sound/data/icons/scalable/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/scalable/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/scalable/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/scalable/Makefile.am	2018-09-26 15:53:21.551225588 -0500
 @@ -0,0 +1,4 @@
 +SUBDIRS = apps devices
 +
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/scalable/apps/Makefile.am b/panels/sound/data/icons/scalable/apps/Makefile.am
---- a/panels/sound/data/icons/scalable/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/scalable/apps/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/scalable/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/scalable/apps/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,18 @@
 +NULL =
 +
@@ -3805,8 +3805,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/scalable/apps/Makefile.am b
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/icons/scalable/devices/Makefile.am b/panels/sound/data/icons/scalable/devices/Makefile.am
---- a/panels/sound/data/icons/scalable/devices/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/icons/scalable/devices/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/icons/scalable/devices/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/icons/scalable/devices/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,37 @@
 +NULL =
 +
@@ -3846,8 +3846,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/icons/scalable/devices/Makefile.a
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/sounds/Makefile.am b/panels/sound/data/sounds/Makefile.am
---- a/panels/sound/data/sounds/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/sounds/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/sounds/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/sounds/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,29 @@
 +NULL =
 +
@@ -3879,8 +3879,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/sounds/Makefile.am b/panels/sound
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/symbolic-icons/Makefile.am b/panels/sound/data/symbolic-icons/Makefile.am
---- a/panels/sound/data/symbolic-icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/symbolic-icons/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/symbolic-icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/symbolic-icons/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,11 @@
 +NULL =
 +
@@ -3894,15 +3894,15 @@ diff '--exclude=.git' -urN a/panels/sound/data/symbolic-icons/Makefile.am b/pane
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/symbolic-icons/scalable/Makefile.am b/panels/sound/data/symbolic-icons/scalable/Makefile.am
---- a/panels/sound/data/symbolic-icons/scalable/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/symbolic-icons/scalable/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/symbolic-icons/scalable/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/symbolic-icons/scalable/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = status
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/sound/data/symbolic-icons/scalable/status/Makefile.am b/panels/sound/data/symbolic-icons/scalable/status/Makefile.am
---- a/panels/sound/data/symbolic-icons/scalable/status/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/sound/data/symbolic-icons/scalable/status/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/sound/data/symbolic-icons/scalable/status/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/sound/data/symbolic-icons/scalable/status/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,14 @@
 +NULL =
 +
@@ -3919,8 +3919,8 @@ diff '--exclude=.git' -urN a/panels/sound/data/symbolic-icons/scalable/status/Ma
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/universal-access/Makefile.am b/panels/universal-access/Makefile.am
---- a/panels/universal-access/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/universal-access/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/universal-access/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/universal-access/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,40 @@
 +cappletname = universal-access
 +
@@ -3963,8 +3963,8 @@ diff '--exclude=.git' -urN a/panels/universal-access/Makefile.am b/panels/univer
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/user-accounts/Makefile.am b/panels/user-accounts/Makefile.am
---- a/panels/user-accounts/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/user-accounts/Makefile.am	2018-04-22 02:02:13.230627839 -0400
+--- a/panels/user-accounts/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/user-accounts/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,129 @@
 +SUBDIRS = data
 +
@@ -4096,8 +4096,8 @@ diff '--exclude=.git' -urN a/panels/user-accounts/Makefile.am b/panels/user-acco
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/user-accounts/data/Makefile.am b/panels/user-accounts/data/Makefile.am
---- a/panels/user-accounts/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/user-accounts/data/Makefile.am	2018-04-22 01:52:19.388387723 -0400
+--- a/panels/user-accounts/data/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/user-accounts/data/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,20 @@
 +SUBDIRS = faces
 +
@@ -4120,8 +4120,8 @@ diff '--exclude=.git' -urN a/panels/user-accounts/data/Makefile.am b/panels/user
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/user-accounts/data/faces/Makefile.am b/panels/user-accounts/data/faces/Makefile.am
---- a/panels/user-accounts/data/faces/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/user-accounts/data/faces/Makefile.am	2018-04-22 22:45:39.563522675 -0400
+--- a/panels/user-accounts/data/faces/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/user-accounts/data/faces/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,26 @@
 +SUBDIRS = legacy
 +
@@ -4150,8 +4150,8 @@ diff '--exclude=.git' -urN a/panels/user-accounts/data/faces/Makefile.am b/panel
 +-include $(top_srcdir)/git.mk
 +
 diff '--exclude=.git' -urN a/panels/user-accounts/data/faces/legacy/Makefile.am b/panels/user-accounts/data/faces/legacy/Makefile.am
---- a/panels/user-accounts/data/faces/legacy/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/user-accounts/data/faces/legacy/Makefile.am	2018-04-22 20:18:21.847897261 -0400
+--- a/panels/user-accounts/data/faces/legacy/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/user-accounts/data/faces/legacy/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,34 @@
 +legacy_imagedir = $(datadir)/pixmaps/faces/legacy
 +
@@ -4188,8 +4188,8 @@ diff '--exclude=.git' -urN a/panels/user-accounts/data/faces/legacy/Makefile.am 
 +-include $(top_srcdir)/git.mk
 +
 diff '--exclude=.git' -urN a/panels/wacom/Makefile.am b/panels/wacom/Makefile.am
---- a/panels/wacom/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/wacom/Makefile.am	2018-04-22 01:52:19.389387719 -0400
+--- a/panels/wacom/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/wacom/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,91 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = wacom
@@ -4283,8 +4283,8 @@ diff '--exclude=.git' -urN a/panels/wacom/Makefile.am b/panels/wacom/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/panels/wacom/calibrator/Makefile.am b/panels/wacom/calibrator/Makefile.am
---- a/panels/wacom/calibrator/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/panels/wacom/calibrator/Makefile.am	2018-04-22 01:52:19.389387719 -0400
+--- a/panels/wacom/calibrator/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/panels/wacom/calibrator/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,49 @@
 +# This is used in PANEL_CFLAGS
 +cappletname = wacom
@@ -4336,8 +4336,8 @@ diff '--exclude=.git' -urN a/panels/wacom/calibrator/Makefile.am b/panels/wacom/
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/search-provider/Makefile.am b/search-provider/Makefile.am
---- a/search-provider/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/search-provider/Makefile.am	2018-04-22 01:52:19.389387719 -0400
+--- a/search-provider/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/search-provider/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,54 @@
 +dbus_shell_search_provider_built_sources =	\
 +	cc-shell-search-provider-generated.c	\
@@ -4394,8 +4394,8 @@ diff '--exclude=.git' -urN a/search-provider/Makefile.am b/search-provider/Makef
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/shell/Makefile.am b/shell/Makefile.am
---- a/shell/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/shell/Makefile.am	2018-04-22 01:52:19.389387719 -0400
+--- a/shell/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/shell/Makefile.am	2018-09-26 15:53:21.552225583 -0500
 @@ -0,0 +1,161 @@
 +include $(top_srcdir)/Makefile.decl
 +
@@ -4559,8 +4559,8 @@ diff '--exclude=.git' -urN a/shell/Makefile.am b/shell/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/shell/appdata/Makefile.am b/shell/appdata/Makefile.am
---- a/shell/appdata/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/shell/appdata/Makefile.am	2018-04-22 01:52:19.389387719 -0400
+--- a/shell/appdata/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/shell/appdata/Makefile.am	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,16 @@
 +@INTLTOOL_XML_RULE@
 +appdatadir = $(datadir)/appdata
@@ -4579,8 +4579,8 @@ diff '--exclude=.git' -urN a/shell/appdata/Makefile.am b/shell/appdata/Makefile.
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urN a/subprojects/libgd/Makefile.am b/subprojects/libgd/Makefile.am
---- a/subprojects/libgd/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/Makefile.am	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/Makefile.am	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,232 @@
 +AUTOMAKE_OPTIONS=subdir-objects
 +NULL =
@@ -4815,8 +4815,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/Makefile.am b/subprojects/libgd/M
 +MAINTAINERCLEANFILES += $(VAPIS)
 +endif
 diff '--exclude=.git' -urN a/subprojects/libgd/README b/subprojects/libgd/README
---- a/subprojects/libgd/README	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/README	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/README	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/README	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,123 @@
 +=====
 +libgd
@@ -4942,8 +4942,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/README b/subprojects/libgd/README
 +- more modularity (not all in libgd.m4/Makefile.am)
 +- CSS styling and data: shared only with gnome-themes-standard?
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-icon-utils.c b/subprojects/libgd/libgd/gd-icon-utils.c
---- a/subprojects/libgd/libgd/gd-icon-utils.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-icon-utils.c	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-icon-utils.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-icon-utils.c	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,394 @@
 +/*
 + * Copyright (c) 2011, 2012, 2015, 2016 Red Hat, Inc.
@@ -5340,8 +5340,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-icon-utils.c b/subprojec
 +  return retval;
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-icon-utils.h b/subprojects/libgd/libgd/gd-icon-utils.h
---- a/subprojects/libgd/libgd/gd-icon-utils.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-icon-utils.h	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-icon-utils.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-icon-utils.h	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,49 @@
 +/*
 + * Copyright (c) 2011, 2012, 2015, 2016 Red Hat, Inc.
@@ -5393,8 +5393,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-icon-utils.h b/subprojec
 +
 +#endif /* __GD_CREATE_SYMBOLIC_ICON_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-child.c b/subprojects/libgd/libgd/gd-main-box-child.c
---- a/subprojects/libgd/libgd/gd-main-box-child.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box-child.c	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-main-box-child.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box-child.c	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,186 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -5583,8 +5583,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-child.c b/subpr
 +  g_object_set (self, "selection-mode", selection_mode, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-child.h b/subprojects/libgd/libgd/gd-main-box-child.h
---- a/subprojects/libgd/libgd/gd-main-box-child.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box-child.h	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-main-box-child.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box-child.h	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,54 @@
 +/*
 + * Copyright (c) 2016 Red Hat, Inc.
@@ -5641,8 +5641,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-child.h b/subpr
 +
 +#endif /* __GD_MAIN_BOX_CHILD_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-generic.c b/subprojects/libgd/libgd/gd-main-box-generic.c
---- a/subprojects/libgd/libgd/gd-main-box-generic.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box-generic.c	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-main-box-generic.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box-generic.c	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,491 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -6136,8 +6136,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-generic.c b/sub
 +    }
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-generic.h b/subprojects/libgd/libgd/gd-main-box-generic.h
---- a/subprojects/libgd/libgd/gd-main-box-generic.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box-generic.h	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-main-box-generic.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box-generic.h	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,73 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -6213,8 +6213,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-generic.h b/sub
 +
 +#endif /* __GD_MAIN_BOX_GENERIC_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-item.c b/subprojects/libgd/libgd/gd-main-box-item.c
---- a/subprojects/libgd/libgd/gd-main-box-item.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box-item.c	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-main-box-item.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box-item.c	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,242 @@
 +/*
 + * Copyright (c) 2016 Red Hat, Inc.
@@ -6459,8 +6459,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-item.c b/subpro
 +  return pulse;
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-item.h b/subprojects/libgd/libgd/gd-main-box-item.h
---- a/subprojects/libgd/libgd/gd-main-box-item.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box-item.h	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd/gd-main-box-item.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box-item.h	2018-09-26 15:53:21.553225579 -0500
 @@ -0,0 +1,55 @@
 +/*
 + * Copyright (c) 2016 Red Hat, Inc.
@@ -6518,8 +6518,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box-item.h b/subpro
 +
 +#endif /* __GD_MAIN_BOX_ITEM_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box.c b/subprojects/libgd/libgd/gd-main-box.c
---- a/subprojects/libgd/libgd/gd-main-box.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-box.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box.c	2018-09-26 15:53:21.554225574 -0500
 @@ -0,0 +1,548 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -7070,8 +7070,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box.c b/subprojects
 +  gd_main_box_generic_unselect_all (GD_MAIN_BOX_GENERIC (priv->current_box));
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box.h b/subprojects/libgd/libgd/gd-main-box.h
---- a/subprojects/libgd/libgd/gd-main-box.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-box.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-box.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-box.h	2018-09-26 15:53:21.554225574 -0500
 @@ -0,0 +1,61 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -7135,8 +7135,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-box.h b/subprojects
 +
 +#endif /* __GD_MAIN_BOX_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-child.c b/subprojects/libgd/libgd/gd-main-icon-box-child.c
---- a/subprojects/libgd/libgd/gd-main-icon-box-child.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-box-child.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-box-child.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-box-child.c	2018-09-26 15:53:21.554225574 -0500
 @@ -0,0 +1,439 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -7578,8 +7578,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-child.c b/
 +                       NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-child.h b/subprojects/libgd/libgd/gd-main-icon-box-child.h
---- a/subprojects/libgd/libgd/gd-main-icon-box-child.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-box-child.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-box-child.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-box-child.h	2018-09-26 15:53:21.554225574 -0500
 @@ -0,0 +1,43 @@
 +/*
 + * Copyright (c) 2016 Red Hat, Inc.
@@ -7625,8 +7625,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-child.h b/
 +
 +#endif /* __GD_MAIN_ICON_BOX_CHILD_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-icon.c b/subprojects/libgd/libgd/gd-main-icon-box-icon.c
---- a/subprojects/libgd/libgd/gd-main-icon-box-icon.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-box-icon.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-box-icon.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-box-icon.c	2018-09-26 15:53:21.557225559 -0500
 @@ -0,0 +1,366 @@
 +/*
 + * Copyright (c) 2017 Red Hat, Inc.
@@ -7995,8 +7995,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-icon.c b/s
 +  gtk_widget_queue_resize (GTK_WIDGET (self));
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-icon.h b/subprojects/libgd/libgd/gd-main-icon-box-icon.h
---- a/subprojects/libgd/libgd/gd-main-icon-box-icon.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-box-icon.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-box-icon.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-box-icon.h	2018-09-26 15:53:21.557225559 -0500
 @@ -0,0 +1,40 @@
 +/*
 + * Copyright (c) 2017 Red Hat, Inc.
@@ -8039,8 +8039,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box-icon.h b/s
 +
 +#endif /* __GD_MAIN_ICON_BOX_ICON_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box.c b/subprojects/libgd/libgd/gd-main-icon-box.c
---- a/subprojects/libgd/libgd/gd-main-icon-box.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-box.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-box.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-box.c	2018-09-26 15:53:21.558225555 -0500
 @@ -0,0 +1,1042 @@
 +/*
 + * Copyright (c) 2016, 2017 Red Hat, Inc.
@@ -9085,8 +9085,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box.c b/subpro
 +  return g_object_new (GD_TYPE_MAIN_ICON_BOX, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box.h b/subprojects/libgd/libgd/gd-main-icon-box.h
---- a/subprojects/libgd/libgd/gd-main-icon-box.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-box.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-box.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-box.h	2018-09-26 15:53:21.558225555 -0500
 @@ -0,0 +1,44 @@
 +/*
 + * Copyright (c) 2016 Red Hat, Inc.
@@ -9133,8 +9133,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-box.h b/subpro
 +
 +#endif /* __GD_MAIN_ICON_BOX_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-view.c b/subprojects/libgd/libgd/gd-main-icon-view.c
---- a/subprojects/libgd/libgd/gd-main-icon-view.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-view.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-view.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-view.c	2018-09-26 15:53:21.558225555 -0500
 @@ -0,0 +1,434 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -9571,8 +9571,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-view.c b/subpr
 +  return g_object_new (GD_TYPE_MAIN_ICON_VIEW, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-view.h b/subprojects/libgd/libgd/gd-main-icon-view.h
---- a/subprojects/libgd/libgd/gd-main-icon-view.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-icon-view.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-icon-view.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-icon-view.h	2018-09-26 15:53:21.558225555 -0500
 @@ -0,0 +1,72 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -9647,8 +9647,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-icon-view.h b/subpr
 +
 +#endif /* __GD_MAIN_ICON_VIEW_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-list-view.c b/subprojects/libgd/libgd/gd-main-list-view.c
---- a/subprojects/libgd/libgd/gd-main-list-view.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-list-view.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-list-view.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-list-view.c	2018-09-26 15:53:21.558225555 -0500
 @@ -0,0 +1,346 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -9997,8 +9997,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-list-view.c b/subpr
 +  return g_object_new (GD_TYPE_MAIN_LIST_VIEW, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-list-view.h b/subprojects/libgd/libgd/gd-main-list-view.h
---- a/subprojects/libgd/libgd/gd-main-list-view.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-list-view.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-list-view.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-list-view.h	2018-09-26 15:53:21.558225555 -0500
 @@ -0,0 +1,80 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -10081,8 +10081,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-list-view.h b/subpr
 +
 +#endif /* __GD_MAIN_LIST_VIEW_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view-generic.c b/subprojects/libgd/libgd/gd-main-view-generic.c
---- a/subprojects/libgd/libgd/gd-main-view-generic.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-view-generic.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-view-generic.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-view-generic.c	2018-09-26 15:53:21.559225550 -0500
 @@ -0,0 +1,330 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -10415,8 +10415,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view-generic.c b/su
 +  g_strfreev (uris);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view-generic.h b/subprojects/libgd/libgd/gd-main-view-generic.h
---- a/subprojects/libgd/libgd/gd-main-view-generic.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-view-generic.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-view-generic.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-view-generic.h	2018-09-26 15:53:21.559225550 -0500
 @@ -0,0 +1,117 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -10536,8 +10536,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view-generic.h b/su
 +
 +#endif /* __GD_MAIN_VIEW_GENERIC_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view.c b/subprojects/libgd/libgd/gd-main-view.c
---- a/subprojects/libgd/libgd/gd-main-view.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-view.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-view.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-view.c	2018-09-26 15:53:21.559225550 -0500
 @@ -0,0 +1,1160 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -11700,8 +11700,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view.c b/subproject
 +  gd_main_view_generic_unselect_all (generic);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view.h b/subprojects/libgd/libgd/gd-main-view.h
---- a/subprojects/libgd/libgd/gd-main-view.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-main-view.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-main-view.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-main-view.h	2018-09-26 15:53:21.559225550 -0500
 @@ -0,0 +1,65 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -11769,8 +11769,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-main-view.h b/subproject
 +
 +#endif /* __GD_MAIN_VIEW_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-margin-container.c b/subprojects/libgd/libgd/gd-margin-container.c
---- a/subprojects/libgd/libgd/gd-margin-container.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-margin-container.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-margin-container.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-margin-container.c	2018-09-26 15:53:21.560225545 -0500
 @@ -0,0 +1,379 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -12152,8 +12152,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-margin-container.c b/sub
 +  return g_object_new (GD_TYPE_MARGIN_CONTAINER, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-margin-container.h b/subprojects/libgd/libgd/gd-margin-container.h
---- a/subprojects/libgd/libgd/gd-margin-container.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-margin-container.h	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-margin-container.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-margin-container.h	2018-09-26 15:53:21.560225545 -0500
 @@ -0,0 +1,75 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -12231,8 +12231,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-margin-container.h b/sub
 +
 +#endif /* _GD_MARGIN_CONTAINER_H */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-notification.c b/subprojects/libgd/libgd/gd-notification.c
---- a/subprojects/libgd/libgd/gd-notification.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-notification.c	2018-04-22 01:55:12.337586586 -0400
+--- a/subprojects/libgd/libgd/gd-notification.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-notification.c	2018-09-26 15:53:21.560225545 -0500
 @@ -0,0 +1,875 @@
 +/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/*
@@ -13110,8 +13110,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-notification.c b/subproj
 +  return g_object_new (GD_TYPE_NOTIFICATION, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-notification.h b/subprojects/libgd/libgd/gd-notification.h
---- a/subprojects/libgd/libgd/gd-notification.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-notification.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-notification.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-notification.h	2018-09-26 15:53:21.560225545 -0500
 @@ -0,0 +1,67 @@
 +/* -*- Mode: C; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 +/*
@@ -13181,8 +13181,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-notification.h b/subproj
 +
 +#endif /* _GD_NOTIFICATION_H_ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-styled-text-renderer.c b/subprojects/libgd/libgd/gd-styled-text-renderer.c
---- a/subprojects/libgd/libgd/gd-styled-text-renderer.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-styled-text-renderer.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-styled-text-renderer.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-styled-text-renderer.c	2018-09-26 15:53:21.560225545 -0500
 @@ -0,0 +1,124 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -13309,8 +13309,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-styled-text-renderer.c b
 +  g_list_free_1 (class_element);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-styled-text-renderer.h b/subprojects/libgd/libgd/gd-styled-text-renderer.h
---- a/subprojects/libgd/libgd/gd-styled-text-renderer.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-styled-text-renderer.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-styled-text-renderer.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-styled-text-renderer.h	2018-09-26 15:53:21.560225545 -0500
 @@ -0,0 +1,79 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -13392,8 +13392,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-styled-text-renderer.h b
 +
 +#endif /* _GD_STYLED_TEXT_RENDERER_H */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-tagged-entry.c b/subprojects/libgd/libgd/gd-tagged-entry.c
---- a/subprojects/libgd/libgd/gd-tagged-entry.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-tagged-entry.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-tagged-entry.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-tagged-entry.c	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,1242 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -14638,8 +14638,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-tagged-entry.c b/subproj
 +  return self->priv->button_visible;
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-tagged-entry.h b/subprojects/libgd/libgd/gd-tagged-entry.h
---- a/subprojects/libgd/libgd/gd-tagged-entry.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-tagged-entry.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-tagged-entry.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-tagged-entry.h	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,117 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -14759,8 +14759,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-tagged-entry.h b/subproj
 +
 +#endif /* __GD_TAGGED_ENTRY_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c b/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c
---- a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,271 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -15034,8 +15034,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.c
 +  return g_object_new (GD_TYPE_TOGGLE_PIXBUF_RENDERER, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h b/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h
---- a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,75 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -15113,8 +15113,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-toggle-pixbuf-renderer.h
 +
 +#endif /* _GD_TOGGLE_PIXBUF_RENDERER_H */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-two-lines-renderer.c b/subprojects/libgd/libgd/gd-two-lines-renderer.c
---- a/subprojects/libgd/libgd/gd-two-lines-renderer.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-two-lines-renderer.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-two-lines-renderer.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-two-lines-renderer.c	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,616 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -15733,8 +15733,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-two-lines-renderer.c b/s
 +  return g_object_new (GD_TYPE_TWO_LINES_RENDERER, NULL);
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-two-lines-renderer.h b/subprojects/libgd/libgd/gd-two-lines-renderer.h
---- a/subprojects/libgd/libgd/gd-two-lines-renderer.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-two-lines-renderer.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-two-lines-renderer.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-two-lines-renderer.h	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,75 @@
 +/*
 + * Copyright (c) 2011 Red Hat, Inc.
@@ -15812,8 +15812,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-two-lines-renderer.h b/s
 +
 +#endif /* _GD_TWO_LINES_RENDERER_H */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-types-catalog.c b/subprojects/libgd/libgd/gd-types-catalog.c
---- a/subprojects/libgd/libgd/gd-types-catalog.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-types-catalog.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-types-catalog.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-types-catalog.c	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,123 @@
 +/*
 + * Copyright (c) 2012 Red Hat, Inc.
@@ -15939,8 +15939,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-types-catalog.c b/subpro
 +}
 +
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-types-catalog.h b/subprojects/libgd/libgd/gd-types-catalog.h
---- a/subprojects/libgd/libgd/gd-types-catalog.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd-types-catalog.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd-types-catalog.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd-types-catalog.h	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,31 @@
 +/*
 + * Copyright (c) 2012 Red Hat, Inc.
@@ -15974,8 +15974,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd-types-catalog.h b/subpro
 +
 +#endif /* __GD_TYPES_CATALOG_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd.h b/subprojects/libgd/libgd/gd.h
---- a/subprojects/libgd/libgd/gd.h	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/gd.h	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/gd.h	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/gd.h	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,81 @@
 +/*
 + * Copyright (c) 2012 Red Hat, Inc.
@@ -16059,8 +16059,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/gd.h b/subprojects/libgd/li
 +
 +#endif /* __GD_H__ */
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd/meson.build b/subprojects/libgd/libgd/meson.build
---- a/subprojects/libgd/libgd/meson.build	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd/meson.build	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/libgd/meson.build	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd/meson.build	2018-09-26 15:53:21.561225540 -0500
 @@ -0,0 +1,202 @@
 +gnome = import('gnome')
 +
@@ -16265,8 +16265,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd/meson.build b/subprojects/l
 +  sources: built_sources
 +)
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd.doap b/subprojects/libgd/libgd.doap
---- a/subprojects/libgd/libgd.doap	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd.doap	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd.doap	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd.doap	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,33 @@
 +<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 +         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
@@ -16302,8 +16302,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd.doap b/subprojects/libgd/li
 +
 +</Project>
 diff '--exclude=.git' -urN a/subprojects/libgd/libgd.m4 b/subprojects/libgd/libgd.m4
---- a/subprojects/libgd/libgd.m4	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/libgd.m4	2018-04-22 01:55:12.336586591 -0400
+--- a/subprojects/libgd/libgd.m4	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/libgd.m4	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,140 @@
 +dnl The option stuff below is based on the similar code from Automake
 +
@@ -16446,8 +16446,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/libgd.m4 b/subprojects/libgd/libg
 +    AC_SUBST(LIBGD_SOURCES)
 +])
 diff '--exclude=.git' -urN a/subprojects/libgd/meson.build b/subprojects/libgd/meson.build
---- a/subprojects/libgd/meson.build	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/meson.build	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/meson.build	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/meson.build	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,24 @@
 +project('libgd', 'c',
 +  meson_version: '>= 0.38.0',
@@ -16474,8 +16474,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/meson.build b/subprojects/libgd/m
 +  endforeach
 +endif
 diff '--exclude=.git' -urN a/subprojects/libgd/meson_options.txt b/subprojects/libgd/meson_options.txt
---- a/subprojects/libgd/meson_options.txt	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/meson_options.txt	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/meson_options.txt	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/meson_options.txt	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,25 @@
 +option('pkglibdir', type: 'string', value: '',
 +  description: 'The private directory the shared library/typelib will be installed into.'
@@ -16504,8 +16504,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/meson_options.txt b/subprojects/l
 +option('with-main-icon-box', type: 'boolean', value: false)
 \ No newline at end of file
 diff '--exclude=.git' -urN a/subprojects/libgd/meson_readme.md b/subprojects/libgd/meson_readme.md
---- a/subprojects/libgd/meson_readme.md	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/meson_readme.md	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/meson_readme.md	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/meson_readme.md	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,88 @@
 +See README for general information. Read below for usage with Meson.
 +
@@ -16596,8 +16596,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/meson_readme.md b/subprojects/lib
 +
 +<!-- TODO: Make a Vala example -->
 diff '--exclude=.git' -urN a/subprojects/libgd/test-tagged-entry-2.c b/subprojects/libgd/test-tagged-entry-2.c
---- a/subprojects/libgd/test-tagged-entry-2.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/test-tagged-entry-2.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/test-tagged-entry-2.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/test-tagged-entry-2.c	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,131 @@
 +#include <gtk/gtk.h>
 +#include <libgd/gd-tagged-entry.h>
@@ -16731,8 +16731,8 @@ diff '--exclude=.git' -urN a/subprojects/libgd/test-tagged-entry-2.c b/subprojec
 +  return 0;
 +}
 diff '--exclude=.git' -urN a/subprojects/libgd/test-tagged-entry.c b/subprojects/libgd/test-tagged-entry.c
---- a/subprojects/libgd/test-tagged-entry.c	1969-12-31 19:00:00.000000000 -0500
-+++ b/subprojects/libgd/test-tagged-entry.c	2018-04-22 01:55:12.338586581 -0400
+--- a/subprojects/libgd/test-tagged-entry.c	1969-12-31 18:00:00.000000000 -0600
++++ b/subprojects/libgd/test-tagged-entry.c	2018-09-26 15:53:21.562225535 -0500
 @@ -0,0 +1,111 @@
 +#include <gtk/gtk.h>
 +#include <libgd/gd-tagged-entry.h>

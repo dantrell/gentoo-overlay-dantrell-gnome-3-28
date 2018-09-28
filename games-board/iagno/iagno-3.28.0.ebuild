@@ -23,16 +23,17 @@ COMMON_DEPEND="
 RDEPEND="${COMMON_DEPEND}
 	!<x11-themes/gnome-themes-standard-3.14
 "
+# libxml2:2 needed for glib-compile-resources xml-stripblanks attributes
 DEPEND="${COMMON_DEPEND}
 	$(vala_depend)
-	app-text/yelp-tools
 	dev-libs/appstream-glib
-	>=dev-util/intltool-0.50
-	sys-devel/gettext
+	dev-libs/libxml2:2
+	dev-util/itstool
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "
 
 src_prepare() {
-	gnome2_src_prepare
 	vala_src_prepare
+	gnome2_src_prepare
 }

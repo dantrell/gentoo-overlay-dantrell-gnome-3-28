@@ -1,6 +1,6 @@
 diff '--exclude=.git' -urNa a/INSTALL b/INSTALL
---- a/INSTALL	1969-12-31 19:00:00.000000000 -0500
-+++ b/INSTALL	2018-07-19 01:46:48.346702602 -0400
+--- a/INSTALL	1969-12-31 18:00:00.000000000 -0600
++++ b/INSTALL	2018-09-26 15:41:12.909768959 -0500
 @@ -0,0 +1,237 @@
 +Installation Instructions
 +*************************
@@ -240,8 +240,8 @@ diff '--exclude=.git' -urNa a/INSTALL b/INSTALL
 +`configure --help' for more details.
 +
 diff '--exclude=.git' -urNa a/Makefile.am b/Makefile.am
---- a/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/Makefile.am	2018-07-19 01:46:48.346702602 -0400
+--- a/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,96 @@
 +ACLOCAL_AMFLAGS=-I m4 ${ACLOCAL_FLAGS}
 +
@@ -340,8 +340,8 @@ diff '--exclude=.git' -urNa a/Makefile.am b/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/README b/README
---- a/README	2018-07-16 16:15:42.000000000 -0400
-+++ b/README	2018-07-19 01:46:48.346702602 -0400
+--- a/README	2018-07-16 15:15:42.000000000 -0500
++++ b/README	2018-09-26 15:41:12.910768954 -0500
 @@ -67,15 +67,15 @@
    properly.
  
@@ -367,8 +367,8 @@ diff '--exclude=.git' -urNa a/README b/README
 +  make
 +  make install
 diff '--exclude=.git' -urNa a/autogen.sh b/autogen.sh
---- a/autogen.sh	1969-12-31 19:00:00.000000000 -0500
-+++ b/autogen.sh	2018-07-19 01:46:48.346702602 -0400
+--- a/autogen.sh	1969-12-31 18:00:00.000000000 -0600
++++ b/autogen.sh	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,15 @@
 +#!/bin/sh
 +srcdir=`dirname $0`
@@ -386,14 +386,14 @@ diff '--exclude=.git' -urNa a/autogen.sh b/autogen.sh
 +
 +. gnome-autogen.sh "$@"
 diff '--exclude=.git' -urNa a/configure.ac b/configure.ac
---- a/configure.ac	1969-12-31 19:00:00.000000000 -0500
-+++ b/configure.ac	2018-07-19 01:46:48.346702602 -0400
+--- a/configure.ac	1969-12-31 18:00:00.000000000 -0600
++++ b/configure.ac	2018-09-26 15:41:19.700735768 -0500
 @@ -0,0 +1,328 @@
 +dnl Process this file with autoconf to produce a configure script.
 +
 +AC_PREREQ([2.68])
 +
-+AC_INIT([file-roller],[3.28.0],[http://bugzilla.gnome.org/enter_bug.cgi?product=file-roller],[file-roller])
++AC_INIT([file-roller],[3.28.1],[http://bugzilla.gnome.org/enter_bug.cgi?product=file-roller],[file-roller])
 +AM_INIT_AUTOMAKE([1.11 foreign no-dist-gzip dist-xz tar-ustar])
 +m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 +
@@ -718,8 +718,8 @@ diff '--exclude=.git' -urNa a/configure.ac b/configure.ac
 +	Use libarchive          : ${enable_libarchive}
 +"
 diff '--exclude=.git' -urNa a/data/Makefile.am b/data/Makefile.am
---- a/data/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/Makefile.am	2018-07-19 01:46:48.346702602 -0400
+--- a/data/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,70 @@
 +SUBDIRS = icons
 +
@@ -792,8 +792,8 @@ diff '--exclude=.git' -urNa a/data/Makefile.am b/data/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/file-roller.convert b/data/file-roller.convert
---- a/data/file-roller.convert	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/file-roller.convert	2018-07-19 01:46:48.346702602 -0400
+--- a/data/file-roller.convert	1969-12-31 18:00:00.000000000 -0600
++++ b/data/file-roller.convert	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,45 @@
 +[org.gnome.FileRoller.Listing]
 +sort-method = /apps/file-roller/listing/sort_method
@@ -841,15 +841,15 @@ diff '--exclude=.git' -urNa a/data/file-roller.convert b/data/file-roller.conver
 +width = /apps/file-roller/dialogs/last_output/width
 +height = /apps/file-roller/dialogs/last_output/height
 diff '--exclude=.git' -urNa a/data/icons/16x16/Makefile.am b/data/icons/16x16/Makefile.am
---- a/data/icons/16x16/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/16x16/Makefile.am	2018-07-19 01:46:48.346702602 -0400
+--- a/data/icons/16x16/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/16x16/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps	
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/16x16/apps/Makefile.am b/data/icons/16x16/apps/Makefile.am
---- a/data/icons/16x16/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/16x16/apps/Makefile.am	2018-07-19 01:46:48.346702602 -0400
+--- a/data/icons/16x16/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/16x16/apps/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,26 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 16x16
@@ -878,8 +878,8 @@ diff '--exclude=.git' -urNa a/data/icons/16x16/apps/Makefile.am b/data/icons/16x
 +	fi
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/16x16/apps/file-roller.png b/data/icons/16x16/apps/file-roller.png
---- a/data/icons/16x16/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/16x16/apps/file-roller.png	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/16x16/apps/file-roller.png	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/16x16/apps/file-roller.png	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,5 @@
 +âPNG
 +
@@ -888,15 +888,15 @@ diff '--exclude=.git' -urNa a/data/icons/16x16/apps/file-roller.png b/data/icons
 +ñÂkSZ –}¸H«SâHÎ—vÈGˇÎ˚¥¥i†4ZWÖa4d®KkwıÏ£≈,ªñ»ª    IENDÆB`Ç
 \ No newline at end of file
 diff '--exclude=.git' -urNa a/data/icons/22x22/Makefile.am b/data/icons/22x22/Makefile.am
---- a/data/icons/22x22/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/22x22/Makefile.am	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/22x22/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/22x22/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps	
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/22x22/apps/Makefile.am b/data/icons/22x22/apps/Makefile.am
---- a/data/icons/22x22/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/22x22/apps/Makefile.am	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/22x22/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/22x22/apps/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,26 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 22x22
@@ -925,8 +925,8 @@ diff '--exclude=.git' -urNa a/data/icons/22x22/apps/Makefile.am b/data/icons/22x
 +	fi
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/22x22/apps/file-roller.png b/data/icons/22x22/apps/file-roller.png
---- a/data/icons/22x22/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/22x22/apps/file-roller.png	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/22x22/apps/file-roller.png	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/22x22/apps/file-roller.png	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,8 @@
 +âPNG
 +
@@ -938,15 +938,15 @@ diff '--exclude=.git' -urNa a/data/icons/22x22/apps/file-roller.png b/data/icons
 +á”áCÄ√!¿Èp¡ÈpAœÍp:)ßBSg!…s‡8eekôÉòL˝˝´—√gï∆¸‰≠˚‡útº˘Ò.=ÚgÁﬁµ‘X≥‹‰ÂãpLPñÀÂT¬”\N(bjzv€vÂ( ·oú—} “Ks    IENDÆB`Ç
 \ No newline at end of file
 diff '--exclude=.git' -urNa a/data/icons/24x24/Makefile.am b/data/icons/24x24/Makefile.am
---- a/data/icons/24x24/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/24x24/Makefile.am	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/24x24/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/24x24/Makefile.am	2018-09-26 15:41:12.910768954 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/24x24/apps/Makefile.am b/data/icons/24x24/apps/Makefile.am
---- a/data/icons/24x24/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/24x24/apps/Makefile.am	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/24x24/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/24x24/apps/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,27 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 24x24
@@ -976,8 +976,8 @@ diff '--exclude=.git' -urNa a/data/icons/24x24/apps/Makefile.am b/data/icons/24x
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/24x24/apps/file-roller.png b/data/icons/24x24/apps/file-roller.png
---- a/data/icons/24x24/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/24x24/apps/file-roller.png	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/24x24/apps/file-roller.png	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/24x24/apps/file-roller.png	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,6 @@
 +âPNG
 +
@@ -987,15 +987,15 @@ diff '--exclude=.git' -urNa a/data/icons/24x24/apps/file-roller.png b/data/icons
 +,À"£*àD¡qVòL,$QúZ`°s©©·+óMÕ,“‹‚üùN[&£PSªS∑'±‹ÈÄ«„≈‡@L”5yÆ’uqòËÚW?'[,^◊>€®õ0∂-å≈föÁyHí Y!Àd9∑£$ì	<">÷Õºﬁj/   1=}ìS¶˙˙™uVóoY61RzÙ€¡„ãÄcﬂçı‘;Aé—}ŒÍMå≈b√∞0[¨0õ9òÕ,f+,f+îåãÖa$»Rºê √»®®XFÕD£“µS7˜ùõdÚOÚÚèœÚÌmO˜)Å?{∑/c’"¬p–¿“l6+õÕr•TJ∆GæÈ‡ 0˘ ¿‘©˘Ä‹ø◊ @œÅ§yzH@vAGÅî@]í X9ù	Hw    IENDÆB`Ç
 \ No newline at end of file
 diff '--exclude=.git' -urNa a/data/icons/256x256/Makefile.am b/data/icons/256x256/Makefile.am
---- a/data/icons/256x256/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/256x256/Makefile.am	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/256x256/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/256x256/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps	
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/256x256/apps/Makefile.am b/data/icons/256x256/apps/Makefile.am
---- a/data/icons/256x256/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/256x256/apps/Makefile.am	2018-07-19 01:46:48.347702597 -0400
+--- a/data/icons/256x256/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/256x256/apps/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,26 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 256x256
@@ -1024,8 +1024,8 @@ diff '--exclude=.git' -urNa a/data/icons/256x256/apps/Makefile.am b/data/icons/2
 +	fi
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/256x256/apps/file-roller.png b/data/icons/256x256/apps/file-roller.png
---- a/data/icons/256x256/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/256x256/apps/file-roller.png	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/256x256/apps/file-roller.png	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/256x256/apps/file-roller.png	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,111 @@
 +âPNG
 +
@@ -1140,15 +1140,15 @@ diff '--exclude=.git' -urNa a/data/icons/256x256/apps/file-roller.png b/data/ico
 +ÈÄL–ÇL fæÙ≥@ù‡ıAm!H¯ÉRP@»q}8Ê0L"ò®L L«¬é√ﬁèÉ}ôHÙ'E˙Ò;•˛ ·ô¬‡Çˇª`Xfê¯˝˜QPõAÏGãqvvxíO *CWoPÍè“ Fı˚ƒ‡@`Ñ$|ˇÛ$ôÅœÇfDê	L"˙QÑøê¸«’¸˜(%å∏ßùòÿˇì$˝Ãû$à≤è:>H	ks\_∆ıwÅ√«(¬ô$yGô≥ñQméÎÄìG¸@L òö	æècaÁ¢ÿ¯oˇÈ¿ Qç”¸˜q!Ï¸‡πqÌáıÈD?0ˇH¿0ü¿(U*hL“¬é1p<-·/√—bs ¯9™V0ÕÒ®v£ÙÛD!6 àº=ÿ‡Á®|Ç?à‘_0Ç√≈45ä	è£0Ñ(ÔìÓ◊≈Iï˛@Ã¿«A8™=?¡/¸daqM£Ñ}U ü:¬˜1 åe¿‰i∏®º·?9òÖÑ}ûFµyœ”@¸¿Äè!√ìòA‘:£ŒM¬Ç1/ÃBXQâ7äd{ˇ”B¯>ÊŒ |D\;0ãüïÄÑº1+°EôNú˙^ßç}""3µÓÇ†ülD%–»Ñ|Zâ>à#a Éòí!å¬Ç<Ÿ80±>	?àc¡ ∆!&Ê∞¿ ûL"ácœ X`Å˘a‘ûZ,∞¿ÄX`Å'∞¿O0`Åû`,¿<¡X0ÄxÇ±` ,c¡ X‡	∆Ç,∞¿åX`Å'∞¿O0`Åû`,¿<¡X0ÄxÇÒˇoœ^l™ì¬    IENDÆB`Ç
 \ No newline at end of file
 diff '--exclude=.git' -urNa a/data/icons/32x32/Makefile.am b/data/icons/32x32/Makefile.am
---- a/data/icons/32x32/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/32x32/Makefile.am	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/32x32/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/32x32/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps	
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/32x32/apps/Makefile.am b/data/icons/32x32/apps/Makefile.am
---- a/data/icons/32x32/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/32x32/apps/Makefile.am	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/32x32/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/32x32/apps/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,26 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 32x32
@@ -1177,8 +1177,8 @@ diff '--exclude=.git' -urNa a/data/icons/32x32/apps/Makefile.am b/data/icons/32x
 +	fi
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/32x32/apps/file-roller.png b/data/icons/32x32/apps/file-roller.png
---- a/data/icons/32x32/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/32x32/apps/file-roller.png	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/32x32/apps/file-roller.png	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/32x32/apps/file-roller.png	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,16 @@
 +âPNG
 +
@@ -1198,15 +1198,15 @@ diff '--exclude=.git' -urNa a/data/icons/32x32/apps/file-roller.png b/data/icons
 +Öä≈¢¿ `<¿˝;{Ô€ˆIñws.L¸ØFD’∂ÏS◊ 'GGŒ∞ÿÖB¡o Äb±®HH ê–T*•,ºF,É ∏”Y‡ˆgKc‚w‘8ÖBA,#∞@Ç†Q∂@‚ˇe1Ä@∏ºh‰^œˇJ/qvı    IENDÆB`Ç
 \ No newline at end of file
 diff '--exclude=.git' -urNa a/data/icons/48x48/Makefile.am b/data/icons/48x48/Makefile.am
---- a/data/icons/48x48/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/48x48/Makefile.am	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/48x48/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/48x48/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps	
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/48x48/apps/Makefile.am b/data/icons/48x48/apps/Makefile.am
---- a/data/icons/48x48/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/48x48/apps/Makefile.am	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/48x48/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/48x48/apps/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,26 @@
 +themedir = $(datadir)/icons/hicolor
 +size = 48x48
@@ -1235,8 +1235,8 @@ diff '--exclude=.git' -urNa a/data/icons/48x48/apps/Makefile.am b/data/icons/48x
 +	fi
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/48x48/apps/file-roller.png b/data/icons/48x48/apps/file-roller.png
---- a/data/icons/48x48/apps/file-roller.png	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/48x48/apps/file-roller.png	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/48x48/apps/file-roller.png	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/48x48/apps/file-roller.png	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,8 @@
 +âPNG
 +
@@ -1248,8 +1248,8 @@ diff '--exclude=.git' -urNa a/data/icons/48x48/apps/file-roller.png b/data/icons
 +oﬂ˛æ]†TÄï>W¯uGdW£„¡3áè˝˛Ë‹ÀJ 8 Ï9‡ÛòVî⁄¡÷\ »X¡ÔS¨èj¥yX a^.|ÄNÊ)™¿˛xÊ¡{W]/+-ﬁ(r√©ø·	¸b941À”1    IENDÆB`Ç
 \ No newline at end of file
 diff '--exclude=.git' -urNa a/data/icons/Makefile.am b/data/icons/Makefile.am
---- a/data/icons/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/Makefile.am	2018-07-19 01:46:48.348702593 -0400
+--- a/data/icons/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/Makefile.am	2018-09-26 15:41:12.911768949 -0500
 @@ -0,0 +1,5 @@
 +SUBDIRS = 16x16 22x22 24x24 32x32 48x48 256x256 scalable
 +
@@ -1257,8 +1257,8 @@ diff '--exclude=.git' -urNa a/data/icons/Makefile.am b/data/icons/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg b/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg
---- a/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg	2018-07-16 16:15:42.000000000 -0400
-+++ b/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg	1969-12-31 19:00:00.000000000 -0500
+--- a/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg	2018-07-16 15:15:42.000000000 -0500
++++ b/data/icons/hicolor/scalable/apps/file-roller-symbolic.svg	1969-12-31 18:00:00.000000000 -0600
 @@ -1,27 +0,0 @@
 -<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 -<!-- Created with Inkscape (http://www.inkscape.org/) -->
@@ -1288,20 +1288,20 @@ diff '--exclude=.git' -urNa a/data/icons/hicolor/scalable/apps/file-roller-symbo
 -  </g>
 -</svg>
 diff '--exclude=.git' -urNa a/data/icons/meson.build b/data/icons/meson.build
---- a/data/icons/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/data/icons/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/data/icons/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/data/icons/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1 +0,0 @@
 -install_subdir('hicolor', install_dir : join_paths(datadir, 'icons'))
 diff '--exclude=.git' -urNa a/data/icons/scalable/Makefile.am b/data/icons/scalable/Makefile.am
---- a/data/icons/scalable/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/scalable/Makefile.am	2018-07-19 01:46:48.349702588 -0400
+--- a/data/icons/scalable/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/scalable/Makefile.am	2018-09-26 15:41:12.913768939 -0500
 @@ -0,0 +1,3 @@
 +SUBDIRS = apps	
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/scalable/apps/Makefile.am b/data/icons/scalable/apps/Makefile.am
---- a/data/icons/scalable/apps/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/scalable/apps/Makefile.am	2018-07-19 01:46:48.349702588 -0400
+--- a/data/icons/scalable/apps/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/scalable/apps/Makefile.am	2018-09-26 15:41:12.913768939 -0500
 @@ -0,0 +1,26 @@
 +themedir = $(datadir)/icons/hicolor
 +size = scalable
@@ -1330,8 +1330,8 @@ diff '--exclude=.git' -urNa a/data/icons/scalable/apps/Makefile.am b/data/icons/
 +	fi
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/data/icons/scalable/apps/file-roller-symbolic.svg b/data/icons/scalable/apps/file-roller-symbolic.svg
---- a/data/icons/scalable/apps/file-roller-symbolic.svg	1969-12-31 19:00:00.000000000 -0500
-+++ b/data/icons/scalable/apps/file-roller-symbolic.svg	2018-07-19 01:46:48.349702588 -0400
+--- a/data/icons/scalable/apps/file-roller-symbolic.svg	1969-12-31 18:00:00.000000000 -0600
++++ b/data/icons/scalable/apps/file-roller-symbolic.svg	2018-09-26 15:41:12.913768939 -0500
 @@ -0,0 +1,27 @@
 +<?xml version='1.0' encoding='UTF-8' standalone='no'?>
 +<!-- Created with Inkscape (http://www.inkscape.org/) -->
@@ -1361,8 +1361,8 @@ diff '--exclude=.git' -urNa a/data/icons/scalable/apps/file-roller-symbolic.svg 
 +  </g>
 +</svg>
 diff '--exclude=.git' -urNa a/data/meson.build b/data/meson.build
---- a/data/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/data/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/data/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/data/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1,64 +0,0 @@
 -po_dir = join_paths(meson.source_root(), 'po')
 -
@@ -1429,8 +1429,8 @@ diff '--exclude=.git' -urNa a/data/meson.build b/data/meson.build
 -
 -subdir('icons')
 diff '--exclude=.git' -urNa a/data/org.gnome.FileRoller.appdata.xml.in b/data/org.gnome.FileRoller.appdata.xml.in
---- a/data/org.gnome.FileRoller.appdata.xml.in	2018-07-16 16:15:42.000000000 -0400
-+++ b/data/org.gnome.FileRoller.appdata.xml.in	2018-07-19 01:46:48.349702588 -0400
+--- a/data/org.gnome.FileRoller.appdata.xml.in	2018-07-16 15:15:42.000000000 -0500
++++ b/data/org.gnome.FileRoller.appdata.xml.in	2018-09-26 15:41:12.913768939 -0500
 @@ -6,21 +6,21 @@
    <metadata_license>CC0-1.0</metadata_license>
    <project_license>GPL-2.0+</project_license>
@@ -1464,8 +1464,8 @@ diff '--exclude=.git' -urNa a/data/org.gnome.FileRoller.appdata.xml.in b/data/or
    </description>
  
 diff '--exclude=.git' -urNa a/data/org.gnome.FileRoller.desktop.in.in b/data/org.gnome.FileRoller.desktop.in.in
---- a/data/org.gnome.FileRoller.desktop.in.in	2018-07-16 16:15:42.000000000 -0400
-+++ b/data/org.gnome.FileRoller.desktop.in.in	2018-07-19 01:46:48.349702588 -0400
+--- a/data/org.gnome.FileRoller.desktop.in.in	2018-07-16 15:15:42.000000000 -0500
++++ b/data/org.gnome.FileRoller.desktop.in.in	2018-09-26 15:41:12.914768934 -0500
 @@ -1,14 +1,12 @@
  [Desktop Entry]
 -Name=Archive Manager
@@ -1485,8 +1485,8 @@ diff '--exclude=.git' -urNa a/data/org.gnome.FileRoller.desktop.in.in b/data/org
  Categories=GTK;GNOME;Utility;Archiving;Compression;X-GNOME-Utilities;
  NotShowIn=KDE;
 diff '--exclude=.git' -urNa a/file-roller.spec.in b/file-roller.spec.in
---- a/file-roller.spec.in	1969-12-31 19:00:00.000000000 -0500
-+++ b/file-roller.spec.in	2018-07-19 01:46:48.349702588 -0400
+--- a/file-roller.spec.in	1969-12-31 18:00:00.000000000 -0600
++++ b/file-roller.spec.in	2018-09-26 15:41:12.914768934 -0500
 @@ -0,0 +1,98 @@
 +%define release 6
 +%define prefix  /usr
@@ -1587,8 +1587,8 @@ diff '--exclude=.git' -urNa a/file-roller.spec.in b/file-roller.spec.in
 +%postun
 +if which scrollkeeper-update>/dev/null 2>&1; then scrollkeeper-update; fi
 diff '--exclude=.git' -urNa a/git.mk b/git.mk
---- a/git.mk	1969-12-31 19:00:00.000000000 -0500
-+++ b/git.mk	2018-07-19 01:46:48.350702583 -0400
+--- a/git.mk	1969-12-31 18:00:00.000000000 -0600
++++ b/git.mk	2018-09-26 15:41:12.914768934 -0500
 @@ -0,0 +1,200 @@
 +# git.mk
 +#
@@ -1791,8 +1791,8 @@ diff '--exclude=.git' -urNa a/git.mk b/git.mk
 +
 +.PHONY: gitignore-clean gitignore gitignore-recurse gitignore-recurse-maybe
 diff '--exclude=.git' -urNa a/help/LINGUAS b/help/LINGUAS
---- a/help/LINGUAS	2018-07-16 16:15:42.000000000 -0400
-+++ b/help/LINGUAS	1969-12-31 19:00:00.000000000 -0500
+--- a/help/LINGUAS	2018-07-16 15:15:42.000000000 -0500
++++ b/help/LINGUAS	1969-12-31 18:00:00.000000000 -0600
 @@ -1,22 +0,0 @@
 -# please keep this list sorted alphabetically
 -#
@@ -1817,8 +1817,8 @@ diff '--exclude=.git' -urNa a/help/LINGUAS b/help/LINGUAS
 -te
 -zh_CN
 diff '--exclude=.git' -urNa a/help/Makefile.am b/help/Makefile.am
---- a/help/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/help/Makefile.am	2018-07-19 01:46:48.350702583 -0400
+--- a/help/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/help/Makefile.am	2018-09-26 15:41:12.914768934 -0500
 @@ -0,0 +1,31 @@
 +@YELP_HELP_RULES@
 +
@@ -1852,8 +1852,8 @@ diff '--exclude=.git' -urNa a/help/Makefile.am b/help/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/help/meson.build b/help/meson.build
---- a/help/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/help/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/help/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/help/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1,23 +0,0 @@
 -gnome.yelp('file-roller',
 -  sources : [
@@ -1879,8 +1879,8 @@ diff '--exclude=.git' -urNa a/help/meson.build b/help/meson.build
 -  ]
 -)
 diff '--exclude=.git' -urNa a/meson.build b/meson.build
---- a/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1,170 +0,0 @@
 -project('file-roller', 'c',
 -  license : 'GPL2+',
@@ -2053,8 +2053,8 @@ diff '--exclude=.git' -urNa a/meson.build b/meson.build
 -]
 -message('\n'.join(summary))
 diff '--exclude=.git' -urNa a/meson_options.txt b/meson_options.txt
---- a/meson_options.txt	2018-07-16 16:15:42.000000000 -0400
-+++ b/meson_options.txt	1969-12-31 19:00:00.000000000 -0500
+--- a/meson_options.txt	2018-07-16 15:15:42.000000000 -0500
++++ b/meson_options.txt	1969-12-31 18:00:00.000000000 -0600
 @@ -1,41 +0,0 @@
 -option('run-in-place', 
 -  type : 'boolean', 
@@ -2098,8 +2098,8 @@ diff '--exclude=.git' -urNa a/meson_options.txt b/meson_options.txt
 -  description : 'Path to the cpio program'
 -)
 diff '--exclude=.git' -urNa a/nautilus/Makefile.am b/nautilus/Makefile.am
---- a/nautilus/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/nautilus/Makefile.am	2018-07-19 01:46:48.350702583 -0400
+--- a/nautilus/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/nautilus/Makefile.am	2018-09-26 15:41:12.914768934 -0500
 @@ -0,0 +1,23 @@
 +AM_CPPFLAGS =						\
 +	-DLOCALEDIR=\"$(localedir)\" 			\
@@ -2125,8 +2125,8 @@ diff '--exclude=.git' -urNa a/nautilus/Makefile.am b/nautilus/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/nautilus/meson.build b/nautilus/meson.build
---- a/nautilus/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/nautilus/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/nautilus/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/nautilus/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1,20 +0,0 @@
 -shared_module('nautilus-fileroller', 
 -  sources : [
@@ -2149,8 +2149,8 @@ diff '--exclude=.git' -urNa a/nautilus/meson.build b/nautilus/meson.build
 -  install_dir : libnautilus_extension_dep.get_pkgconfig_variable('extensiondir')
 -)
 diff '--exclude=.git' -urNa a/nautilus/nautilus-fileroller.c b/nautilus/nautilus-fileroller.c
---- a/nautilus/nautilus-fileroller.c	2018-07-16 16:15:42.000000000 -0400
-+++ b/nautilus/nautilus-fileroller.c	2018-07-19 01:46:48.350702583 -0400
+--- a/nautilus/nautilus-fileroller.c	2018-07-16 15:15:42.000000000 -0500
++++ b/nautilus/nautilus-fileroller.c	2018-09-26 15:41:12.914768934 -0500
 @@ -28,7 +28,6 @@
  #include <libnautilus-extension/nautilus-extension-types.h>
  #include <libnautilus-extension/nautilus-file-info.h>
@@ -2183,8 +2183,8 @@ diff '--exclude=.git' -urNa a/nautilus/nautilus-fileroller.c b/nautilus/nautilus
  		g_signal_connect (item,
  				  "activate",
 diff '--exclude=.git' -urNa a/po/POTFILES.in b/po/POTFILES.in
---- a/po/POTFILES.in	2018-07-16 16:15:42.000000000 -0400
-+++ b/po/POTFILES.in	2018-07-19 01:46:48.351702578 -0400
+--- a/po/POTFILES.in	2018-07-16 15:15:42.000000000 -0500
++++ b/po/POTFILES.in	2018-09-26 15:41:12.914768934 -0500
 @@ -2,10 +2,11 @@
  #
  # DO NOT EDIT.  This file is automatically generated, to
@@ -2281,8 +2281,8 @@ diff '--exclude=.git' -urNa a/po/POTFILES.in b/po/POTFILES.in
 +[type: gettext/glade]src/ui/request-dialog.ui
 +[type: gettext/glade]src/ui/update.ui
 diff '--exclude=.git' -urNa a/po/make-potfiles-in.py b/po/make-potfiles-in.py
---- a/po/make-potfiles-in.py	2018-07-16 16:15:42.000000000 -0400
-+++ b/po/make-potfiles-in.py	1969-12-31 19:00:00.000000000 -0500
+--- a/po/make-potfiles-in.py	2018-07-16 15:15:42.000000000 -0500
++++ b/po/make-potfiles-in.py	1969-12-31 18:00:00.000000000 -0600
 @@ -1,44 +0,0 @@
 -#!/usr/bin/env python3
 -
@@ -2329,13 +2329,13 @@ diff '--exclude=.git' -urNa a/po/make-potfiles-in.py b/po/make-potfiles-in.py
 -            file = os.path.relpath(file, root_dir)
 -            print("{0}{1}".format(prefix, file)) 
 diff '--exclude=.git' -urNa a/po/meson.build b/po/meson.build
---- a/po/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/po/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/po/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/po/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1 +0,0 @@
 -i18n.gettext(gettext_package, preset : 'glib')
 diff '--exclude=.git' -urNa a/po/update-potfiles.sh b/po/update-potfiles.sh
---- a/po/update-potfiles.sh	1969-12-31 19:00:00.000000000 -0500
-+++ b/po/update-potfiles.sh	2018-07-19 01:46:48.351702578 -0400
+--- a/po/update-potfiles.sh	1969-12-31 18:00:00.000000000 -0600
++++ b/po/update-potfiles.sh	2018-09-26 15:41:12.914768934 -0500
 @@ -0,0 +1,18 @@
 +#!/bin/sh
 +
@@ -2356,8 +2356,8 @@ diff '--exclude=.git' -urNa a/po/update-potfiles.sh b/po/update-potfiles.sh
 +	esac
 +done
 diff '--exclude=.git' -urNa a/postinstall.py b/postinstall.py
---- a/postinstall.py	2018-07-16 16:15:42.000000000 -0400
-+++ b/postinstall.py	1969-12-31 19:00:00.000000000 -0500
+--- a/postinstall.py	2018-07-16 15:15:42.000000000 -0500
++++ b/postinstall.py	1969-12-31 18:00:00.000000000 -0600
 @@ -1,27 +0,0 @@
 -#!/usr/bin/env python3
 -
@@ -2387,8 +2387,8 @@ diff '--exclude=.git' -urNa a/postinstall.py b/postinstall.py
 -        os.makedirs(schemas_dir)
 -    subprocess.call(['glib-compile-schemas', schemas_dir])
 diff '--exclude=.git' -urNa a/src/Makefile.am b/src/Makefile.am
---- a/src/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/src/Makefile.am	2018-07-19 01:46:48.351702578 -0400
+--- a/src/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/src/Makefile.am	2018-09-26 15:41:12.915768929 -0500
 @@ -0,0 +1,236 @@
 +SUBDIRS = commands sh ui
 +
@@ -2627,8 +2627,8 @@ diff '--exclude=.git' -urNa a/src/Makefile.am b/src/Makefile.am
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/src/commands/Makefile.am b/src/commands/Makefile.am
---- a/src/commands/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/src/commands/Makefile.am	2018-07-19 01:46:48.351702578 -0400
+--- a/src/commands/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/src/commands/Makefile.am	2018-09-26 15:41:12.915768929 -0500
 @@ -0,0 +1,9 @@
 +privexecdir = $(libexecdir)/$(PACKAGE)
 +privexec_PROGRAMS = rpm2cpio
@@ -2640,8 +2640,8 @@ diff '--exclude=.git' -urNa a/src/commands/Makefile.am b/src/commands/Makefile.a
 +
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/src/commands/meson.build b/src/commands/meson.build
---- a/src/commands/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/src/commands/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/src/commands/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/src/commands/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1,10 +0,0 @@
 -executable('rpm2cpio', 'rpm2cpio.c',
 -  dependencies : [ 
@@ -2654,8 +2654,8 @@ diff '--exclude=.git' -urNa a/src/commands/meson.build b/src/commands/meson.buil
 -  install_dir : privexecdir
 -)
 diff '--exclude=.git' -urNa a/src/fr-application-menu.c b/src/fr-application-menu.c
---- a/src/fr-application-menu.c	2018-07-16 16:15:42.000000000 -0400
-+++ b/src/fr-application-menu.c	2018-07-19 01:46:48.351702578 -0400
+--- a/src/fr-application-menu.c	2018-07-16 15:15:42.000000000 -0500
++++ b/src/fr-application-menu.c	2018-09-26 15:41:12.915768929 -0500
 @@ -126,7 +126,7 @@
  	const char *documenters [] = { "Alexander Kirillov", "Breda McColgan", NULL };
  
@@ -2666,8 +2666,8 @@ diff '--exclude=.git' -urNa a/src/fr-application-menu.c b/src/fr-application-men
  			       "comments", _("An archive manager for GNOME."),
  			       "authors", authors,
 diff '--exclude=.git' -urNa a/src/fr-init.c b/src/fr-init.c
---- a/src/fr-init.c	2018-07-16 16:15:42.000000000 -0400
-+++ b/src/fr-init.c	2018-07-19 01:46:48.352702573 -0400
+--- a/src/fr-init.c	2018-07-16 15:15:42.000000000 -0500
++++ b/src/fr-init.c	2018-09-26 15:41:12.915768929 -0500
 @@ -638,7 +638,7 @@
  					       NULL);
  
@@ -2678,8 +2678,8 @@ diff '--exclude=.git' -urNa a/src/fr-init.c b/src/fr-init.c
  	migrate_options_directory ();
  	register_archives ();
 diff '--exclude=.git' -urNa a/src/gtk-utils.c b/src/gtk-utils.c
---- a/src/gtk-utils.c	2018-07-16 16:15:42.000000000 -0400
-+++ b/src/gtk-utils.c	2018-07-19 01:46:48.352702573 -0400
+--- a/src/gtk-utils.c	2018-07-16 15:15:42.000000000 -0500
++++ b/src/gtk-utils.c	2018-09-26 15:41:12.915768929 -0500
 @@ -534,7 +534,7 @@
  	GtkBuilder *builder;
  	GError     *error = NULL;
@@ -2690,8 +2690,8 @@ diff '--exclude=.git' -urNa a/src/gtk-utils.c b/src/gtk-utils.c
          if (! gtk_builder_add_from_file (builder, filename, &error)) {
                  g_warning ("%s\n", error->message);
 diff '--exclude=.git' -urNa a/src/meson.build b/src/meson.build
---- a/src/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/src/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/src/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/src/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1,120 +0,0 @@
 -# Sources
 -
@@ -2814,8 +2814,8 @@ diff '--exclude=.git' -urNa a/src/meson.build b/src/meson.build
 -subdir('commands')
 -subdir('sh')
 diff '--exclude=.git' -urNa a/src/sh/Makefile.am b/src/sh/Makefile.am
---- a/src/sh/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/src/sh/Makefile.am	2018-07-19 01:46:48.352702573 -0400
+--- a/src/sh/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/src/sh/Makefile.am	2018-09-26 15:41:12.915768929 -0500
 @@ -0,0 +1,5 @@
 +shdir = $(libexecdir)/$(PACKAGE)
 +sh_DATA = isoinfo.sh 
@@ -2823,13 +2823,13 @@ diff '--exclude=.git' -urNa a/src/sh/Makefile.am b/src/sh/Makefile.am
 +EXTRA_DIST = $(sh_DATA)
 +-include $(top_srcdir)/git.mk
 diff '--exclude=.git' -urNa a/src/sh/meson.build b/src/sh/meson.build
---- a/src/sh/meson.build	2018-07-16 16:15:42.000000000 -0400
-+++ b/src/sh/meson.build	1969-12-31 19:00:00.000000000 -0500
+--- a/src/sh/meson.build	2018-07-16 15:15:42.000000000 -0500
++++ b/src/sh/meson.build	1969-12-31 18:00:00.000000000 -0600
 @@ -1 +0,0 @@
 -install_data('isoinfo.sh', install_dir : privexecdir)
 diff '--exclude=.git' -urNa a/src/ui/Makefile.am b/src/ui/Makefile.am
---- a/src/ui/Makefile.am	1969-12-31 19:00:00.000000000 -0500
-+++ b/src/ui/Makefile.am	2018-07-19 01:46:48.352702573 -0400
+--- a/src/ui/Makefile.am	1969-12-31 18:00:00.000000000 -0600
++++ b/src/ui/Makefile.am	2018-09-26 15:41:12.915768929 -0500
 @@ -0,0 +1,20 @@
 +EXTRA_DIST = 				\
 +	add-dialog-options.ui		\
