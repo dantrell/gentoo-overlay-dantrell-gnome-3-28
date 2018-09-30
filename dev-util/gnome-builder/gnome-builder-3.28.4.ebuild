@@ -16,7 +16,7 @@ LICENSE="GPL-3+ GPL-2+ LGPL-3+ LGPL-2+ MIT CC-BY-SA-3.0 CC0-1.0"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="clang devhelp doc +git introspection sysprof +vala webkit"
+IUSE="clang devhelp doc +git introspection spell sysprof +vala webkit"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}"
 
 # When bumping, pay attention to all the included plugins/*/meson.build (and other) build files and the requirements within.
@@ -57,6 +57,10 @@ RDEPEND="
 	${PYTHON_DEPS}
 	clang? ( sys-devel/clang:= )
 	devhelp? ( >=dev-util/devhelp-3.25.1:= )
+	spell? (
+		>=app-text/gspell-1.2.0
+		>=app-text/enchant-2:2=
+	)
 	sysprof? ( >=dev-util/sysprof-3.28.0[gtk] )
 	vala? (
 		dev-lang/vala:=
@@ -65,9 +69,6 @@ RDEPEND="
 " # We use subslot operator dep on vala in addition to $(vala_depend), because we have _runtime_
 #   usage in vapa-pack plugin and need it rebuilt before removing an older vala it was built against
 # TODO: runtime ctags path finding..
-# FIXME: spellcheck plugin temporarily disabled due to requiring enchant-2
-#	>=app-text/gspell-1.2.0
-#	>=app-text/enchant:2
 
 # desktop-file-utils required for tests, but we have it in deptree for xdg update-desktop-database anyway, so be explicit and unconditional
 # appstream-glib needed for appdata.xml gettext translation and validation of it with appstream-util with FEATURES=test
@@ -113,10 +114,6 @@ pkg_setup() {
 }
 
 src_prepare() {
-	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-builder/commit/0061fa3ae9325a031ff401b9fb1ab8aa1ade1111
-	eapply "${FILESDIR}"/${PN}-3.28.1-spellcheck-dont-depend-on-enchant-2.patch
-
 	use vala && vala_src_prepare
 	gnome2_src_prepare
 }
@@ -142,7 +139,7 @@ src_configure() {
 		-D with_git=$(usex git true false)
 		-D with_gdb=false
 		-D with_gettext=true
-		-D with_spellcheck=false # TODO: requires enchant-2
+		-D with_spellcheck=$(usex spell true false)
 		-D with_sysprof=$(usex sysprof true false)
 		-D with_terminal=true
 	)
