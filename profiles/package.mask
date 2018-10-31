@@ -123,6 +123,8 @@ gnome-extra/yelp-xsl::gentoo
 gnome-extra/yelp-xsl::gnome-kit
 gnome-extra/yelp::gentoo
 gnome-extra/yelp::gnome-kit
+gnome-extra/zenity::gentoo
+gnome-extra/zenity::gnome-kit
 mail-client/evolution::gentoo
 mail-client/evolution::gnome-kit
 media-gfx/gnome-font-viewer::gentoo
