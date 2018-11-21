@@ -25,8 +25,8 @@ RDEPEND="
 	X? ( >=x11-libs/libwnck-2.91.0:3 )
 "
 DEPEND="${RDEPEND}
-	app-text/yelp-tools
 	>=dev-util/intltool-0.41.0
+	dev-util/itstool
 	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "

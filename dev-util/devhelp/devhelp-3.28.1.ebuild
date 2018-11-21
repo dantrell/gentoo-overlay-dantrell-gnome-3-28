@@ -11,15 +11,15 @@ DESCRIPTION="An API documentation browser for GNOME"
 HOMEPAGE="https://wiki.gnome.org/Apps/Devhelp"
 
 LICENSE="GPL-2+"
-SLOT="0/3-4" # subslot = 3-(libdevhelp-3 soname version)
+SLOT="0/3-5" # subslot = 3-(libdevhelp-3 soname version)
 KEYWORDS="*"
 
 IUSE="gedit +introspection"
 REQUIRED_USE="gedit? ( ${PYTHON_REQUIRED_USE} )"
 
 COMMON_DEPEND="
-	>=dev-libs/glib-2.38:2[dbus]
-	>=x11-libs/gtk+-3.20:3
+	>=dev-libs/glib-2.40:2[dbus]
+	>=x11-libs/gtk+-3.22:3
 	>=net-libs/webkit-gtk-2.19.2:4
 	gnome-base/gsettings-desktop-schemas
 	introspection? ( >=dev-libs/gobject-introspection-1.30:= )
@@ -35,6 +35,7 @@ RDEPEND="${COMMON_DEPEND}
 DEPEND="${COMMON_DEPEND}
 	${PYTHON_DEPS}
 	dev-libs/libxml2:2
+	dev-util/itstool
 	>=dev-util/gtk-doc-am-1.25
 	>=sys-devel/gettext-0.19.7
 	virtual/pkgconfig
@@ -42,9 +43,18 @@ DEPEND="${COMMON_DEPEND}
 # eautoreconf requires:
 #  dev-libs/appstream-glib
 #  sys-devel/autoconf-archive
+#  app-text/yelp-tools
 
 pkg_setup() {
 	use gedit && python-single-r1_pkg_setup
+}
+
+src_prepare() {
+	if ! use gedit ; then
+		sed -e '/SUBDIRS/ s/gedit-plugin//' -i plugins/Makefile.{am,in} || die
+	fi
+
+	gnome2_src_prepare
 }
 
 src_configure() {

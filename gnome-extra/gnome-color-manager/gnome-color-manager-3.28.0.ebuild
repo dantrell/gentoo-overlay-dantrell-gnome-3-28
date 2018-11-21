@@ -34,9 +34,8 @@ DEPEND="${RDEPEND}
 	app-text/docbook-sgml-dtd:4.1
 	app-text/docbook-sgml-utils
 	dev-libs/appstream-glib
-	dev-libs/libxslt
 	dev-util/itstool
-	>=sys-devel/gettext-0.19.7
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "
 
@@ -46,9 +45,9 @@ PATCHES=(
 
 src_configure() {
 	local emesonargs=(
-		-D enable-tests=false
-		-D enable-exiv=$(usex raw true false)
-		-D enable-packagekit=$(usex packagekit true false)
+		-D tests=false
+		-D exiv=$(usex raw true false)
+		-D packagekit=$(usex packagekit true false)
 	)
 	meson_src_configure
 }
