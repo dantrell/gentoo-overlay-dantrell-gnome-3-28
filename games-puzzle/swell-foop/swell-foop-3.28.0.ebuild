@@ -15,9 +15,9 @@ IUSE=""
 
 RDEPEND="
 	>=dev-libs/glib-2.36:2
+	>=x11-libs/gtk+-3.12:3
 	>=media-libs/clutter-1.14:1.0
 	>=media-libs/clutter-gtk-1.5:1.0
-	>=x11-libs/gtk+-3.12:3
 "
 DEPEND="${RDEPEND}
 	$(vala_depend)

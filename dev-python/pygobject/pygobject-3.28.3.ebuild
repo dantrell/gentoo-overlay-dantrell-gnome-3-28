@@ -32,6 +32,7 @@ DEPEND="${COMMON_DEPEND}
 	cairo? ( x11-libs/cairo[glib] )
 	test? (
 		dev-libs/atk[introspection]
+		dev-python/pytest[${PYTHON_USEDEP}]
 		media-fonts/font-cursor-misc
 		media-fonts/font-misc-misc
 		x11-libs/cairo[glib]
@@ -85,7 +86,7 @@ src_test() {
 
 	testing() {
 		local -x XDG_CACHE_HOME="${T}/${EPYTHON}"
-		emake -C "${BUILD_DIR}" check
+		emake -C "${BUILD_DIR}" check || die "emake check failed"
 	}
 	virtx python_foreach_impl testing
 }
