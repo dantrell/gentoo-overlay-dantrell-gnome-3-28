@@ -2,27 +2,25 @@
 
 EAPI="6"
 
-inherit gnome2 vala meson
+inherit gnome2 meson vala
 
 DESCRIPTION="Graphical tool for editing the dconf configuration database"
 HOMEPAGE="https://gitlab.gnome.org/GNOME/dconf-editor"
 
-LICENSE="LGPL-2.1+"
+LICENSE="GPL-3+"
 SLOT="0"
 KEYWORDS="*"
 
-COMMON_DEPEND="
-	dev-libs/appstream-glib
-	>=dev-libs/glib-2.46.0:2
-	>=gnome-base/dconf-0.25.1
-	>=x11-libs/gtk+-3.22.0:3
+RDEPEND="
+	>=gnome-base/dconf-0.26.1
+	>=dev-libs/glib-2.55.1:2
+	>=x11-libs/gtk+-3.22.27:3
 "
-DEPEND="${COMMON_DEPEND}
-	>=sys-devel/gettext-0.19.7
+DEPEND="${RDEPEND}
+	$(vala_depend)
+	dev-libs/libxml2:2
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
-"
-RDEPEND="${COMMON_DEPEND}
-	!<gnome-base/dconf-0.22[X]
 "
 
 src_prepare() {
