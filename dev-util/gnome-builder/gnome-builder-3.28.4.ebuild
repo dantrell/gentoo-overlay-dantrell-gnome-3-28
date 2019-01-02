@@ -141,7 +141,6 @@ src_configure() {
 		-D with_gettext=true
 		-D with_spellcheck=$(usex spell true false)
 		-D with_sysprof=$(usex sysprof true false)
-		-D with_terminal=true
 	)
 	meson_src_configure
 }

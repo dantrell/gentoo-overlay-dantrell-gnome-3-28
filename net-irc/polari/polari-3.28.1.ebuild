@@ -11,7 +11,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE=""
+IUSE="test"
 
 COMMON_DEPEND="
 	>=dev-libs/glib-2.43.4:2
@@ -36,4 +36,5 @@ DEPEND="${COMMON_DEPEND}
 	dev-util/itstool
 	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
+	test? ( dev-lang/spidermonkey:52 )
 "
