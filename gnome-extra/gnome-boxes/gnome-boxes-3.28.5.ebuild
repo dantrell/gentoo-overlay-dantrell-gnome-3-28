@@ -2,7 +2,7 @@
 
 EAPI="6"
 VALA_USE_DEPEND="vapigen"
-VALA_MIN_API_VERSION="0.28"
+VALA_MIN_API_VERSION="0.36"
 VALA_MAX_API_VERSION="0.38"
 
 inherit gnome2 linux-info readme.gentoo-r1 vala meson
@@ -10,9 +10,9 @@ inherit gnome2 linux-info readme.gentoo-r1 vala meson
 DESCRIPTION="Simple GNOME 3 application to access remote or virtual systems"
 HOMEPAGE="https://wiki.gnome.org/Apps/Boxes"
 
-LICENSE="LGPL-2"
+LICENSE="LGPL-2+"
 SLOT="0"
-KEYWORDS="*" # qemu-kvm[spice] is 64bit-only
+KEYWORDS="*"
 
 # We force 'bindist' due to licenses from gnome-boxes-nonfree
 IUSE="" #bindist
@@ -26,7 +26,7 @@ IUSE="" #bindist
 #        directly with USE=spice
 RDEPEND="
 	>=app-arch/libarchive-3:=
-	>=dev-libs/glib-2.38:2
+	>=dev-libs/glib-2.52:2
 	>=dev-libs/gobject-introspection-0.9.6:=
 	>=dev-libs/libxml2-2.7.8:2
 	>=sys-libs/libosinfo-1.1.0
@@ -42,8 +42,7 @@ RDEPEND="
 
 	>=app-misc/tracker-0.16:0=[iso]
 
-	>=sys-apps/util-linux-2.20
-	>=net-libs/libsoup-2.38:2.4
+	>=net-libs/libsoup-2.44:2.4
 
 	sys-fs/mtools
 	>=virtual/libgudev-165:=
@@ -53,8 +52,7 @@ RDEPEND="
 DEPEND="${RDEPEND}
 	$(vala_depend)
 	app-text/yelp-tools
-	>=dev-util/intltool-0.40
-	>=sys-devel/gettext-0.17
+	>=sys-devel/gettext-0.19.8
 	virtual/pkgconfig
 "
 
