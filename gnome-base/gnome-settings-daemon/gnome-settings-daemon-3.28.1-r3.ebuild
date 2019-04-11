@@ -13,7 +13,7 @@ LICENSE="GPL-2+"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="+colord +cups debug elogind input_devices_wacom networkmanager policykit smartcard systemd test +udev vanilla-inactivity wayland"
+IUSE="+colord +cups debug elogind input_devices_wacom networkmanager smartcard systemd test +udev vanilla-inactivity wayland"
 REQUIRED_USE="
 	?? ( elogind systemd )
 	input_devices_wacom? ( udev )
