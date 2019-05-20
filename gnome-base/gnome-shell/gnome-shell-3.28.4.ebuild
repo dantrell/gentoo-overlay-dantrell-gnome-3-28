@@ -11,7 +11,7 @@ HOMEPAGE="https://wiki.gnome.org/Projects/GnomeShell"
 
 LICENSE="GPL-2+ LGPL-2+"
 SLOT="0"
-KEYWORDS="*"
+KEYWORDS="~*"
 
 IUSE="+bluetooth browser-extension deprecated-background doc elogind +networkmanager nsplugin systemd vanilla-gc vanilla-motd vanilla-screen"
 REQUIRED_USE="${PYTHON_REQUIRED_USE}
@@ -142,13 +142,7 @@ src_prepare() {
 
 	# From GNOME:
 	# 	https://gitlab.gnome.org/GNOME/gnome-shell/commit/3033506f2c266115a00ff43daaad14e59e3215c5
-	# 	https://gitlab.gnome.org/GNOME/gnome-shell/commit/87da623d86323a0744b8723e1991f053586defaf
-	# 	https://gitlab.gnome.org/GNOME/gnome-shell/commit/9c41736a813354fd9291177b12f6c4f85bd1c5f7
-	# 	https://gitlab.gnome.org/GNOME/gnome-shell/commit/5bca4a884e8f02441a89d7b44490339d869e5966
 	eapply "${FILESDIR}"/${PN}-3.28.3-dnd-nullify-dragactor-after-weve-destroyed-it-and-avoid-invalid-access.patch
-	eapply "${FILESDIR}"/${PN}-3.30.1-messagelist-stop-syncing-if-closebutton-has-been-destroyed.patch
-	eapply "${FILESDIR}"/${PN}-3.30.1-automountmanager-remove-allowautorun-expire-timeout-on-volume-removal.patch
-	eapply "${FILESDIR}"/${PN}-3.30.1-calendar-chain-up-to-parent-on-ondestroy.patch
 
 	gnome2_src_prepare
 }

@@ -1,0 +1,81 @@
+diff '--exclude=.git' -urN a/src/compositor/meta-window-actor.c b/src/compositor/meta-window-actor.c
+--- a/src/compositor/meta-window-actor.c	2019-05-14 12:55:12.000000000 -0500
++++ b/src/compositor/meta-window-actor.c	2019-05-19 21:47:33.270882310 -0500
+@@ -969,7 +969,7 @@
+   float refresh_rate;
+   int interval, offset;
+ 
+-  if (priv->send_frame_messages_timer != 0)
++  if (priv->send_frame_messages_timer != 0 || !priv->window->monitor)
+     return;
+ 
+   logical_monitor = meta_window_get_main_logical_monitor (window);
+diff '--exclude=.git' -urN a/src/core/window.c b/src/core/window.c
+--- a/src/core/window.c	2019-05-14 12:55:12.000000000 -0500
++++ b/src/core/window.c	2019-05-19 21:47:33.271882305 -0500
+@@ -2799,7 +2799,7 @@
+   meta_window_recalc_features (window);
+   set_net_wm_state (window);
+ 
+-  if (window->monitor->in_fullscreen)
++  if (window->monitor && window->monitor->in_fullscreen)
+     meta_screen_queue_check_fullscreen (window->screen);
+ 
+   g_object_freeze_notify (G_OBJECT (window));
+@@ -3236,6 +3236,7 @@
+   gboolean unmaximize_horizontally, unmaximize_vertically;
+ 
+   g_return_if_fail (!window->override_redirect);
++  g_return_if_fail (window->monitor);
+ 
+   /* At least one of the two directions ought to be set */
+   unmaximize_horizontally = directions & META_MAXIMIZE_HORIZONTAL;
+diff '--exclude=.git' -urN a/src/wayland/meta-wayland-xdg-shell.c b/src/wayland/meta-wayland-xdg-shell.c
+--- a/src/wayland/meta-wayland-xdg-shell.c	2019-05-14 12:55:12.000000000 -0500
++++ b/src/wayland/meta-wayland-xdg-shell.c	2019-05-19 21:49:22.874377991 -0500
+@@ -264,7 +264,7 @@
+   if (!meta_wayland_seat_get_grab_info (seat, surface, serial, FALSE, NULL, NULL))
+     return;
+ 
+-  monitor_scale = window->monitor->scale;
++  monitor_scale = window->monitor ? window->monitor->scale : 1;
+   meta_window_show_menu (window, META_WINDOW_MENU_WM,
+                          window->buffer_rect.x + (x * monitor_scale),
+                          window->buffer_rect.y + (y * monitor_scale));
+diff '--exclude=.git' -urN a/src/wayland/meta-window-wayland.c b/src/wayland/meta-window-wayland.c
+--- a/src/wayland/meta-window-wayland.c	2019-05-14 12:55:12.000000000 -0500
++++ b/src/wayland/meta-window-wayland.c	2019-05-19 21:47:33.271882305 -0500
+@@ -71,7 +71,7 @@
+ {
+   g_assert (logical_monitor);
+ 
+-  if (meta_is_stage_views_scaled ())
++  if (meta_is_stage_views_scaled () || !logical_monitor)
+     return 1;
+   else
+     return meta_logical_monitor_get_scale (logical_monitor);
+diff '--exclude=.git' -urN a/src/x11/window-x11.c b/src/x11/window-x11.c
+--- a/src/x11/window-x11.c	2019-05-14 12:55:12.000000000 -0500
++++ b/src/x11/window-x11.c	2019-05-19 21:47:33.271882305 -0500
+@@ -2099,7 +2099,11 @@
+ 
+       if (window->monitor)
+         {
+-          meta_screen_get_monitor_geometry (window->screen, window->monitor->number, &monitor_rect);
++          gboolean rect_equals = FALSE;
++          if (window->monitor) {
++            meta_screen_get_monitor_geometry (window->screen, window->monitor->number, &monitor_rect);
++            rect_equals = meta_rectangle_equal (&rect, &monitor_rect);
++          }
+ 
+           /* Workaround braindead legacy apps that don't know how to
+            * fullscreen themselves properly - don't get fooled by
+@@ -2111,7 +2115,7 @@
+           if (meta_prefs_get_force_fullscreen() &&
+               !window->hide_titlebar_when_maximized &&
+               (window->decorated || !meta_window_is_client_decorated (window)) &&
+-              meta_rectangle_equal (&rect, &monitor_rect) &&
++              rect_equals &&
+               window->has_fullscreen_func &&
+               !window->fullscreen)
+             {
