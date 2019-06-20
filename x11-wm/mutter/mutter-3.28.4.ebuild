@@ -9,7 +9,7 @@ HOMEPAGE="https://gitlab.gnome.org/GNOME/mutter/"
 
 LICENSE="GPL-2+"
 SLOT="0"
-KEYWORDS="~*"
+KEYWORDS="*"
 
 IUSE="ck debug deprecated-background elogind gles2 input_devices_wacom +introspection systemd test udev +vanilla-mipmapping wayland"
 REQUIRED_USE="
