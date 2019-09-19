@@ -2,7 +2,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes" # plugins are dlopened
-PYTHON_COMPAT=( python{3_4,3_5,3_6,3_7} )
+PYTHON_COMPAT=( python{3_5,3_6,3_7} )
 PYTHON_REQ_USE="xml"
 VALA_MIN_API_VERSION="0.28"
 
@@ -56,7 +56,7 @@ DEPEND="${RDEPEND}
 "
 
 pkg_setup() {
-	use python && [[ ${MERGE_TYPE} != binary ]] && python-single-r1_pkg_setup
+	use python && python-single-r1_pkg_setup
 }
 
 src_prepare() {
