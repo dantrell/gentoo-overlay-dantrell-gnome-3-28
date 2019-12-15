@@ -21,6 +21,8 @@ REQUIRED_USE="
 	wayland? ( udev )
 "
 
+RESTRICT="!test? ( test )"
+
 COMMON_DEPEND="
 	>=dev-libs/glib-2.44.0:2[dbus]
 	>=x11-libs/gtk+-3.15.3:3[X,wayland?]

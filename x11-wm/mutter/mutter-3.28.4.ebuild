@@ -17,6 +17,8 @@ REQUIRED_USE="
 	wayland? ( || ( elogind systemd ) )
 "
 
+RESTRICT="!test? ( test )"
+
 # libXi-1.7.4 or newer needed per:
 # https://bugzilla.gnome.org/show_bug.cgi?id=738944
 COMMON_DEPEND="
@@ -109,6 +111,8 @@ src_prepare() {
 	# From Zhu Hai:
 	# 	https://bugzilla.gnome.org/show_bug.cgi?id=789166
 	eapply "${FILESDIR}"/${PN}-3.28.4-wayland-check-monitor-before-use-to-avoid-crash.patch
+
+	eapply "${FILESDIR}"/${PN}-3.24.4-eglmesaext-include.patch
 
 	eautoreconf
 	gnome2_src_prepare
