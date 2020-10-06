@@ -2,7 +2,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_6,3_7,3_8} )
+PYTHON_COMPAT=( python{3_6,3_7,3_8,3_9} )
 
 inherit autotools gnome2 python-any-r1 systemd udev virtualx
 
@@ -44,7 +44,6 @@ COMMON_DEPEND="
 	x11-libs/libXext
 	x11-libs/libXfixes
 	x11-libs/libXtst
-	x11-libs/libXxf86misc
 	x11-misc/xkeyboard-config
 
 	>=app-misc/geoclue-2.3.1:2.0

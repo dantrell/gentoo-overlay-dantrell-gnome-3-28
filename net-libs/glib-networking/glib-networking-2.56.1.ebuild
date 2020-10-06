@@ -28,7 +28,7 @@ DEPEND="${RDEPEND}
 	app-misc/ca-certificates
 	>=net-libs/gnutls-3:=[${MULTILIB_USEDEP}]
 	>=sys-devel/gettext-0.19.4
-	>=virtual/pkgconfig-0-r1[${MULTILIB_USEDEP}]
+	virtual/pkgconfig
 	test? ( sys-apps/dbus[X] )
 "
 
