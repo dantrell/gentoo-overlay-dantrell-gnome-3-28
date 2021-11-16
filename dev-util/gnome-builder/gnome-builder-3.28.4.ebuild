@@ -54,7 +54,7 @@ RDEPEND="
 
 	introspection? ( >=dev-libs/gobject-introspection-1.48.0:= )
 	$(python_gen_cond_dep '
-		>=dev-python/pygobject-3.22.0:3[${PYTHON_MULTI_USEDEP}]
+		>=dev-python/pygobject-3.22.0:3[${PYTHON_USEDEP}]
 	')
 	${PYTHON_DEPS}
 	clang? ( sys-devel/clang:= )

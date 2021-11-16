@@ -7,7 +7,7 @@ VALA_MAX_API_VERSION="0.38"
 
 inherit gnome2 linux-info readme.gentoo-r1 vala meson
 
-DESCRIPTION="Simple GNOME 3 application to access remote or virtual systems"
+DESCRIPTION="Simple GNOME application to access remote or virtual systems"
 HOMEPAGE="https://wiki.gnome.org/Apps/Boxes"
 
 LICENSE="LGPL-2+"
