@@ -12,7 +12,7 @@ LICENSE="GPL-2+ LGPL-2+ FDL-1.1"
 SLOT="0"
 KEYWORDS="*"
 
-IUSE="doc gnome +introspection packagekit +previewer selinux sendto vanilla-menu vanilla-menu-compress vanilla-rename vanilla-search vanilla-thumbnailer test"
+IUSE="doc gnome +introspection +previewer selinux sendto vanilla-menu vanilla-menu-compress vanilla-rename vanilla-search vanilla-thumbnailer test"
 
 # FIXME: tests fails under Xvfb, but pass when building manually
 # "FAIL: check failed in nautilus-file.c, line 8307"
@@ -45,11 +45,10 @@ DEPEND="${COMMON_DEPEND}
 	>=sys-devel/gettext-0.19.7
 	virtual/pkgconfig
 	x11-base/xorg-proto
-	app-misc/tracker
+	app-misc/tracker:0=
 	>=media-libs/gexiv2-0.10.0
 "
 RDEPEND="${COMMON_DEPEND}
-	packagekit? ( app-admin/packagekit-base )
 	sendto? ( !<gnome-extra/nautilus-sendto-3.0.1 )
 "
 PDEPEND="
@@ -100,7 +99,7 @@ src_configure() {
 	local emesonargs=(
 		-D docs=$(usex doc true false)
 		-D extensions=$(usex sendto true false)
-		-D packagekit=$(usex packagekit true false)
+		-D packagekit=false
 		-D selinux=$(usex selinux true false)
 		-D profiling=false
 		-D tests=$(usex test all none)
