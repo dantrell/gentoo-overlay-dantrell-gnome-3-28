@@ -2,7 +2,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_8,3_9,3_10} )
+PYTHON_COMPAT=( python{3_8,3_9,3_10,3_11} )
 
 inherit autotools gnome2 python-any-r1 systemd udev virtualx
 
@@ -48,7 +48,7 @@ COMMON_DEPEND="
 
 	>=app-misc/geoclue-2.3.1:2.0
 	>=dev-libs/libgweather-3.9.5:2=
-	>=sci-geosciences/geocode-glib-3.10
+	>=sci-geosciences/geocode-glib-3.10:0
 	>=sys-auth/polkit-0.103
 
 	colord? (
@@ -91,8 +91,8 @@ DEPEND="${COMMON_DEPEND}
 
 python_check_deps() {
 	if use test; then
-		has_version "dev-python/pygobject:3[${PYTHON_USEDEP}]" &&
-		has_version "dev-python/python-dbusmock[${PYTHON_USEDEP}]"
+		python_has_version "dev-python/pygobject:3[${PYTHON_USEDEP}]" &&
+		python_has_version "dev-python/python-dbusmock[${PYTHON_USEDEP}]"
 	fi
 }
 

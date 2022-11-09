@@ -38,7 +38,7 @@ RDEPEND="
 	maps? (
 		media-libs/clutter-gtk:1.0
 		media-libs/libchamplain:0.12
-		>=sci-geosciences/geocode-glib-3.15.3
+		>=sci-geosciences/geocode-glib-3.15.3:0
 	)
 	telepathy? ( >=net-libs/telepathy-glib-0.22 )
 	v4l? ( >=media-video/cheese-3.5.91:= )
