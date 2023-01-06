@@ -6,8 +6,13 @@ GNOME2_LA_PUNT="yes"
 
 inherit gnome2 multilib-minimal
 
+GNOME_ORG_MODULE="at-spi2-core"
+
 DESCRIPTION="D-Bus accessibility specifications and registration daemon"
-HOMEPAGE="https://wiki.gnome.org/Accessibility"
+HOMEPAGE="https://wiki.gnome.org/Accessibility https://gitlab.gnome.org/GNOME/at-spi2-core"
+SRC_URI="mirror://gnome/sources/${GNOME_ORG_MODULE}/${GNOME_ORG_PVP}/${GNOME_ORG_MODULE}-${PV}.tar.${GNOME_TARBALL_SUFFIX}"
+
+S="${WORKDIR}/${GNOME_ORG_MODULE}-${PV}"
 
 LICENSE="LGPL-2+"
 SLOT="2"
@@ -30,6 +35,8 @@ RDEPEND="
 		x11-libs/libXi[${MULTILIB_USEDEP}]
 		x11-libs/libXtst[${MULTILIB_USEDEP}]
 	)
+
+	!<app-accessibility/at-spi2-core-2.46.0:2
 "
 DEPEND="${RDEPEND}
 	>=dev-util/gtk-doc-1.9
@@ -40,12 +47,12 @@ DEPEND="${RDEPEND}
 
 PATCHES=(
 	# disable teamspaces test since that requires Novell.ICEDesktop.Daemon
-	"${FILESDIR}"/${PN}-2.0.2-disable-teamspaces-test.patch
+	"${FILESDIR}"/${GNOME_ORG_MODULE}-2.0.2-disable-teamspaces-test.patch
 
 	# From GNOME:
 	# 	https://gitlab.gnome.org/GNOME/at-spi2-core/commit/10d81a5c3d11ad87dc5ceb5519ebde003a86ba58
 	# 	https://gitlab.gnome.org/GNOME/at-spi2-core/commit/840cbcb3b84b8fe8ea76b32ef6c775cebb66d193
-	"${FILESDIR}"/${PN}-2.28.0-support-autotools.patch
+	"${FILESDIR}"/${GNOME_ORG_MODULE}-2.28.0-support-autotools.patch
 )
 
 multilib_src_configure() {
