@@ -35,7 +35,7 @@ COMMON_DEPEND="
 	x11-libs/libXext
 	x11-libs/libXrender
 
-	doc? ( >=dev-util/gtk-doc-am-1.10 )
+	doc? ( >=dev-build/gtk-doc-am-1.10 )
 	introspection? ( >=dev-libs/gobject-introspection-0.6.4:= )
 	selinux? ( >=sys-libs/libselinux-2 )
 "

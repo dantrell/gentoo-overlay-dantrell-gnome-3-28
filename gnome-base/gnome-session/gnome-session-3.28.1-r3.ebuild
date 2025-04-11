@@ -73,9 +73,9 @@ DEPEND="${COMMON_DEPEND}
 
 src_prepare() {
 	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-session/commit/926c3fce17d9665047412046a7298fad55934b2d
-	# 	https://gitlab.gnome.org/GNOME/gnome-session/commit/ffb1f23d3e5fb99c5a41a73218084250af7215a9
-	# 	https://gitlab.gnome.org/GNOME/gnome-session/commit/d8b8665dae18700cc4caae5e857b1c23a005a62e
+	# 	https://gitlab.gnome.org/GNOME/gnome-session/-/commit/926c3fce17d9665047412046a7298fad55934b2d
+	# 	https://gitlab.gnome.org/GNOME/gnome-session/-/commit/ffb1f23d3e5fb99c5a41a73218084250af7215a9
+	# 	https://gitlab.gnome.org/GNOME/gnome-session/-/commit/d8b8665dae18700cc4caae5e857b1c23a005a62e
 	eapply "${FILESDIR}"/${PN}-3.28.1-support-gconf.patch
 	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
 	eapply "${FILESDIR}"/${PN}-3.28.1-support-old-upower.patch

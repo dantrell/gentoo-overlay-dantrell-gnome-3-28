@@ -125,16 +125,16 @@ DEPEND="${COMMON_DEPEND}
 	virtual/pkgconfig
 
 	gnome-base/gnome-common
-	sys-devel/autoconf-archive
+	dev-build/autoconf-archive
 "
 # Needed for autoreconf
 #	gnome-base/gnome-common
-#	sys-devel/autoconf-archive
+#	dev-build/autoconf-archive
 
 src_prepare() {
 	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
-	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/9a611e0d69dc10c7cdedaace471e3407235e18d6
+	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/-/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
+	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/-/commit/9a611e0d69dc10c7cdedaace471e3407235e18d6
 	eapply "${FILESDIR}"/${PN}-3.28.2-support-autotools.patch
 	eapply "${FILESDIR}"/${PN}-3.29.0-keyboard-remove-deprecated-gdk-error-trap-push-pop-calls.patch
 
@@ -166,7 +166,7 @@ src_prepare() {
 	fi
 
 	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
+	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/-/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
 	#~cd "${S}"/subprojects
 	#~rm -rf libgd
 	#~git clone https://gitlab.gnome.org/GNOME/libgd
@@ -199,7 +199,7 @@ src_install() {
 	gnome2_src_install completiondir="$(get_bashcompdir)"
 
 	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
+	# 	https://gitlab.gnome.org/GNOME/gnome-control-center/-/commit/dc0988d47c4725e00c042e4e6c724b6552baa856
 	insinto /usr/share/glib-2.0/schemas
 	doins "${S}"/shell/org.gnome.ControlCenter.gschema.xml
 }

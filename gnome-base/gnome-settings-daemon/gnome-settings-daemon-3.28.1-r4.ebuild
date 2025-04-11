@@ -2,7 +2,7 @@
 
 EAPI="6"
 GNOME2_LA_PUNT="yes"
-PYTHON_COMPAT=( python{3_9,3_10,3_11} )
+PYTHON_COMPAT=( python{3_10,3_11,3_12,3_13} )
 
 inherit autotools gnome2 python-any-r1 systemd udev virtualx
 
@@ -102,9 +102,9 @@ pkg_setup() {
 
 src_prepare() {
 	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/07b346e4f99a912861978eb77058504af0871d3a
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/acdd75f8f1d3802149a34531f19e7dc12595dddf
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/f69e9d8c74a46b700d751ec93cd82a3699d6c497
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/commit/07b346e4f99a912861978eb77058504af0871d3a
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/commit/acdd75f8f1d3802149a34531f19e7dc12595dddf
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/commit/f69e9d8c74a46b700d751ec93cd82a3699d6c497
 	eapply "${FILESDIR}"/${PN}-3.28.1-support-autotools.patch
 	# Make colord and wacom optional; requires eautoreconf
 	eapply "${FILESDIR}"/${PN}-3.24.3-optional.patch
@@ -115,7 +115,7 @@ src_prepare() {
 
 	if ! use vanilla-inactivity; then
 		# From GNOME:
-		# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/2fdb48fa3333638cee889b8bb80dc1d2b65aaa4a
+		# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/commit/2fdb48fa3333638cee889b8bb80dc1d2b65aaa4a
 		eapply -R "${FILESDIR}"/${PN}-3.27.90-power-default-to-suspend-after-20-minutes-of-inactivity.patch
 	fi
 
@@ -124,7 +124,7 @@ src_prepare() {
 	eapply "${FILESDIR}"/${PN}-3.12.0-optionally-allow-suspending-with-multiple-monitors-on-lid-close.patch
 
 	# From GNOME:
-	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/commit/3110457f72f70b2d283c1ad2f27b91b95d75d92f
+	# 	https://gitlab.gnome.org/GNOME/gnome-settings-daemon/-/commit/3110457f72f70b2d283c1ad2f27b91b95d75d92f
 	eapply "${FILESDIR}"/${PN}-3.29.90-housekeeping-fix-improper-notify-notification-close-usage.patch
 
 	eautoreconf
